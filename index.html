@@ -913,6 +913,182 @@
             font-weight: 500;
         }
 
+        /* Feature Detail Pages - Army of You */
+        .feature-detail-section {
+            padding: 120px 20px;
+            min-height: 100vh;
+            background: var(--bg-subtle);
+        }
+
+        .feature-detail-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-detail-header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--secondary);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-ultra-subtle);
+            transform: translateY(-50%) translateX(-2px);
+        }
+
+        .feature-detail-header h2 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .feature-detail-content {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .feature-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-detail-card {
+            background: var(--secondary);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-detail-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .feature-detail-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-detail-card li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 24px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .feature-detail-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .feature-detail-card p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .result-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-ultra-subtle);
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .feature-detail-example {
+            background: var(--secondary);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-detail-example h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+
+        .example-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 20px;
+            background: var(--bg-ultra-subtle);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent);
+        }
+
+        .timeline-item .time {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            min-width: 80px;
+        }
+
+        .timeline-item .action {
+            font-size: 16px;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
         /* Examples Section */
         .examples-section {
             padding: 120px 20px;
@@ -2294,6 +2470,369 @@
             <div style="text-align: center; margin-top: 80px;">
                 <button class="btn-primary" onclick="showPage('demo')">Start Arbitraging</button>
                 <button class="btn-secondary" onclick="showPage('features')" style="margin-left: 20px;">← Back</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Money You Feature Page -->
+    <div id="money-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>💰 Money You</h2>
+                    <p class="hero-subtitle">Your financial clone finds money you didn't know existed. 24/7.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Money You Does</h3>
+                            <ul>
+                                <li>Scans every transaction for overcharges</li>
+                                <li>Contests every disputable charge</li>
+                                <li>Optimizes every subscription</li>
+                                <li>Trades while you sleep</li>
+                                <li>Finds hidden tax deductions</li>
+                                <li>Negotiates better rates</li>
+                                <li>Exploits arbitrage opportunities</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Real Results</h3>
+                            <div class="result-stats">
+                                <div class="stat">
+                                    <span class="stat-number">$4,700</span>
+                                    <span class="stat-label">Average monthly money found</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">+$1,400</span>
+                                    <span class="stat-label">Average user profit</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">24/7</span>
+                                    <span class="stat-label">Active monitoring</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Money You in Action</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">2:14 AM</span>
+                                <span class="action">Detected $47 overcharge on gym membership</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">2:15 AM</span>
+                                <span class="action">Automated dispute filed with bank</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">2:16 AM</span>
+                                <span class="action">Found 3 cheaper gym alternatives</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">2:17 AM</span>
+                                <span class="action">Negotiated 40% discount with current gym</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">9:30 AM</span>
+                                <span class="action">You wake up to $47 refund + $28/month savings</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Phone You Feature Page -->
+    <div id="phone-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>📞 Phone You</h2>
+                    <p class="hero-subtitle">Your exact voice calling 50 places at once. Perfect every time.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Phone You Does</h3>
+                            <ul>
+                                <li>Makes calls in your exact voice</li>
+                                <li>Handles insurance disputes</li>
+                                <li>Calls customer service</li>
+                                <li>Books appointments</li>
+                                <li>Negotiates bills</li>
+                                <li>Follows up on promises</li>
+                                <li>Never gets frustrated</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Voice Cloning Technology</h3>
+                            <p>Phone You uses advanced voice synthesis that captures your exact tone, cadence, and personality. Each call sounds like you, but with infinite patience and perfect strategy.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Insurance Battle Won</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">10:00 AM</span>
+                                <span class="action">Insurance denied $2,400 claim</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">10:05 AM</span>
+                                <span class="action">Phone You calls insurance company</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">10:15 AM</span>
+                                <span class="action">Escalates to supervisor with perfect script</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">10:25 AM</span>
+                                <span class="action">Threatens regulatory complaint</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">10:30 AM</span>
+                                <span class="action">Claim approved. $2,400 deposited</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Future You Feature Page -->
+    <div id="future-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>🔮 Future You</h2>
+                    <p class="hero-subtitle">Sees problems 3 months early. Always 10 steps ahead.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Future You Does</h3>
+                            <ul>
+                                <li>Predicts market crashes</li>
+                                <li>Identifies competitor threats</li>
+                                <li>Spots relationship problems</li>
+                                <li>Foresees career obstacles</li>
+                                <li>Anticipates health issues</li>
+                                <li>Plans escape routes</li>
+                                <li>Prepares backup plans</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Predictive Analytics</h3>
+                            <p>Future You analyzes patterns across thousands of data points to predict problems before they happen. Then takes action to prevent them entirely.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Market Crash Predicted</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">3 months ago</span>
+                                <span class="action">Detected volatility patterns matching 2008</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">2 months ago</span>
+                                <span class="action">Moved 60% to defensive positions</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">1 month ago</span>
+                                <span class="action">Bought inverse ETFs and puts</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">Today</span>
+                                <span class="action">Market crashes 30%. Portfolio up 15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Guardian You Feature Page -->
+    <div id="guardian-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>🛡️ Guardian You</h2>
+                    <p class="hero-subtitle">Your best self protects current self from stupid decisions.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Guardian You Does</h3>
+                            <ul>
+                                <li>Blocks drunk purchases</li>
+                                <li>Prevents rage quits</li>
+                                <li>Stops relationship mistakes</li>
+                                <li>Protects from scams</li>
+                                <li>Monitors spending limits</li>
+                                <li>Intercepts bad emails</li>
+                                <li>Maintains boundaries</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Protection Systems</h3>
+                            <p>Guardian You uses behavioral analysis to detect when you're not thinking clearly and intervenes before damage is done.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Drunk Crypto Purchase Blocked</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">11:30 PM</span>
+                                <span class="action">You try to buy $5,000 of "MoonCoin"</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">11:31 PM</span>
+                                <span class="action">Guardian You detects unusual behavior</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">11:32 PM</span>
+                                <span class="action">Blocks transaction with 24-hour delay</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">Next day</span>
+                                <span class="action">MoonCoin crashes 80%. $4,000 saved.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Worker You Feature Page -->
+    <div id="worker-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>⚡ Worker You</h2>
+                    <p class="hero-subtitle">Does every task before you remember it exists.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Worker You Does</h3>
+                            <ul>
+                                <li>Pays bills automatically</li>
+                                <li>Fills out forms</li>
+                                <li>Books appointments</li>
+                                <li>Answers emails</li>
+                                <li>Manages calendar</li>
+                                <li>Handles paperwork</li>
+                                <li>Maintains systems</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Task Automation</h3>
+                            <p>Worker You handles all the mundane tasks that waste your time, so you can focus on what matters most.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Tax Season Handled</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">January</span>
+                                <span class="action">Worker You starts collecting tax documents</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">February</span>
+                                <span class="action">Finds $3,200 in missed deductions</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">March</span>
+                                <span class="action">Files taxes with maximum refund</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">April</span>
+                                <span class="action">You get $8,400 refund. Zero effort.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Everywhere You Feature Page -->
+    <div id="everywhere-you-feature" class="page">
+        <section class="feature-detail-section">
+            <div class="feature-detail-container">
+                <div class="feature-detail-header">
+                    <button class="back-btn" onclick="showPage('home')">← Back to Army</button>
+                    <h2>🌐 Everywhere You</h2>
+                    <p class="hero-subtitle">You exist in parallel. Time becomes optional.</p>
+                </div>
+                
+                <div class="feature-detail-content">
+                    <div class="feature-detail-grid">
+                        <div class="feature-detail-card">
+                            <h3>What Everywhere You Does</h3>
+                            <ul>
+                                <li>Attends meetings for you</li>
+                                <li>Networks at events</li>
+                                <li>Participates in calls</li>
+                                <li>Represents you online</li>
+                                <li>Builds relationships</li>
+                                <li>Gathers intelligence</li>
+                                <li>Expands your reach</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="feature-detail-card">
+                            <h3>Parallel Existence</h3>
+                            <p>Everywhere You allows you to be in multiple places simultaneously, expanding your influence and opportunities exponentially.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-detail-example">
+                        <h3>Example: Conference Networking</h3>
+                        <div class="example-timeline">
+                            <div class="timeline-item">
+                                <span class="time">9:00 AM</span>
+                                <span class="action">You at work. Everywhere You at conference</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">10:00 AM</span>
+                                <span class="action">Everywhere You meets 15 potential clients</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">11:00 AM</span>
+                                <span class="action">Everywhere You gives presentation</span>
+                            </div>
+                            <div class="timeline-item">
+                                <span class="time">12:00 PM</span>
+                                <span class="action">You get 3 new contracts. Zero travel time.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </div>

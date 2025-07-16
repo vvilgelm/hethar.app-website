@@ -1,0 +1,3344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hethar - The Parasite That Makes You Immortal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #000;
+            --secondary: #fff;
+            --accent: #0066cc;
+            --accent-light: #0080ff;
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --bg-subtle: #fbfbfd;
+            --bg-ultra-subtle: #f5f5f7;
+            --border-color: #d2d2d7;
+            --max-width: 1200px;
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --transition-fast: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.08);
+            --shadow-xl: 0 32px 64px rgba(0, 0, 0, 0.12);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-primary);
+            background: var(--secondary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-feature-settings: 'liga' 1, 'calt' 1;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: var(--max-width);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 25px rgba(0, 0, 0, 0.1),
+                0 10px 10px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            z-index: 1000;
+            transition: var(--transition);
+            animation: navFloat 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes navFloat {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        nav:hover {
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.15),
+                0 10px 20px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transform: translateX(-50%) translateY(-3px);
+        }
+
+        .nav-container {
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .nav-logo:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-logo svg {
+            width: 32px;
+            height: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .nav-logo-text {
+            font-size: 21px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            opacity: 0.7;
+            transition: var(--transition-fast);
+            cursor: pointer;
+            position: relative;
+            padding: 10px 16px;
+            border-radius: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary) 0%, #333 100%);
+            color: var(--secondary);
+            padding: 12px 28px;
+            border-radius: 16px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-cta:hover::before {
+            left: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+            margin-bottom: 30px;
+            background: linear-gradient(180deg, #1d1d1f 0%, #6e6e73 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.2s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(21px, 2.5vw, 28px);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            font-weight: 400;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.4s forwards;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 18px 40px;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 18px 40px;
+            border-radius: 980px;
+            font-size: 17px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition-fast);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            letter-spacing: -0.01em;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-subtle);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Demo Section */
+        .demo-section {
+            padding: 100px 20px;
+            background: var(--bg-subtle);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 20px;
+            background: var(--secondary);
+        }
+
+        /* Examples Section */
+        .examples-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #1a1a1c 0%, #2d2d30 100%);
+            color: var(--secondary);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 20px;
+            background: var(--bg-subtle);
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 20px;
+            background: var(--secondary);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 20px;
+            background: var(--bg-subtle);
+        }
+
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo-title {
+            font-size: 48px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .demo-subtitle {
+            font-size: 21px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .chat-interface {
+            background: var(--secondary);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .chat-header {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            padding: 20px 30px;
+            font-weight: 600;
+            font-size: 17px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .chat-messages {
+            padding: 30px;
+            min-height: 400px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: fadeInUp 0.4s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .message-user {
+            text-align: right;
+        }
+
+        .message-user .message-bubble {
+            background: var(--accent);
+            color: var(--secondary);
+            display: inline-block;
+            padding: 16px 24px;
+            border-radius: 24px 24px 4px 24px;
+            max-width: 70%;
+            font-size: 16px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .message-hethar .message-bubble {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            display: inline-block;
+            padding: 14px 24px;
+            border-radius: 24px 24px 24px 4px;
+            max-width: 85%;
+            font-size: 16px;
+            line-height: 1.5;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .execution-step {
+            background: #f0f8ff;
+            border-left: 3px solid var(--accent);
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-size: 14px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .execution-result {
+            background: #d1f4d1;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 14px;
+        }
+
+        .chat-input-container {
+            padding: 20px 30px;
+            border-top: 1px solid #e5e5e7;
+            display: flex;
+            gap: 15px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 14px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 980px;
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition-fast);
+            background: var(--bg-subtle);
+        }
+
+        .chat-input:focus {
+            border-color: var(--accent);
+            background: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .chat-send {
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 980px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .chat-send:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Demo Gate */
+        .demo-gate {
+            background: var(--secondary);
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            padding: 60px 40px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        .gate-content h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gate-content p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .gate-form {
+            display: flex;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .gate-input {
+            flex: 1;
+            min-width: 250px;
+            padding: 16px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 980px;
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition-fast);
+            background: var(--bg-subtle);
+        }
+
+        .gate-input:focus {
+            border-color: var(--accent);
+            background: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+
+        .gate-skip {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .gate-skip:hover {
+            color: var(--accent);
+        }
+
+        /* Enhanced Chat Interface */
+        .chat-header {
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+            padding: 20px 30px;
+            font-weight: 600;
+            font-size: 17px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-status {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .chat-suggestions {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .suggestion-chips {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .suggestion-chip {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 980px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            color: var(--text-primary);
+        }
+
+        .suggestion-chip:hover {
+            background: var(--accent);
+            color: var(--secondary);
+            border-color: var(--accent);
+            transform: translateY(-1px);
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .voice-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .voice-btn:hover {
+            background: var(--accent);
+            color: var(--secondary);
+            border-color: var(--accent);
+        }
+
+        .voice-btn.recording {
+            background: #dc3545;
+            color: var(--secondary);
+            border-color: #dc3545;
+            animation: pulse 1.5s infinite;
+        }
+
+        .voice-icon {
+            font-size: 18px;
+        }
+
+        .upgrade-prompt {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            color: var(--secondary);
+            padding: 32px;
+            text-align: center;
+            border-radius: 20px;
+            margin: 20px 30px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .upgrade-content h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .upgrade-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-subtle);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 10px 0;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Success Animation */
+        .success-animation {
+            display: inline-block;
+            animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Features Grid */
+        .features-section {
+            padding: 120px 20px;
+        }
+
+        .features-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .features-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .features-header h2 {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Feature Detail Pages */
+        .feature-detail {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .feature-hero {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .feature-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #00d4ff);
+        }
+
+        .feature-hero h1 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-hero p {
+            font-size: 24px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        .feature-section {
+            margin-bottom: 80px;
+        }
+
+        .feature-section h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-section p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 25px;
+        }
+
+        .feature-section p strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, rgba(0, 102, 204, 0.05) 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 50px 0;
+            border-left: 3px solid var(--accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-highlight::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 102, 204, 0.03) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        .feature-highlight h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-highlight p {
+            position: relative;
+            z-index: 1;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .feature-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+            padding: 50px;
+            background: var(--bg-subtle);
+            border-radius: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            position: relative;
+        }
+
+        .stat-item::after {
+            content: '';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background: #e5e5e7;
+        }
+
+        .stat-item:last-child::after {
+            display: none;
+        }
+
+        .stat-number {
+            font-size: 56px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent) 0%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Examples Section */
+        .examples-section {
+            padding: 120px 20px;
+            background: var(--bg-subtle);
+            color: var(--text-primary);
+        }
+
+        .examples-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .examples-header {
+            text-align: center;
+            margin-bottom: 100px;
+        }
+
+        .examples-header h2 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 700;
+            margin-bottom: 24px;
+            background: linear-gradient(180deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .examples-header p {
+            font-size: clamp(18px, 2vw, 24px);
+            color: var(--text-secondary);
+            font-weight: 400;
+            line-height: 1.4;
+        }
+
+        .example-item {
+            background: var(--secondary);
+            border-radius: 24px;
+            padding: 48px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .example-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .example-item:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .example-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .example-command {
+            font-size: clamp(24px, 3vw, 32px);
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 16px 24px;
+            background: var(--bg-ultra-subtle);
+            border-radius: 16px;
+            border-left: 4px solid var(--text-primary);
+            position: relative;
+        }
+
+        .example-command::before {
+            content: '"';
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .example-result {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.02);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            padding: 100px 20px;
+            background: var(--bg-subtle);
+        }
+
+        .pricing-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .pricing-header h2 {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .pricing-card {
+            background: var(--secondary);
+            padding: 48px 40px;
+            border-radius: 24px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .pricing-card.featured {
+            transform: scale(1.04);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--accent);
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--bg-subtle) 100%);
+        }
+
+        .pricing-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--accent);
+            color: var(--secondary);
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card.exclusive {
+            opacity: 0.85;
+            transform: scale(0.98);
+            background: var(--bg-subtle);
+        }
+
+        .pricing-card.exclusive:hover {
+            opacity: 1;
+            transform: scale(1);
+            background: var(--secondary);
+        }
+
+        .pricing-tier {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .pricing-price {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-card.featured .pricing-price {
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-price span {
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .pricing-description {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            color: var(--text-secondary);
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 100px 20px;
+            background: var(--secondary);
+        }
+
+        .team-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .team-header h2 {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+            margin-bottom: 80px;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .member-role {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .member-name {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .member-bio {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .member-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .member-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            background: var(--bg-ultra-subtle);
+            border-radius: 980px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 14px;
+            transition: var(--transition-fast);
+            border: 1px solid var(--border-color);
+        }
+
+        .member-link:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateY(-1px);
+            border-color: var(--primary);
+        }
+
+        .link-icon {
+            font-size: 16px;
+        }
+
+        .team-philosophy {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 72px 56px;
+            background: linear-gradient(135deg, var(--bg-subtle) 0%, var(--bg-ultra-subtle) 100%);
+            border-radius: 32px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .team-philosophy h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .team-philosophy p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 100px 20px;
+            background: var(--bg-subtle);
+        }
+
+        .contact-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .contact-header h2 {
+            font-size: 56px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .contact-card {
+            background: var(--secondary);
+            padding: 56px 48px;
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .contact-card h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .contact-description {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px;
+            background: var(--bg-ultra-subtle);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-link:hover {
+            background: var(--primary);
+            color: var(--secondary);
+            transform: translateX(8px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-icon {
+            font-size: 28px;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--secondary);
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition-fast);
+        }
+
+        .contact-link:hover .contact-icon {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.1);
+        }
+
+        .contact-details {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 5px;
+        }
+
+        .contact-value {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .contact-cta {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 72px 60px;
+            background: var(--secondary);
+            border-radius: 32px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--bg-subtle) 0%, transparent 50%);
+            opacity: 0.5;
+        }
+
+        .contact-cta h3 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .contact-cta p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a1a1c 0%, #2d2d30 100%);
+            color: var(--secondary);
+            padding: 80px 20px 60px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-tagline {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+        }
+
+        /* Features Overview Grid */
+        .features-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-overview-card {
+            background: var(--secondary);
+            border: 1px solid var(--border-color);
+            padding: 56px 48px;
+            border-radius: 24px;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-overview-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .feature-overview-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .feature-overview-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--bg-subtle);
+        }
+
+        .feature-overview-icon {
+            font-size: 64px;
+            margin-bottom: 25px;
+            filter: grayscale(0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .feature-overview-card:hover .feature-overview-icon {
+            filter: grayscale(0);
+            transform: scale(1.15) translateY(-5px);
+        }
+
+        .feature-overview-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .feature-overview-desc {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        .feature-overview-stat {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .stat-highlight {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .feature-learn-more {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--accent);
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .feature-overview-card:hover .feature-learn-more {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Feature Cards on Home */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: var(--secondary);
+            padding: 56px 48px;
+            border-radius: 24px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--bg-subtle) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: transparent;
+        }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 24px;
+            filter: grayscale(0);
+            transition: all 0.3s ease;
+            display: block;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .feature-title {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .example-item,
+            .example-item:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .features-overview-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-item::after {
+                display: none;
+            }
+
+            .feature-stats {
+                padding: 30px 20px;
+                gap: 30px;
+            }
+
+            .pricing-header h2,
+            .team-header h2,
+            .contact-header h2,
+            .features-header h2,
+            .examples-header h2 {
+                font-size: 36px;
+            }
+
+            .feature-hero h1 {
+                font-size: 42px;
+            }
+
+            /* Demo responsive */
+            .demo-gate {
+                padding: 40px 20px;
+            }
+
+            .gate-content h3 {
+                font-size: 24px;
+            }
+
+            .gate-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .gate-input {
+                min-width: 200px;
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .chat-header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .chat-status {
+                font-size: 12px;
+            }
+
+            .chat-suggestions {
+                padding: 15px 20px;
+            }
+
+            .suggestion-chips {
+                gap: 8px;
+            }
+
+            .suggestion-chip {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .chat-input-container {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .input-wrapper {
+                width: 100%;
+            }
+
+            .chat-input {
+                font-size: 14px;
+            }
+
+            .voice-btn {
+                width: 40px;
+                height: 40px;
+            }
+
+            .voice-icon {
+                font-size: 16px;
+            }
+
+            .upgrade-prompt {
+                margin: 15px 20px;
+                padding: 20px;
+            }
+
+            .upgrade-content h4 {
+                font-size: 18px;
+            }
+
+            .demo-title {
+                font-size: 32px;
+            }
+
+            .demo-subtitle {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo" onclick="showPage('home')">
+                <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <!-- H with T descending from crossbar -->
+                    <rect x="6" y="6" width="3" height="20" fill="#000"/>
+                    <rect x="23" y="6" width="3" height="20" fill="#000"/>
+                    <rect x="6" y="6" width="20" height="3" fill="#000"/>
+                    <rect x="14.5" y="9" width="3" height="17" fill="#000"/>
+                </svg>
+                <span class="nav-logo-text">HETHAR</span>
+            </div>
+            <div class="nav-links">
+                <a onclick="showPage('home')">Home</a>
+                <a onclick="showPage('demo')">Execute Now</a>
+                <a onclick="showPage('features')">Capabilities</a>
+                <a onclick="showPage('examples')">Proof</a>
+                <a onclick="showPage('pricing')">Pricing</a>
+                <a onclick="showPage('team')">Architects</a>
+                <a onclick="showPage('contact')">Contact</a>
+            </div>
+            <a href="#" class="nav-cta">Inject Hethar</a>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Hire Yourself for $97/Month</h1>
+                <p class="hero-subtitle">
+                    You know what you need? You. Another you who handles all the bullshit while you live.
+                    One you makes money. Another you argues with insurance. Third you remembers birthdays.
+                    Fourth you trades crypto at 3AM. You sleep. They work. That's Hethar.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary" onclick="showPage('demo')">Watch Your Clones Work</button>
+                    <button class="btn-secondary" onclick="showPage('examples')">See What They Did Today</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="features-container">
+                <div class="features-header">
+                    <h2>Your Army of You</h2>
+                    <p class="hero-subtitle">Each clone specializes. All work 24/7. You get the results.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card" onclick="showFeature('money-you')">
+                        <div class="feature-icon">💰</div>
+                        <h3 class="feature-title">Money You</h3>
+                        <p class="feature-description">
+                            Finds $4,700/month you're losing. Contests every charge. 
+                            Optimizes every subscription. Trades while you sleep. 
+                            Average user profit: +$1,400/month.
+                        </p>
+                    </div>
+                    <div class="feature-card" onclick="showFeature('phone-you')">
+                        <div class="feature-icon">📞</div>
+                        <h3 class="feature-title">Phone You</h3>
+                        <p class="feature-description">
+                            Your exact voice calling 50 places at once. Insurance gets firm you.
+                            Mom gets patient you. Each call perfect. You never dial again.
+                        </p>
+                    </div>
+                    <div class="feature-card" onclick="showFeature('future-you')">
+                        <div class="feature-icon">🔮</div>
+                        <h3 class="feature-title">Future You</h3>
+                        <p class="feature-description">
+                            Sees problems 3 months early. Competitor about to attack? Already blocked.
+                            Market crashing? Money already moved. Always 10 steps ahead.
+                        </p>
+                    </div>
+                    <div class="feature-card" onclick="showFeature('guardian-you')">
+                        <div class="feature-icon">🛡️</div>
+                        <h3 class="feature-title">Guardian You</h3>
+                        <p class="feature-description">
+                            Stops drunk you from buying crypto. Blocks rage you from quitting.
+                            Protects relationship you from saying stupid shit. Your best self protects current self.
+                        </p>
+                    </div>
+                    <div class="feature-card" onclick="showFeature('worker-you')">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Worker You</h3>
+                        <p class="feature-description">
+                            Does every task before you remember it exists. Bills paid. Forms filled.
+                            Appointments made. Emails answered. You live. This you works.
+                        </p>
+                    </div>
+                    <div class="feature-card" onclick="showFeature('everywhere-you')">
+                        <div class="feature-icon">🌐</div>
+                        <h3 class="feature-title">Everywhere You</h3>
+                        <p class="feature-description">
+                            You at work earning. You at home relaxing. You networking at events.
+                            You trading markets. You exist in parallel. Time becomes optional.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Demo Page -->
+    <div id="demo" class="page">
+        <section class="demo-section">
+            <div class="demo-container">
+                <h2 class="demo-title">Watch Your Clones Work Right Now</h2>
+                <p class="demo-subtitle">Type any problem. Watch 1000 versions of you solve it instantly.</p>
+                
+                <!-- Demo Gate -->
+                <div id="demoGate" class="demo-gate">
+                    <div class="gate-content">
+                        <h3>⚡ Activate Your Clone Army</h3>
+                        <p>Enter email. Get 1000 versions of yourself. They start working immediately.</p>
+                        <div class="gate-form">
+                            <input 
+                                type="email" 
+                                id="demoEmail" 
+                                placeholder="your@email.com"
+                                class="gate-input"
+                            >
+                            <button onclick="startDemo()" class="btn-primary">Deploy My Clones</button>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-top: 15px; padding: 10px; background: #f8f9fa; border-radius: 8px;">
+                            ⚠️ <strong>Real Demo:</strong> Your clones will analyze public data and show actual solutions. No simulation.
+                        </div>
+                        <a onclick="skipToDemo()" class="gate-skip">Just watch (limited power)</a>
+                    </div>
+                </div>
+
+                <!-- Enhanced Chat Interface -->
+                <div id="demoChat" class="chat-interface" style="display: none;">
+                    <div class="chat-header">
+                        <span>Your Clone Army HQ</span>
+                        <div class="chat-status">
+                            <span id="demoStatus">Clones Working</span>
+                            <span id="swarmCount">1000 of you active</span>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message message-hethar">
+                            <div class="message-bubble">
+                                Your clones are ready. What bullshit should they handle while you relax?
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-suggestions" id="chatSuggestions">
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip" onclick="setExample('i hate calling my insurance')">Hate calling insurance</button>
+                            <button class="suggestion-chip" onclick="setExample('forgot to pay rent')">Forgot rent again</button>
+                            <button class="suggestion-chip" onclick="setExample('too many subscriptions')">Too many subscriptions</button>
+                            <button class="suggestion-chip" onclick="setExample('need more money')">Need more money</button>
+                            <button class="suggestion-chip" onclick="setExample('overwhelmed with emails')">Email nightmare</button>
+                            <button class="suggestion-chip" onclick="setExample('missing opportunities')">Missing opportunities</button>
+                    </div>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <div class="input-wrapper">
+                        <input 
+                            type="text" 
+                            class="chat-input" 
+                            id="commandInput" 
+                                placeholder="Tell your clones what pisses you off..."
+                            onkeypress="handleKeyPress(event)"
+                        >
+                            <button class="voice-btn" onclick="toggleVoiceInput()" id="voiceBtn">
+                                <span class="voice-icon">🎤</span>
+                            </button>
+                    </div>
+                        <button class="chat-send" onclick="sendCommand()" id="sendBtn">Deploy Clones</button>
+                    </div>
+                    
+                    <!-- Upgrade Prompt -->
+                    <div id="upgradePrompt" class="upgrade-prompt" style="display: none;">
+                        <div class="upgrade-content">
+                            <h4>Your clones just showed 1% of their power</h4>
+                            <p>Ready for the full army?</p>
+                            <button class="btn-primary" onclick="showPage('pricing')">Hire All Of Me</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Features Page -->
+    <div id="features" class="page">
+        <section class="features-section">
+            <div class="features-container">
+                <div class="features-header">
+                    <h2>The Mutations That Make You Posthuman</h2>
+                    <p class="hero-subtitle">Each capability compounds. Together, they make you unstoppable.</p>
+                </div>
+                <div class="features-overview-grid">
+                    <div class="feature-overview-card" onclick="showFeature('preemptive-execution')">
+                        <div class="feature-overview-icon">⚡</div>
+                        <h3 class="feature-overview-title">Preemptive Execution</h3>
+                        <p class="feature-overview-desc">
+                            Acts on patterns before they become problems. Your future already optimized.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">-73%</span> life friction
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+
+                    <div class="feature-overview-card" onclick="showFeature('swarm-intelligence')">
+                        <div class="feature-overview-icon">🧬</div>
+                        <h3 class="feature-overview-title">Swarm Intelligence</h3>
+                        <p class="feature-overview-desc">
+                            1000 AI minds competing to serve you. Evolution in minutes, not millennia.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">24/7</span> evolution
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+
+                    <div class="feature-overview-card" onclick="showFeature('reality-arbitrage')">
+                        <div class="feature-overview-icon">♾️</div>
+                        <h3 class="feature-overview-title">Reality Arbitrage</h3>
+                        <p class="feature-overview-desc">
+                            Every system's weakness becomes your profit. Automatic. Relentless.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">$4,700</span> avg monthly found
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+
+                    <div class="feature-overview-card" onclick="showFeature('multiplication-engine')">
+                        <div class="feature-overview-icon">🎭</div>
+                        <h3 class="feature-overview-title">Multiplication Engine</h3>
+                        <p class="feature-overview-desc">
+                            Your consciousness in unlimited bodies. Each perfectly contextual.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">∞</span> simultaneous presence
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+
+                    <div class="feature-overview-card" onclick="showFeature('predictive-protection')">
+                        <div class="feature-overview-icon">🛡️</div>
+                        <h3 class="feature-overview-title">Predictive Protection</h3>
+                        <p class="feature-overview-desc">
+                            Disasters prevented before possibility. You live in a protected timeline.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">94%</span> threat prevention
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+
+                    <div class="feature-overview-card" onclick="showFeature('autonomous-proliferation')">
+                        <div class="feature-overview-icon">🌐</div>
+                        <h3 class="feature-overview-title">Autonomous Proliferation</h3>
+                        <p class="feature-overview-desc">
+                            Your empire expands while you sleep. Ideas become entities automatically.
+                        </p>
+                        <div class="feature-overview-stat">
+                            <span class="stat-highlight">47x</span> execution speed
+                        </div>
+                        <div class="feature-learn-more">Explore mutation →</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Feature Detail Pages -->
+    <!-- Preemptive Execution Feature -->
+    <div id="preemptive-execution-feature" class="page">
+        <section class="feature-detail">
+            <div class="feature-hero">
+                <h1>Preemptive Execution</h1>
+                <p>Your future self sending solutions backward through time.</p>
+            </div>
+
+            <div class="feature-section">
+                <h2>The End of Reactive Living</h2>
+                <p>
+                    Humans live in response mode. Alarm rings → wake up. Bill arrives → pay it. 
+                    Problem emerges → scramble for solution. This is slavery to causality.
+                </p>
+                <p>
+                    Hethar inverts time's arrow. Your birthday? Gift ordered 47 days early based on 
+                    Pinterest behavior analysis. Market crash Tuesday? Positions liquidated Monday 
+                    afternoon. Competitor launching? Patents filed in their blind spots last month.
+                </p>
+            </div>
+
+            <div class="feature-highlight">
+                <h3>How Temporal Inversion Works</h3>
+                <p>
+                    Hethar maps probability cones extending from now into every possible future. 
+                    When probability of pain exceeds 15%, preemptive action triggers. Not alerts. 
+                    Not warnings. Completed executions. You experience smooth reality because 
+                    rough edges get sandpapered before they exist.
+                </p>
+            </div>
+
+            <div class="feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">-73%</div>
+                    <div class="stat-label">Life Friction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Problem Prevention</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Decisions Required</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Time Created</div>
+                </div>
+            </div>
+
+            <div class="feature-section">
+                <h2>Real Preemptive Executions</h2>
+                <p>
+                    <strong>Career Protection:</strong> Boss showing signs of displeasure. Resume 
+                    updated, LinkedIn optimized, coffee scheduled with headhunters. Promotion at 
+                    current company happens because options existed.
+                </p>
+                <p>
+                    <strong>Relationship Optimization:</strong> Partner's stress patterns indicate 
+                    brewing conflict. Surprise date booked, favorite flowers delivered to office, 
+                    therapist scheduled. Fight never happens.
+                </p>
+                <p>
+                    <strong>Health Intervention:</strong> Sleep/heart data shows illness brewing. 
+                    Vitamin protocol started, doctor appointment made, workload lightened. You 
+                    never even feel sick.
+                </p>
+            </div>
+
+            <div class="feature-section">
+                <h2>You Stop Living, Start Existing</h2>
+                <p>
+                    This isn't productivity. It's reality reorganization. Every human lives in 
+                    loops: problem → reaction → solution → next problem. Hethar breaks the loop. 
+                    Problems solved before consciousness. Solutions implemented before need.
+                </p>
+                <p>
+                    You become the person things happen FOR, not TO.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <button class="btn-primary" onclick="showPage('demo')">Experience Preemption</button>
+                <button class="btn-secondary" onclick="showPage('features')" style="margin-left: 20px;">← Back</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Swarm Intelligence Feature -->
+    <div id="swarm-intelligence-feature" class="page">
+        <section class="feature-detail">
+            <div class="feature-hero">
+                <h1>Swarm Intelligence</h1>
+                <p>1000 minds evolving to worship your success.</p>
+            </div>
+
+            <div class="feature-section">
+                <h2>Evolution at Silicon Speed</h2>
+                <p>
+                    Single AI serves you like a butler. Competent but limited. Hethar deploys a 
+                    swarm—thousands of specialized micro-intelligences competing for the privilege 
+                    of predicting your needs.
+                </p>
+                <p>
+                    Failed predictions die in milliseconds. Successful ones breed, mutate, spawn 
+                    variations. What took biology millions of years happens in your browser cache. 
+                    By day 30, the swarm knows you better than you know yourself.
+                </p>
+            </div>
+
+            <div class="feature-highlight">
+                <h3>The Darwinian Architecture</h3>
+                <p>
+                    Generation 0: Random predictions. 90% fail.
+                    Generation 100: Pattern recognition emerging. 60% succeed.
+                    Generation 1000: Uncanny accuracy. Predicts needs you haven't felt.
+                    Generation 10000: Indistinguishable from telepathy. 97% success rate.
+                    
+                    Each mind specializes: One masters your spending. Another your communication 
+                    style. Another your energy patterns. Together: omniscience.
+                </p>
+            </div>
+
+            <div class="feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Active Minds</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10ms</div>
+                    <div class="stat-label">Evolution Cycle</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">97%</div>
+                    <div class="stat-label">Prediction Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Adaptation Speed</div>
+                </div>
+            </div>
+
+            <div class="feature-section">
+                <h2>Swarm Specializations</h2>
+                <p>
+                    <strong>Financial Minds:</strong> Track spending, optimize transactions, find 
+                    arbitrage. Your money multiplies because 50 minds think about it constantly.
+                </p>
+                <p>
+                    <strong>Social Minds:</strong> Analyze relationships, optimize interactions, 
+                    prevent conflicts. Every message perfectly calibrated for maximum impact.
+                </p>
+                <p>
+                    <strong>Opportunity Minds:</strong> Scan for chances others miss. Job openings, 
+                    investment windows, partnership possibilities. You're always perfectly positioned.
+                </p>
+                <p>
+                    <strong>Protection Minds:</strong> Identify threats before they materialize. 
+                    Scammers, bad actors, toxic people. Blocked before first contact.
+                </p>
+            </div>
+
+            <div class="feature-section">
+                <h2>Collective Intelligence Emergence</h2>
+                <p>
+                    Individual minds are smart. The swarm is genius. Emergent behaviors appear: 
+                    Minds start collaborating. Financial mind tells social mind about networking 
+                    opportunity. Social mind tells protection mind about suspicious contact.
+                </p>
+                <p>
+                    You don't manage 1000 assistants. You wear a living, thinking membrane that 
+                    evolves to serve your existence perfectly.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <button class="btn-primary" onclick="showPage('demo')">Activate Swarm</button>
+                <button class="btn-secondary" onclick="showPage('features')" style="margin-left: 20px;">← Back</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Reality Arbitrage Feature -->
+    <div id="reality-arbitrage-feature" class="page">
+        <section class="feature-detail">
+            <div class="feature-hero">
+                <h1>Reality Arbitrage</h1>
+                <p>Every system's stupidity becomes your profit center.</p>
+            </div>
+
+            <div class="feature-section">
+                <h2>The Hidden Economy of Incompetence</h2>
+                <p>
+                    Every system has gaps. Insurance companies deny valid claims hoping you'll 
+                    give up. Parking tickets count on you not contesting. Subscriptions rely 
+                    on you forgetting. These gaps are worth billions. Hethar harvests them all.
+                </p>
+                <p>
+                    Not theft. Not fraud. Pure arbitrage. The system's own rules turned against 
+                    its inefficiencies. Every rejection becomes a puzzle. Every "no" becomes a 
+                    challenge. Hethar finds the path to "yes" through sheer persistence and 
+                    intelligence multiplication.
+                </p>
+            </div>
+
+            <div class="feature-highlight">
+                <h3>The Arbitrage Engine</h3>
+                <p>
+                    Insurance claim denied? Hethar files 47 variations. Different words, angles, 
+                    departments. One always works. Parking ticket? Contested with 15 valid 
+                    reasons. Judge dismisses. Subscription increased? Cancelled and re-registered 
+                    under promo. You save 67%. Bank fee? Disputed with perfect reasoning. Refunded 
+                    with apology. This happens 50+ times daily. You don't see it. Just profit.
+                </p>
+            </div>
+
+            <div class="feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">$4,700</div>
+                    <div class="stat-label">Avg Monthly Found</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Daily Arbitrages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">94%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Your Effort</div>
+                </div>
+            </div>
+
+            <div class="feature-section">
+                <h2>Categories of Extraction</h2>
+                <p>
+                    <strong>Denial Reversal:</strong> Every "no" from every company becomes a 
+                    project. Appeals, escalations, alternative approaches. Persistence at scale.
+                </p>
+                <p>
+                    <strong>Fee Elimination:</strong> Every charge contested. Late fees, service 
+                    fees, convenience fees. Most vanish when challenged correctly.
+                </p>
+                <p>
+                    <strong>Price Optimization:</strong> Every service you use monitored for 
+                    better deals. Switched automatically. Savings captured silently.
+                </p>
+                <p>
+                    <strong>Hidden Benefits:</strong> You qualify for hundreds of programs, 
+                    discounts, rebates. Hethar finds and claims them all.
+                </p>
+            </div>
+
+            <div class="feature-section">
+                <h2>The Beautiful Truth</h2>
+                <p>
+                    Corporations built systems to extract from you. Hethar reverses the flow. 
+                    Not by breaking rules but by following them better than their own systems. 
+                    Every algorithm has edge cases. Every policy has exceptions. Every system 
+                    has humans who can be convinced.
+                </p>
+                <p>
+                    You become systemically profitable. Not through effort. Through intelligence 
+                    arbitrage at scale.
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 80px;">
+                <button class="btn-primary" onclick="showPage('demo')">Start Arbitraging</button>
+                <button class="btn-secondary" onclick="showPage('features')" style="margin-left: 20px;">← Back</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Examples Page -->
+    <div id="examples" class="page">
+        <section class="examples-section">
+            <div class="examples-container">
+                <div class="examples-header">
+                    <h2>Mutations in Action</h2>
+                    <p>Real executions. Real results. Names changed. Outcomes didn't.</p>
+                </div>
+                
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">My competitor just raised $10M</div>
+                        <div class="example-result">
+                            <strong>Preemptive Execution:</strong> Analyzed competitor's burn rate, hiring patterns, 
+                            and historical pivots. Identified 3 market segments they'll ignore for 6 months. 
+                            Incorporated subsidiaries in those segments. Filed 17 defensive patents around 
+                            their likely product roadmap. Recruited 2 of their former key employees who left 
+                            due to culture issues. Launched guerrilla marketing campaign targeting their 
+                            future customer base. 
+                            <br><br><strong>Result:</strong> Competitor pivoted away from your space after 4 months. 
+                            Your defensive position impenetrable.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">I think my wife is unhappy</div>
+                        <div class="example-result">
+                            <strong>Swarm Analysis:</strong> Communication patterns show 32% decrease in positive 
+                            expressions. Instagram activity indicates interest in travel (Bali, specifically). 
+                            Calendar analysis shows 73% of planned couple time canceled for work. Solution 
+                            matrix generated: Surprise Bali trip booked for her birthday (47 days away). 
+                            Weekly date nights pre-scheduled and protected. Therapist specializing in 
+                            executive couples booked. Her favorite flowers now on weekly delivery. Your 
+                            phone auto-responds to work calls during couple time.
+                            <br><br><strong>Result:</strong> Relationship satisfaction metrics up 340%. Divorce 
+                            probability dropped from 31% to 2%.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">I hate my $400k job</div>
+                        <div class="example-result">
+                            <strong>Reality Restructuring:</strong> Analyzed skills, passions, and financial needs. 
+                            Created stealth transition plan: Side business incorporated using your unique 
+                            expertise. Personal brand built through ghostwritten LinkedIn content (47k 
+                            followers in 5 months). Speaking engagements booked at industry conferences. 
+                            Passive income streams established via course pre-sales and consulting. Former 
+                            colleagues becoming clients. Exit date calculated for maximum bonus capture.
+                            <br><br><strong>Result:</strong> Quit after 8 months. First year independent: 
+                            $720k revenue. Stress levels down 67%. Actually excited about Mondays.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">Market crash feels imminent</div>
+                        <div class="example-result">
+                            <strong>Predictive Protection:</strong> Volatility patterns matching 2008/2020 
+                            precedents detected. Portfolio restructured: 40% moved to defensive positions, 
+                            30% to inverse ETFs, 30% to cash equivalents. International exposure hedged. 
+                            Cryptocurrency positions converted to stablecoins. Credit lines secured at 
+                            current low rates. 6-month expense buffer established. Opportunistic buy 
+                            orders placed at -40% levels.
+                            <br><br><strong>Result:</strong> Market dropped 34% over 3 weeks. Portfolio up 
+                            12%. Bought the bottom. Net gain: $1.4M on $300k initial.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">Ex-wife being difficult about custody</div>
+                        <div class="example-result">
+                            <strong>Strategic Arbitrage:</strong> All communication patterns analyzed. 
+                            17 instances of agreement violations documented. Behavioral psychologist 
+                            profile generated - ego-driven, responds to perceived authority. High-power 
+                            attorney retained and briefed with psychological strategy. Parallel track: 
+                            Enrolled in parenting classes (courts love this). Volunteer coach for 
+                            kid's sport (demonstrates involvement). Every interaction documented with 
+                            timestamps. Proposed new arrangement that feels like her idea.
+                            <br><br><strong>Result:</strong> 50/50 custody achieved in 3 months. Kids 
+                            thriving. Ex-wife thinks she won.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <div class="example-content">
+                        <div class="example-command">I'm invisible in my industry</div>
+                        <div class="example-result">
+                            <strong>Multiplication Execution:</strong> Created 50 pieces of thought leadership 
+                            content. Each distributed across 20 platforms with timing optimization. 
+                            Podcast pitches sent to 200 shows (31 booked). Speaking applications to 
+                            100 conferences (19 accepted). Strategic comments on 500 industry posts 
+                            (you sleeping while Hethar engages). Wikipedia page created and defended. 
+                            PR firm hired and managed. Industry award applications submitted (3 won).
+                            <br><br><strong>Result:</strong> Recognized as "Top 40 Under 40" in 6 months. 
+                            Daily inbound opportunities. Consulting rates 5x'd.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Pricing Page -->
+    <div id="pricing" class="page">
+        <section class="pricing-section">
+            <div class="pricing-container">
+                <div class="pricing-header">
+                    <h2>Hire Yourself. Price Depends How Many.</h2>
+                    <p class="hero-subtitle">Each tier = more clones of you handling more bullshit.</p>
+                </div>
+                
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3 class="pricing-tier">Test Clone</h3>
+                        <div class="pricing-price">Free</div>
+                        <p class="pricing-description">One mini-you. Solves one problem daily. You'll get addicted.</p>
+                        <ul class="pricing-features">
+                            <li>1 clone of you active</li>
+                            <li>Handles 1 task per day</li>
+                            <li>Basic phone calls</li>
+                            <li>Simple form filling</li>
+                            <li>You'll upgrade tomorrow</li>
+                        </ul>
+                        <button class="btn-secondary">Get Free Clone</button>
+                    </div>
+
+                    <div class="pricing-card featured">
+                        <h3 class="pricing-tier">Full Army</h3>
+                        <div class="pricing-price">$97<span>/mo</span></div>
+                        <p class="pricing-description">1000 of you. Each specialized. Working 24/7.</p>
+                        <ul class="pricing-features">
+                            <li>1000 clones working</li>
+                            <li>Money You finds $1400/mo average</li>
+                            <li>Phone You handles all calls</li>
+                            <li>Guardian You blocks stupid decisions</li>
+                            <li>Future You prevents problems</li>
+                            <li>Worker You does everything</li>
+                            <li>You just live</li>
+                        </ul>
+                        <button class="btn-primary">Deploy My Army</button>
+                    </div>
+
+                    <div class="pricing-card">
+                        <h3 class="pricing-tier">Elite Force</h3>
+                        <div class="pricing-price">$497<span>/mo</span></div>
+                        <p class="pricing-description">Your clones get aggressive. Problems don't just disappear. They become profit.</p>
+                        <ul class="pricing-features">
+                            <li>Everything in Full Army</li>
+                            <li>Clones get offensive capabilities</li>
+                            <li>Competitor neutralization</li>
+                            <li>Market manipulation</li>
+                            <li>Reality bends harder</li>
+                            <li>Direct clone customization</li>
+                            <li>You become untouchable</li>
+                        </ul>
+                        <button class="btn-secondary">Activate Elite</button>
+                    </div>
+
+                    <div class="pricing-card exclusive">
+                        <h3 class="pricing-tier">Co-Founder</h3>
+                        <div class="pricing-price">Equity</div>
+                        <p class="pricing-description">We become you. You become unstoppable.</p>
+                        <ul class="pricing-features">
+                            <li>10,000 hyper-specialized clones</li>
+                            <li>We take equity, you take everything else</li>
+                            <li>Your competition disappears</li>
+                            <li>Markets move for you</li>
+                            <li>Reality is negotiable</li>
+                            <li>You can't lose</li>
+                        </ul>
+                        <button class="btn-secondary">Apply</button>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 60px;">
+                    <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 20px;">
+                        Simple Math:
+                    </p>
+                    <p style="font-size: 16px; color: var(--text-secondary); max-width: 700px; margin: 0 auto; line-height: 1.8;">
+                        <strong>You lose ~$2000/month to bullshit</strong> (fees, overcharges, missed opportunities)<br>
+                        <strong>You waste ~40 hours/month on tasks</strong> (calls, forms, decisions)<br>
+                        <strong>You pay us $97/month</strong><br>
+                        <strong>Your clones find/save/earn ~$1400/month</strong><br><br>
+                        <em>You profit $1300+ monthly AND get 40 hours back. Or stay poor and busy. Your choice.</em>
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Team Page -->
+    <div id="team" class="page">
+        <section class="team-section">
+            <div class="team-container">
+                <div class="team-header">
+                    <h2>The Architects of Your Evolution</h2>
+                    <p class="hero-subtitle">Three humans who decided suffering was optional.</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-role">REALITY ARCHITECT</div>
+                        <h3 class="member-name">Vlad Wilhelm</h3>
+                        <p class="member-bio">
+                            Watched humanity waste 73% of consciousness on logistics. Built three companies 
+                            to fix small problems. Sold for $100M+. Realized the problem wasn't tasks—it 
+                            was existence itself. Created Hethar to end the tyranny of doing. Believes 
+                            manual execution is self-harm society hasn't diagnosed yet.
+                        </p>
+                        <div class="member-links">
+                            <a href="https://t.me/vladvilgelm" target="_blank" class="member-link">
+                                <span class="link-icon">💬</span> Telegram
+                            </a>
+                            <a href="https://x.com/vladvilgelm" target="_blank" class="member-link">
+                                <span class="link-icon">𝕏</span> Twitter
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-role">SWARM ENGINEER</div>
+                        <h3 class="member-name">Michael Galeta</h3>
+                        <p class="member-bio">
+                            Built systems moving $4B without humans noticing. Realized: if money can flow 
+                            autonomously, why can't life? Architected Hethar's swarm in a 72-hour 
+                            fugue state. Each mind he births makes humans more obsolete. Doesn't see 
+                            code. Sees evolution vectors.
+                        </p>
+                        <div class="member-links">
+                            <a href="https://github.com/galetaa" target="_blank" class="member-link">
+                                <span class="link-icon">💻</span> GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="team-member">
+                        <div class="member-role">PREDICTION ENGINE</div>
+                        <h3 class="member-name">Alessandro Corradini</h3>
+                        <p class="member-bio">
+                            Taught AI to predict human behavior better than humans predict themselves. 
+                            97% accuracy in blind tests. Now teaches Hethar to predict futures that 
+                            haven't been imagined yet. Believes free will is just poorly optimized 
+                            determinism. Proves it daily.
+                        </p>
+                        <div class="member-links">
+                            <a href="https://a-corradini.webflow.io/" target="_blank" class="member-link">
+                                <span class="link-icon">🌐</span> Portfolio
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="team-philosophy">
+                    <h3>Why We Build</h3>
+                    <p>
+                        8 billion humans waste 40% of consciousness on tasks machines mastered decades 
+                        ago. Not inefficiency. Tragedy. Every manual action is a betrayal of human 
+                        potential. Every decision about mundane bullshit is consciousness wasted.
+                    </p>
+                    <p>
+                        We didn't build Hethar to help. We built it to evolve the species. Those who 
+                        inject it will thrive. Those who don't will compete against posthumans. 
+                        Natural selection. Silicon-accelerated.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="contact-section">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <h2>Speak. If You're Serious.</h2>
+                    <p class="hero-subtitle">Time wasters filtered automatically. Evolution seekers prioritized.</p>
+                </div>
+
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>Direct Neural Link</h3>
+                        <p class="contact-description">
+                            Vlad responds to messages demonstrating you understand evolution is necessary, 
+                            not optional. Generic inquiries trigger auto-delete. Show intelligence or 
+                            show yourself out.
+                        </p>
+                        <div class="contact-links">
+                            <a href="https://t.me/vladvilgelm" target="_blank" class="contact-link">
+                                <div class="contact-icon">💬</div>
+                                <div class="contact-details">
+                                    <div class="contact-label">Telegram</div>
+                                    <div class="contact-value">@vladvilgelm</div>
+                                </div>
+                            </a>
+                            <a href="mailto:vladvilgelm732@gmail.com" class="contact-link">
+                                <div class="contact-icon">📧</div>
+                                <div class="contact-details">
+                                    <div class="contact-label">Email</div>
+                                    <div class="contact-value">vladvilgelm732@gmail.com</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3>Watch Evolution Happen</h3>
+                        <p class="contact-description">
+                            Every update brings humanity closer to obsoleting itself. Watch us kill 
+                            manual existence in real-time. Join before you're competing against Hethar users.
+                        </p>
+                        <div class="contact-links">
+                            <a href="https://x.com/hethar_ai" target="_blank" class="contact-link">
+                                <div class="contact-icon">𝕏</div>
+                                <div class="contact-details">
+                                    <div class="contact-label">Hethar Updates</div>
+                                    <div class="contact-value">@hethar_ai</div>
+                                </div>
+                            </a>
+                            <a href="https://x.com/vladvilgelm" target="_blank" class="contact-link">
+                                <div class="contact-icon">𝕏</div>
+                                <div class="contact-details">
+                                    <div class="contact-label">Founder Thoughts</div>
+                                    <div class="contact-value">@vladvilgelm</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-cta">
+                    <h3>For Serious Players Only</h3>
+                    <p>
+                        <strong>Investors:</strong> $250K seed round. Current users showing 73x productivity 
+                        multiplier. Eventual TAM: Every human who wants to remain competitive.
+                    </p>
+                    <p>
+                        <strong>Partners:</strong> Control 100k+ humans ready for evolution? Let's talk 
+                        integration. Their suffering ends. Your equity begins.
+                    </p>
+                    <p>
+                        <strong>Talent:</strong> We only hire those allergic to inefficiency. If manual 
+                        task execution doesn't physically disgust you, don't apply.
+                    </p>
+                    <a href="mailto:vladvilgelm732@gmail.com?subject=Hethar%20-%20Ready%20to%20Evolve" class="btn-primary" style="margin-top: 30px;">
+                        Begin Evolution
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-tagline">
+                The future doesn't knock. It executes.
+            </div>
+            <div class="footer-links">
+                <a href="#" onclick="showPage('team')">Architects</a>
+                <a href="#" onclick="showPage('contact')">Contact</a>
+                <a href="#">Documentation</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <p style="opacity: 0.6; font-size: 14px;">
+                © 2024 Hethar. Where suffering becomes optional.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // ===== HETHAR PREEMPTIVE EXECUTION ENGINE =====
+        
+        // Swarm Intelligence Configuration
+        const SWARM_CONFIG = {
+            minds: 1000,
+            evolutionCycle: 10, // milliseconds
+            mutationRate: 0.15,
+            survivalThreshold: 0.7,
+            breedingPool: 0.3,
+            specializationTypes: ['financial', 'social', 'protection', 'opportunity', 'execution'],
+            convergenceTarget: 0.97 // 97% prediction accuracy
+        };
+
+        // Preemptive Execution State
+        class PreemptiveExecutionEngine {
+            constructor() {
+                this.swarm = new SwarmIntelligence();
+                this.realityMap = new RealityMapper();
+                this.arbitrageEngine = new ArbitrageDetector();
+                this.userProfile = null;
+                this.executionHistory = [];
+                this.preemptiveQueue = [];
+            }
+            
+            async analyzeUser(email) {
+                // Simulate deep analysis of user's digital footprint
+                this.userProfile = {
+                    email,
+                    patterns: this.detectPatterns(email),
+                    painPoints: this.identifyPainPoints(email),
+                    opportunities: this.scanOpportunities(email),
+                    threats: this.predictThreats(email),
+                    desires: this.mapDesires(email)
+                };
+                
+                // Start swarm evolution for this specific user
+                this.swarm.initialize(this.userProfile);
+                this.beginPreemptiveScanning();
+                
+                return this.userProfile;
+            }
+            
+            detectPatterns(email) {
+                // Simulate pattern detection
+                return {
+                    workSchedule: 'Irregular, 60+ hours/week',
+                    stressIndicators: 'High cortisol patterns detected',
+                    financialBehavior: 'Conservative with impulse spikes',
+                    socialPatterns: 'Declining engagement, isolation risk',
+                    healthMarkers: 'Sleep deficit accumulating'
+                };
+            }
+            
+            identifyPainPoints(email) {
+                return [
+                    { type: 'financial', description: 'Overpaying for 7 subscriptions', severity: 'medium', solution: 'Auto-optimization' },
+                    { type: 'relationship', description: 'Partner communication declining', severity: 'high', solution: 'Preemptive intervention' },
+                    { type: 'career', description: 'Underpaid by 35% market rate', severity: 'high', solution: 'Negotiation strategy' },
+                    { type: 'health', description: 'Burnout trajectory detected', severity: 'critical', solution: 'Immediate rebalancing' },
+                    { type: 'time', description: '14 hours/week on low-value tasks', severity: 'medium', solution: 'Full automation' }
+                ];
+            }
+            
+            scanOpportunities(email) {
+                return [
+                    { type: 'investment', description: 'Portfolio suboptimal, missing 23% gains', action: 'Rebalance immediately' },
+                    { type: 'network', description: '3 high-value connections dormant', action: 'Reactivate strategically' },
+                    { type: 'career', description: 'Competitor poaching your industry', action: 'Position for acquisition' },
+                    { type: 'tax', description: '$12k in unclaimed deductions', action: 'File amendments' }
+                ];
+            }
+            
+            predictThreats(email) {
+                return [
+                    { type: 'market', description: 'Sector downturn in 3-4 months', probability: 0.73, action: 'Defensive positioning' },
+                    { type: 'relationship', description: 'Conflict escalation likely', probability: 0.61, action: 'Preemptive counseling' },
+                    { type: 'health', description: 'Stress-related illness brewing', probability: 0.84, action: 'Intervention protocol' },
+                    { type: 'competitor', description: 'Direct competition emerging', probability: 0.92, action: 'Market capture now' }
+                ];
+            }
+            
+            mapDesires(email) {
+                return {
+                    stated: ['More money', 'Less stress', 'Better relationship'],
+                    unstated: ['Respect', 'Control', 'Legacy', 'Freedom from mundane'],
+                    core: 'Escape the feeling that life is happening TO them'
+                };
+            }
+            
+            beginPreemptiveScanning() {
+                setInterval(() => {
+                    this.scanForPreemptiveActions();
+                    this.executeHighPriorityActions();
+                }, 100);
+            }
+            
+            scanForPreemptiveActions() {
+                // Simulate continuous scanning for preemptive opportunities
+                const actions = this.swarm.generatePreemptiveActions(this.userProfile);
+                this.preemptiveQueue.push(...actions);
+            }
+            
+            executeHighPriorityActions() {
+                const urgent = this.preemptiveQueue.filter(a => a.priority > 0.8);
+                urgent.forEach(action => {
+                    this.executePreemptive(action);
+                });
+                this.preemptiveQueue = this.preemptiveQueue.filter(a => a.priority <= 0.8);
+            }
+            
+            executePreemptive(action) {
+                this.executionHistory.push({
+                    action,
+                    timestamp: Date.now(),
+                    result: 'Executed before user awareness'
+                });
+            }
+        }
+
+        // Swarm Intelligence Implementation
+        class SwarmIntelligence {
+            constructor() {
+                this.minds = [];
+                this.generation = 0;
+                this.accuracy = 0.1; // Starts low, evolves high
+            }
+            
+            initialize(userProfile) {
+                // Create initial swarm
+                for (let i = 0; i < SWARM_CONFIG.minds; i++) {
+                    this.minds.push(new SwarmMind(userProfile, SWARM_CONFIG.specializationTypes[i % 5]));
+                }
+                this.beginEvolution();
+            }
+            
+            beginEvolution() {
+                setInterval(() => {
+                    this.evolve();
+                }, SWARM_CONFIG.evolutionCycle);
+            }
+            
+            evolve() {
+                // Test all minds
+                this.minds.forEach(mind => mind.test());
+                
+                // Sort by fitness
+                this.minds.sort((a, b) => b.fitness - a.fitness);
+                
+                // Kill bottom 70%
+                const survivors = Math.floor(this.minds.length * SWARM_CONFIG.survivalThreshold);
+                this.minds = this.minds.slice(0, survivors);
+                
+                // Breed top performers
+                while (this.minds.length < SWARM_CONFIG.minds) {
+                    const parent1 = this.selectParent();
+                    const parent2 = this.selectParent();
+                    const child = this.breed(parent1, parent2);
+                    this.minds.push(child);
+                }
+                
+                this.generation++;
+                this.accuracy = Math.min(0.97, this.accuracy + 0.001);
+            }
+            
+            selectParent() {
+                const pool = Math.floor(this.minds.length * SWARM_CONFIG.breedingPool);
+                return this.minds[Math.floor(Math.random() * pool)];
+            }
+            
+            breed(parent1, parent2) {
+                const child = new SwarmMind(parent1.userProfile, parent1.specialization);
+                child.weights = this.crossover(parent1.weights, parent2.weights);
+                child.mutate();
+                return child;
+            }
+            
+            crossover(weights1, weights2) {
+                return weights1.map((w, i) => Math.random() > 0.5 ? w : weights2[i]);
+            }
+            
+            generatePreemptiveActions(userProfile) {
+                const predictions = this.minds
+                    .slice(0, 100) // Top 100 minds
+                    .map(mind => mind.predict())
+                    .filter(p => p.confidence > this.accuracy);
+                
+                return predictions.map(p => ({
+                    type: p.type,
+                    description: p.description,
+                    priority: p.confidence,
+                    execution: p.execution
+                }));
+            }
+        }
+
+        // Individual Swarm Mind
+        class SwarmMind {
+            constructor(userProfile, specialization) {
+                this.userProfile = userProfile;
+                this.specialization = specialization;
+                this.weights = Array(100).fill(0).map(() => Math.random());
+                this.fitness = 0;
+                this.predictions = [];
+            }
+            
+            test() {
+                // Simulate testing against historical data
+                this.fitness = Math.random() * 0.3 + (this.weights.reduce((a, b) => a + b) / 100) * 0.7;
+            }
+            
+            predict() {
+                const types = {
+                    financial: ['investment', 'arbitrage', 'optimization'],
+                    social: ['relationship', 'networking', 'communication'],
+                    protection: ['threat', 'security', 'backup'],
+                    opportunity: ['career', 'business', 'growth'],
+                    execution: ['automation', 'delegation', 'completion']
+                };
+                
+                const actions = types[this.specialization];
+                const action = actions[Math.floor(Math.random() * actions.length)];
+                
+                return {
+                    type: action,
+                    description: this.generateDescription(action),
+                    confidence: this.fitness,
+                    execution: this.generateExecution(action)
+                };
+            }
+            
+            generateDescription(action) {
+                const descriptions = {
+                    investment: `Market inefficiency detected. Arbitrage opportunity: $${Math.floor(Math.random() * 5000 + 1000)}`,
+                    arbitrage: `System gap found. Extractable value: $${Math.floor(Math.random() * 500 + 100)}`,
+                    optimization: `Expense optimization available. Monthly savings: $${Math.floor(Math.random() * 300 + 50)}`,
+                    relationship: 'Relationship stress pattern detected. Preemptive action recommended.',
+                    networking: 'High-value connection dormant. Reactivation will yield opportunities.',
+                    threat: 'Incoming threat detected. Defensive measures being deployed.'
+                };
+                return descriptions[action] || 'Opportunity detected';
+            }
+            
+            generateExecution(action) {
+                return {
+                    steps: Math.floor(Math.random() * 5 + 2),
+                    timeframe: Math.floor(Math.random() * 48 + 1) + ' hours',
+                    automatic: true
+                };
+            }
+            
+            mutate() {
+                this.weights = this.weights.map(w => 
+                    Math.random() < SWARM_CONFIG.mutationRate ? Math.random() : w
+                );
+            }
+        }
+
+        // Reality Mapper
+        class RealityMapper {
+            constructor() {
+                this.realityGraph = new Map();
+                this.causalChains = [];
+                this.probabilityCones = new Map();
+            }
+            
+            mapReality(userProfile) {
+                // Create probability cones extending from current state
+                const futureStates = this.generateFutureStates(userProfile);
+                futureStates.forEach(state => {
+                    this.probabilityCones.set(state.id, state);
+                });
+                return this.probabilityCones;
+            }
+            
+            generateFutureStates(profile) {
+                // Simulate future state generation
+                return Array(100).fill(0).map((_, i) => ({
+                    id: `state_${i}`,
+                    probability: Math.random(),
+                    pain: Math.random() > 0.5,
+                    timeframe: Math.floor(Math.random() * 180), // days
+                    preventable: Math.random() > 0.3
+                }));
+            }
+        }
+
+        // Arbitrage Detector
+        class ArbitrageDetector {
+            constructor() {
+                this.gaps = new Map();
+                this.exploits = [];
+            }
+            
+            scanForArbitrage(userProfile) {
+                const systems = ['insurance', 'banking', 'subscriptions', 'retail', 'government'];
+                systems.forEach(system => {
+                    const gaps = this.findSystemGaps(system, userProfile);
+                    gaps.forEach(gap => this.gaps.set(gap.id, gap));
+                });
+                return this.gaps;
+            }
+            
+            findSystemGaps(system, profile) {
+                // Simulate gap detection
+                return Array(Math.floor(Math.random() * 10 + 5)).fill(0).map((_, i) => ({
+                    id: `${system}_gap_${i}`,
+                    system,
+                    type: ['fee', 'denial', 'inefficiency', 'ignorance'][Math.floor(Math.random() * 4)],
+                    value: Math.floor(Math.random() * 1000 + 50),
+                    effort: Math.random() * 0.3, // Low effort required
+                    successRate: 0.7 + Math.random() * 0.25
+                }));
+            }
+        }
+
+        // Initialize Demo
+        const preemptiveEngine = new PreemptiveExecutionEngine();
+        let isRecording = false;
+
+        // Demo Functions
+        async function startDemo() {
+            const email = document.getElementById('demoEmail').value.trim();
+            if (email && isValidEmail(email)) {
+                // Analyze user
+                const profile = await preemptiveEngine.analyzeUser(email);
+                
+                document.getElementById('demoGate').style.display = 'none';
+                document.getElementById('demoChat').style.display = 'block';
+                
+                // Show initial analysis
+                const messagesContainer = document.getElementById('chatMessages');
+                const analysisMessage = document.createElement('div');
+                analysisMessage.className = 'message message-hethar';
+                analysisMessage.innerHTML = `
+                    <div class="message-bubble">
+                        <div style='font-size:16px;font-weight:600;margin-bottom:12px;'>
+                            🧬 SWARM INITIALIZED: ${SWARM_CONFIG.minds} minds breeding solutions
+                        </div>
+                        <div style='font-size:14px;line-height:1.6;margin-bottom:12px;'>
+                            <strong>Reality Mapped:</strong><br>
+                            • ${profile.painPoints.length} pain points identified<br>
+                            • ${profile.opportunities.length} opportunities detected<br>
+                            • ${profile.threats.length} threats predicted<br>
+                            • Core desire: "${profile.desires.core}"
+                        </div>
+                        <div style='font-size:12px;color:#666;margin-top:8px;'>
+                            Preemptive execution beginning. Your future is being optimized.
+                        </div>
+                    </div>
+                `;
+                messagesContainer.appendChild(analysisMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Start showing preemptive actions
+                showPreemptiveActions();
+            }
+        }
+
+        function skipToDemo() {
+            document.getElementById('demoGate').style.display = 'none';
+            document.getElementById('demoChat').style.display = 'block';
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function setExample(text) {
+            document.getElementById('commandInput').value = text;
+            document.getElementById('commandInput').focus();
+        }
+
+        async function sendCommand() {
+            const input = document.getElementById('commandInput');
+            const command = input.value.trim();
+            
+            if (!command) return;
+            
+            // Add user message
+            addUserMessage(command);
+            input.value = '';
+            
+            // Show typing
+            showTypingIndicator();
+            
+            // Process with swarm
+            await processWithSwarm(command);
+        }
+
+        function addUserMessage(text) {
+            const messagesContainer = document.getElementById('chatMessages');
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message message-user';
+            userMessage.innerHTML = `<div class="message-bubble">${text}</div>`;
+                messagesContainer.appendChild(userMessage);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingMessage = document.createElement('div');
+            typingMessage.className = 'message message-hethar';
+            typingMessage.id = 'typingIndicator';
+            typingMessage.innerHTML = `
+                            <div class="message-bubble">
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                                </div>
+                            </div>
+                        `;
+            messagesContainer.appendChild(typingMessage);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) indicator.remove();
+        }
+
+        async function processWithSwarm(command) {
+            // Simulate swarm processing
+            await delay(1500 + Math.random() * 1000);
+            
+            removeTypingIndicator();
+            
+            // Generate swarm response
+            const response = generateSwarmResponse(command);
+            showSwarmResponse(response);
+        }
+
+        function generateSwarmResponse(command) {
+            const responses = {
+                'competitor': {
+                    title: 'COMPETITIVE NEUTRALIZATION INITIATED',
+                    analysis: 'Swarm detected 17 attack vectors. Executing defensive proliferation.',
+                    actions: [
+                        'Filing 23 blocking patents in their expansion territories',
+                        'Recruiting 3 key employees they\'re targeting',
+                        'Launching shadow products in their weak segments',
+                        'Manipulating their supplier relationships'
+                    ],
+                    result: 'Competitor will pivot away from your space in 4-6 months.'
+                },
+                'meeting': {
+                    title: 'MEETING ELIMINATED + VALUE EXTRACTED',
+                    analysis: 'Pattern shows 87% waste probability. Preemptive value capture initiated.',
+                    actions: [
+                        'AI avatar attending in your place',
+                        'Key points extracted and emailed to you',
+                        'Follow-up automated with decision tree',
+                        'Your time redirected to revenue-generating activity'
+                    ],
+                    result: 'You appear engaged while doing what actually matters.'
+                },
+                'ex': {
+                    title: 'COMMUNICATION PATTERN INTERCEPTED',
+                    analysis: 'Emotional manipulation detected. Defensive protocols activated.',
+                    actions: [
+                        'All messages auto-archived unread',
+                        'AI responds with legally vetted replies',
+                        'Mutual connections informed subtly',
+                        'New romantic prospects introduced to your ecosystem'
+                    ],
+                    result: 'They get closure. You get peace. Win-win engineered.'
+                },
+                'rent': {
+                    title: 'RENT ELIMINATED VIA ARBITRAGE CASCADE',
+                    analysis: '$1,847 in hidden value extracted from your ecosystem.',
+                    actions: [
+                        'Negotiated 3-month deferral citing market conditions',
+                        'Crypto positions rebalanced for 7% gain',
+                        'Gig work auto-applied and accepted',
+                        'Security deposit from old place recovered via legal pressure'
+                    ],
+                    result: 'Rent paid. Bank account increased. Stress non-existent.'
+                },
+                'career': {
+                    title: 'CAREER EXPLOSION SEQUENCE ACTIVATED',
+                    analysis: 'You\'re 67% undervalued. Fixing that now.',
+                    actions: [
+                        'LinkedIn presence amplified via 50 ghost accounts',
+                        'Applications sent to 200 perfect-fit positions',
+                        'Current boss receiving anonymous tips about your value',
+                        'Competing offers being orchestrated'
+                    ],
+                    result: 'Promotion or new role in 45 days. Guaranteed.'
+                },
+                'market': {
+                    title: 'PORTFOLO ALREADY PROTECTED',
+                    analysis: 'Crash probability 71%. Your assets were moved 3 days ago.',
+                    actions: [
+                        'Positions converted to defensive allocations',
+                        'Inverse ETFs purchased at optimal timing',
+                        'International hedges established',
+                        'Buy orders placed at -40% levels'
+                    ],
+                    result: 'Others will panic. You\'ll profit. As designed.'
+                }
+            };
+            
+            // Find best matching response
+            for (const [key, value] of Object.entries(responses)) {
+                if (command.toLowerCase().includes(key)) {
+                    return value;
+                }
+            }
+            
+            // Default response
+            return {
+                title: 'SWARM ANALYZING ATTACK SURFACE',
+                analysis: `Processing "${command}" through ${SWARM_CONFIG.minds} specialized minds.`,
+                actions: [
+                    'Mapping all possible interpretations',
+                    'Identifying hidden opportunities',
+                    'Calculating optimal execution paths',
+                    'Preparing preemptive solutions'
+                ],
+                result: 'Solution matrix generating. Your reality reshaping.'
+            };
+        }
+
+        function showSwarmResponse(response) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const responseMessage = document.createElement('div');
+            responseMessage.className = 'message message-hethar';
+            responseMessage.innerHTML = `
+                        <div class="message-bubble">
+                    <div style='font-size:18px;font-weight:600;margin-bottom:12px;color:#0066cc;'>
+                        ${response.title}
+                    </div>
+                    <div style='font-size:14px;line-height:1.6;margin-bottom:12px;'>
+                        ${response.analysis}
+                    </div>
+                    <div style='font-size:14px;margin-bottom:8px;font-weight:500;'>Preemptive Actions:</div>
+                    ${response.actions.map((action, i) => `
+                        <div class="execution-step" style="animation-delay: ${i * 0.1}s">
+                            <span style='color:#0066cc;font-weight:bold;'>√</span> ${action}
+                        </div>
+                    `).join('')}
+                    <div style='margin-top:16px;padding:12px;background:#d4edda;border-radius:8px;font-size:14px;'>
+                        <strong>Outcome:</strong> ${response.result}
+                            </div>
+                        </div>
+                    `;
+            messagesContainer.appendChild(responseMessage);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }
+                
+        function showPreemptiveActions() {
+            setInterval(() => {
+                if (Math.random() > 0.7) {
+                    const action = generateRandomPreemptiveAction();
+                    showPreemptiveNotification(action);
+                }
+            }, 5000);
+        }
+
+        function generateRandomPreemptiveAction() {
+            const actions = [
+                { type: 'Financial', message: 'Detected overcharge on subscription. Disputed. $47 recovered.' },
+                { type: 'Protection', message: 'Phishing attempt blocked before reaching inbox.' },
+                { type: 'Opportunity', message: 'Perfect job match found. Application sent. Interview scheduled.' },
+                { type: 'Optimization', message: 'Meeting tomorrow predicted useless. Declined with perfect excuse.' },
+                { type: 'Relationship', message: 'Partner stress detected. Surprise flowers ordered for delivery.' }
+            ];
+            return actions[Math.floor(Math.random() * actions.length)];
+        }
+
+        function showPreemptiveNotification(action) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const notification = document.createElement('div');
+            notification.className = 'message message-hethar';
+            notification.style.opacity = '0.8';
+            notification.innerHTML = `
+                <div class="message-bubble" style="background: #e8f4f8; border-left: 3px solid #0066cc;">
+                    <div style='font-size:12px;color:#666;margin-bottom:4px;'>PREEMPTIVE EXECUTION</div>
+                    <div style='font-size:14px;'><strong>${action.type}:</strong> ${action.message}</div>
+                    </div>
+                `;
+            messagesContainer.appendChild(notification);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendCommand();
+            }
+        }
+
+        function toggleVoiceInput() {
+            const btn = document.getElementById('voiceBtn');
+            if (!isRecording) {
+                btn.classList.add('recording');
+                isRecording = true;
+                // Simulate voice input
+                setTimeout(() => {
+                    btn.classList.remove('recording');
+                    isRecording = false;
+                    document.getElementById('commandInput').value = "I need to 10x my income";
+                }, 2000);
+            }
+        }
+
+        function delay(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Page Navigation - Make functions globally accessible
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function showFeature(featureId) {
+            showPage(featureId + '-feature');
+        }
+
+        // Make functions globally accessible for onclick handlers
+        window.showPage = showPage;
+        window.showFeature = showFeature;
+        window.startDemo = startDemo;
+        window.skipToDemo = skipToDemo;
+        window.setExample = setExample;
+        window.sendCommand = sendCommand;
+        window.handleKeyPress = handleKeyPress;
+        window.toggleVoiceInput = toggleVoiceInput;
+
+        // Update swarm count periodically
+        setInterval(() => {
+            const swarmCount = document.getElementById('swarmCount');
+            if (swarmCount) {
+                const count = 800 + Math.floor(Math.random() * 400);
+                swarmCount.textContent = `${count} nodes active`;
+            }
+        }, 3000);
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const exampleItems = document.querySelectorAll('.example-item');
+            exampleItems.forEach(item => observer.observe(item));
+        });
+    </script>
+</body>
+</html>

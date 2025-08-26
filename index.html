@@ -151,6 +151,7 @@
     .pill-nav{display:flex; gap:6px; padding:6px; border:1px solid var(--line); background:var(--pill); border-radius:999px}
     .pill-nav a{padding:8px 12px; border-radius:999px; opacity:.9}
     .pill-nav a:hover{background:var(--accent); opacity:1}
+    .pill-nav a.active{background:var(--accent); opacity:1}
 
     /* --- Mobile hamburger + sheet --- */
     .hamburger{display:inline-flex; align-items:center; justify-content:center; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--pill)}
@@ -163,6 +164,9 @@
     .mnav.open .mnav-backdrop{opacity:1; pointer-events:auto}
     .mnav.open .mnav-sheet{transform:translateY(0)}
     .mnav-links{display:grid; gap:12px; padding:14px 20px}
+
+    /* Sticky header polish */
+    header.is-scrolled{box-shadow: 0 6px 20px rgba(0,0,0,.22)}
   </style>
 </head>
 <body>
@@ -420,6 +424,32 @@
     if(mbackdrop){ mbackdrop.addEventListener('click', closeMenu); }
     // Close on nav click
     document.querySelectorAll('.mnav-links a').forEach(a=>a.addEventListener('click', closeMenu));
+
+    // Sticky header shadow
+    const headerEl = document.querySelector('header');
+    const updateHeaderShadow = ()=>{
+      if(window.scrollY > 8){ headerEl.classList.add('is-scrolled'); } else { headerEl.classList.remove('is-scrolled'); }
+    };
+    updateHeaderShadow();
+    window.addEventListener('scroll', updateHeaderShadow, {passive:true});
+
+    // Scrollspy active link highlighting
+    const sections = ['essence','how','vision','privacy','pricing'];
+    const allLinks = Array.from(document.querySelectorAll('.pill-nav a, .mnav-links a')).filter(a=>a.getAttribute('href').startsWith('#'));
+    const linkFor = (id)=> allLinks.filter(a=>a.getAttribute('href') === `#${id}`);
+    const spyObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        const id = entry.target.id;
+        if(!sections.includes(id)) return;
+        if(entry.isIntersecting){
+          // Clear active
+          allLinks.forEach(a=>a.classList.remove('active'));
+          // Mark all matching links active
+          linkFor(id).forEach(a=>a.classList.add('active'));
+        }
+      });
+    }, {rootMargin: '-40% 0px -55% 0px', threshold: 0});
+    sections.forEach(id=>{ const el = document.getElementById(id); if(el) spyObserver.observe(el); });
   </script>
 </body>
 </html>

@@ -1,284 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hethar - Your life. Beautifully handled.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hethar — Your Second Self</title>
+  <meta name="description" content="Hethar is a persistent AI companion — a second you that lives with you, learns your entire digital and real-world context, and proactively manages life on your behalf." />
+  <meta name="theme-color" content="#0b0b0c" />
+  <link rel="icon" href="favicon.ico" />
+  <style>
+    /* --- Base: Apple-like, 2018 minimal --- */
+    :root{
+      --bg:#0b0b0c;
+      --fg:#e9eaec;
+      --muted:#b7bbc2;
+      --line:#202226;
+      --cta:#ffffff;
+      --cta-bg:#0b0b0c;
+      --pill:#111215;
+      --accent: rgba(255,255,255,0.08);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 16px;
+    }
+    @media (prefers-color-scheme: light) {
+      :root{
+        --bg:#fafafa;
+        --fg:#0b0b0c;
+        --muted:#4d5057;
+        --line:#e9eaec;
+        --cta:#fff;
+        --cta-bg:#0b0b0c;
+        --pill:#ffffff;
+        --accent: rgba(11,11,12,0.05);
+        --shadow: 0 8px 24px rgba(0,0,0,.08);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display","SF Pro Text","Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--fg);
+      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.08), transparent 60%), var(--bg);
+      letter-spacing:-0.01em;
+    }
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    /* --- Layout --- */
+    .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+    header{
+      position:sticky;top:0;z-index:1000;
+      backdrop-filter:saturate(180%) blur(18px);
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(180deg,#fff, #9aa0a6);box-shadow:0 0 20px rgba(255,255,255,.35)}
+    nav a{opacity:.85;margin:0 10px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 18px;border-radius:999px;border:1px solid var(--line);
+      background:var(--pill); color:var(--fg); transition:transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--fg) 35%, var(--line));}
+    .btn.primary{background:var(--cta-bg);color:var(--cta);border-color:transparent}
+    .ghost{border:none;background:transparent}
+    /* --- Hero --- */
+    .hero{padding:96px 0 40px;border-bottom:1px solid var(--line)}
+    .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--pill);opacity:.9}
+    .h1{
+      font-weight:800;
+      line-height:1.02;
+      letter-spacing:-0.02em;
+      margin:16px 0 12px;
+      font-size: clamp(36px, 5vw, 72px);
+    }
+    .lede{
+      font-size: clamp(16px, 2.2vw, 22px);
+      color:var(--muted);
+      max-width: 820px;
+    }
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .hero-media{
+      margin:48px auto 0; max-width:940px; border-radius:24px; background:linear-gradient(180deg, var(--accent), transparent 70%);
+      box-shadow: var(--shadow); border:1px solid var(--line); overflow:hidden; position:relative;
+    }
+    .pendant{
+      width:100%; aspect-ratio: 16/9; display:grid; place-items:center;
+      background:
+        radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+    }
+    .pendant svg{width:220px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
+    /* --- Sections --- */
+    section{padding:88px 0;border-bottom:1px solid var(--line)}
+    h2{
+      font-size: clamp(28px, 3.6vw, 44px);
+      letter-spacing:-0.02em; margin:0 0 12px;
+    }
+    .muted{color:var(--muted)}
+    .grid{display:grid;gap:28px}
+    @media (min-width:900px){
+      .grid-2{grid-template-columns: 1fr 1fr}
+      .grid-3{grid-template-columns: repeat(3,1fr)}
+    }
+    .card{
+      border:1px solid var(--line); background:var(--pill); border-radius: var(--radius); padding:24px;
+    }
+    .list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+    .list li{display:flex;gap:10px}
+    .check{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#9aa0a6);margin-top:5px;flex:none}
+    /* --- Split --- */
+    .split{display:grid;gap:32px}
+    @media (min-width:1000px){.split{grid-template-columns: 1.1fr .9fr;align-items:center}}
+    .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--pill);font-size:12px}
+    /* --- Footer --- */
+    footer{padding:56px 0;color:var(--muted)}
+    .small{font-size:13px}
+    .cols{display:grid;gap:18px}
+    @media (min-width:860px){.cols{grid-template-columns:1fr auto}}
+    /* --- Animations --- */
+    .reveal{opacity:0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease}
+    .reveal.on{opacity:1; transform: translateY(0)}
+    .fade-in{animation:fade .9s ease both}
+    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+    /* --- Accessibility tweaks --- */
+    :focus-visible{outline:2px solid #8ab4ff; outline-offset:3px; border-radius:8px}
+  </style>
 </head>
 <body>
-    <main class="min-h-screen bg-white text-neutral-900 selection:bg-black selection:text-white">
-        <!-- Nav -->
-        <header class="sticky top-0 z-50 backdrop-blur bg-white/70 border-b border-neutral-200">
-            <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-                <a href="#" class="flex items-center gap-2">
-                    <div class="h-6 w-6 rounded-full bg-black"></div>
-                    <span class="font-semibold tracking-tight">Hethar</span>
-                </a>
-                <nav class="hidden md:flex items-center gap-8 text-sm">
-                    <a href="#product" class="hover:opacity-70">Product</a>
-                    <a href="#how" class="hover:opacity-70">How it works</a>
-                    <a href="#privacy" class="hover:opacity-70">Privacy</a>
-                    <a href="#faq" class="hover:opacity-70">FAQ</a>
-                </nav>
-                <div class="flex items-center gap-3">
-                    <a href="#early" class="text-sm hover:opacity-70">Early access</a>
-                    <a href="#early" class="text-sm rounded-full px-4 py-2 bg-black text-white hover:bg-neutral-800">Try the Shadow Day demo</a>
-                </div>
-            </div>
-        </header>
+  <!-- Header -->
+  <header>
+    <div class="wrap nav">
+      <div class="logo">
+        <span class="logo-dot" aria-hidden="true"></span>
+        <a href="#top" aria-label="Hethar home">Hethar</a>
+      </div>
+      <nav class="hide-mobile">
+        <a href="#essence">Essence</a>
+        <a href="#how">How it works</a>
+        <a href="#vision">Vision</a>
+        <a href="#privacy">Privacy</a>
+      </nav>
+      <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Request access</a>
+    </div>
+  </header>
 
-        <!-- Hero -->
-        <section class="relative overflow-hidden">
-            <div class="pointer-events-none absolute inset-0 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]">
-                <div class="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-neutral-100"></div>
-                <div class="absolute -bottom-32 -right-16 h-96 w-96 rounded-full bg-neutral-100"></div>
-            </div>
-            <div class="mx-auto max-w-6xl px-4 pt-20 pb-10 md:pt-28 md:pb-16">
-                <h1 class="text-4xl md:text-6xl font-semibold tracking-tight leading-[1.05]">
-                    Your life. <span class="inline-block bg-black text-white px-2 rounded-md">Beautifully handled.</span>
-                </h1>
-                <p class="mt-6 text-lg md:text-xl max-w-3xl text-neutral-600">
-                    Hethar is a persistent, fully-embedded companion — a second you that walks in step with you (идёт в ногу с тобой), carries the whole context of your life, and acts autonomously to make it better. Above Agent Mode. Far beyond tasks.
-                </p>
-                <div class="mt-8 flex flex-wrap items-center gap-3">
-                    <a href="#early" class="rounded-full px-5 py-3 bg-black text-white hover:bg-neutral-900">Get early access</a>
-                    <a href="#video" class="rounded-full px-5 py-3 border border-neutral-300 hover:bg-neutral-50">See a Shadow Day</a>
-                </div>
-                <div class="mt-14 grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <h3 class="font-medium">Decides & executes</h3>
-                        <p class="mt-2 text-neutral-600 text-sm">Hethar plans, prioritizes, and acts — without micro-approvals. You can always veto with one tap.</p>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <h3 class="font-medium">Knows you, longitudinally</h3>
-                        <p class="mt-2 text-neutral-600 text-sm">Not pattern-matching your last week. It infers durable values over months — then proves why.</p>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <h3 class="font-medium">Local-first privacy</h3>
-                        <p class="mt-2 text-neutral-600 text-sm">Crown-jewel data stays on your device. Cloud sees only summaries. One button obliterates everything.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- Hero -->
+  <main id="top" class="wrap hero">
+    <span class="tag reveal">Early Access · 2026</span>
+    <h1 class="h1 reveal" style="transition-delay:.05s">Hethar is your second self.</h1>
+    <p class="lede reveal" style="transition-delay:.1s">
+      Not an assistant. Not a tool. A persistent intelligence that lives with you, learns your entire digital and real-world context, and proactively manages life on your behalf.
+    </p>
+    <div class="hero-cta reveal" style="transition-delay:.15s">
+      <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Join early access</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
 
-        <!-- Product blocks -->
-        <section id="product" class="border-t border-neutral-200 bg-neutral-50/60">
-            <div class="mx-auto max-w-6xl px-4 py-20">
-                <div class="max-w-3xl">
-                    <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Not an assistant. A parallel consciousness for your life.</h2>
-                    <p class="mt-4 text-neutral-600 text-lg">It doesn't wait for commands. It understands your goals, constraints, and values; simulates outcomes; then executes safely with proofs, rollbacks, and explanations.</p>
-                </div>
+    <div class="hero-media reveal" style="transition-delay:.2s">
+      <div class="pendant">
+        <!-- Simple pendant placeholder SVG -->
+        <svg viewBox="0 0 200 300" role="img" aria-label="Hethar Pendant">
+          <defs>
+            <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#f5f7fa"/>
+              <stop offset="100%" stop-color="#c9cdd4"/>
+            </linearGradient>
+          </defs>
+          <!-- chain -->
+          <path d="M 20 30 C 60 10, 140 10, 180 30" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="6" stroke-linecap="round"/>
+          <!-- body -->
+          <ellipse cx="100" cy="170" rx="55" ry="75" fill="url(#metal)" />
+          <!-- lens -->
+          <circle cx="100" cy="140" r="14" fill="#0b0b0c" />
+          <circle cx="100" cy="140" r="4" fill="#9aa0a6" />
+          <!-- mic slits -->
+          <rect x="88" y="195" width="24" height="4" rx="2" fill="#a8adb7" />
+        </svg>
+      </div>
+    </div>
+  </main>
 
-                <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-sm text-neutral-500">Unified ontology of you</div>
-                        <div class="mt-1 font-medium">Life Model</div>
-                        <p class="mt-2 text-sm text-neutral-600">A structured, evolving model of goals, commitments, relationships, health, finances — with confidence, provenance, and decay over time.</p>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-sm text-neutral-500">Longitudinal & causal</div>
-                        <div class="mt-1 font-medium">Value Inference</div>
-                        <p class="mt-2 text-sm text-neutral-600">Distinguishes impulses from durable values. Learns across months, runs counterfactuals, and explains why a plan aligns with future-you.</p>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-sm text-neutral-500">LLM + constraints</div>
-                        <div class="mt-1 font-medium">Planner with Guarantees</div>
-                        <p class="mt-2 text-sm text-neutral-600">Generates plans with preconditions, invariants, and automatic rollbacks. High reliability without micromanagement.</p>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-sm text-neutral-500">Diffs, undo, ledgers</div>
-                        <div class="mt-1 font-medium">Action Sandbox</div>
-                        <p class="mt-2 text-sm text-neutral-600">Every change ships with a diff. One-tap undo. Deterministic replay and compensating actions for safety.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- Essence -->
+  <section id="essence">
+    <div class="wrap split">
+      <div class="reveal">
+        <h2>The AI that lives with you.</h2>
+        <p class="muted">
+          Hethar isn’t something you “use.” It is a second you — present in your digital world and your physical life.
+          It remembers, decides, and acts on your behalf. Always learning. Always adapting. Always in step with you.
+        </p>
+        <div class="grid grid-3" style="margin-top:24px">
+          <div class="card"><strong>Proactive</strong><br><span class="muted">Spots needs, risks, and opportunities before you ask.</span></div>
+          <div class="card"><strong>Autonomous</strong><br><span class="muted">Executes immediately with 1-tap veto and full undo.</span></div>
+          <div class="card"><strong>Continuous</strong><br><span class="muted">No sessions. No gaps. Constant presence.</span></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <span class="pill">Essence</span>
+          <h3 style="margin:10px 0 6px">You don’t “use” Hethar. You live with it.</h3>
+          <p class="muted">Tools fade. Assistants wait. Hethar is presence — an intelligence that walks beside you, saves your time, protects your focus, and shapes your days toward better outcomes.</p>
+        </div>
+        <div class="card" style="margin-top:18px">
+          <span class="pill">Outcome</span>
+          <ul class="list" style="margin-top:10px">
+            <li><span class="check"></span><span>Hours back each week. Fewer decisions. Less friction.</span></li>
+            <li><span class="check"></span><span>Inbox and calendar that self-organize around your energy.</span></li>
+            <li><span class="check"></span><span>Purchases, bookings, and logistics handled automatically.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- How it works -->
-        <section id="how" class="border-t border-neutral-200">
-            <div class="mx-auto max-w-6xl px-4 py-20">
-                <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">How Hethar operates</h2>
-                <ol class="mt-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <li class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-xs text-neutral-500">01</div>
-                        <div class="mt-1 font-medium">Sense</div>
-                        <p class="mt-2 text-sm text-neutral-600">Ingests your streams: calendar, email, docs, health, finance, home. Local-first by default.</p>
-                    </li>
-                    <li class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-xs text-neutral-500">02</div>
-                        <div class="mt-1 font-medium">Model</div>
-                        <p class="mt-2 text-sm text-neutral-600">Updates your life state, values, and constraints with confidence + provenance.</p>
-                    </li>
-                    <li class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-xs text-neutral-500">03</div>
-                        <div class="mt-1 font-medium">Plan</div>
-                        <p class="mt-2 text-sm text-neutral-600">Hybrid planner simulates counterfactuals; produces diffs, costs, and rollbacks.</p>
-                    </li>
-                    <li class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="text-xs text-neutral-500">04</div>
-                        <div class="mt-1 font-medium">Act</div>
-                        <p class="mt-2 text-sm text-neutral-600">Executes autonomously under caps. You get explanations, and one-tap undo.</p>
-                    </li>
-                </ol>
+  <!-- How it works -->
+  <section id="how">
+    <div class="wrap">
+      <h2 class="reveal">One being. Two embodiments.</h2>
+      <p class="muted reveal" style="max-width:820px">Hethar is a single consciousness with two ways of seeing — the Mind (digital) and the Body (IRL). Together they hold your whole context and act in your best interest.</p>
 
-                <!-- Diff card mock -->
-                <div class="mt-12 rounded-2xl border border-neutral-200 p-6 bg-white/70">
-                    <div class="text-sm text-neutral-500">Example action</div>
-                    <div class="mt-2 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
-                        <div class="font-medium">Rescheduled investor call & booked focused work block</div>
-                        <div class="text-sm text-neutral-500">Reason: higher close probability; protects sleep target</div>
-                    </div>
-                    <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                        <div class="rounded-xl border border-neutral-200 p-4">
-                            <div class="text-neutral-500">Diff</div>
-                            <ul class="mt-2 list-disc ml-4 space-y-1">
-                                <li>Moved call Tue→Thu 10:30</li>
-                                <li>Inserted Deep Work 90min Tue 10:30</li>
-                                <li>Re-ordered emails for follow-up</li>
-                            </ul>
-                        </div>
-                        <div class="rounded-xl border border-neutral-200 p-4">
-                            <div class="text-neutral-500">Guardrails</div>
-                            <ul class="mt-2 list-disc ml-4 space-y-1">
-                                <li>Within meeting hours</li>
-                                <li>Respect travel buffer</li>
-                                <li>Budget impact €0</li>
-                            </ul>
-                        </div>
-                        <div class="rounded-xl border border-neutral-200 p-4">
-                            <div class="text-neutral-500">What-if</div>
-                            <ul class="mt-2 list-disc ml-4 space-y-1">
-                                <li>Close rate +12% (historical)</li>
-                                <li>Sleep risk −18%</li>
-                                <li>Energy fit: high</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="mt-4 flex gap-3">
-                        <button class="rounded-full px-4 py-2 bg-black text-white hover:bg-neutral-900">Approve</button>
-                        <button class="rounded-full px-4 py-2 border border-neutral-300 hover:bg-neutral-50">Undo</button>
-                        <button class="rounded-full px-4 py-2 border border-neutral-300 hover:bg-neutral-50">Always auto for this</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+      <div class="grid grid-2" style="margin-top:28px">
+        <div class="card reveal">
+          <span class="pill">The Mind</span>
+          <h3 style="margin:12px 0 8px">Digital context</h3>
+          <ul class="list">
+            <li><span class="check"></span><span>Lives across phone, laptop, and cloud — always on.</span></li>
+            <li><span class="check"></span><span>Understands schedule, messages, tasks, habits, health and finance.</span></li>
+            <li><span class="check"></span><span>Plans, decides, and executes without your micro-approval.</span></li>
+            <li><span class="check"></span><span>Everything is reversible — diff + undo for total control.</span></li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <span class="pill">The Body</span>
+          <h3 style="margin:12px 0 8px">IRL context (pendant)</h3>
+          <ul class="list">
+            <li><span class="check"></span><span>Dual ultrawide vision + IR for night/indoor understanding.</span></li>
+            <li><span class="check"></span><span>Mic array with beamforming for events and conversations.</span></li>
+            <li><span class="check"></span><span>Biometrics (HRV, temperature, motion) and environment.</span></li>
+            <li><span class="check"></span><span>Edge AI filters raw signals; only semantic events are shared.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Privacy -->
-        <section id="privacy" class="border-t border-neutral-200 bg-neutral-50/60">
-            <div class="mx-auto max-w-6xl px-4 py-20">
-                <div class="max-w-3xl">
-                    <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Privacy you can verify, not just believe.</h2>
-                    <p class="mt-4 text-neutral-600 text-lg">Local-first by default. Selective disclosure. Deletion proofs. Per-action signatures. Hethar actively protects your data when it deals with other services.</p>
-                </div>
-                <div class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="font-medium">Local-first hub</div>
-                        <div class="mt-2 text-sm text-neutral-600">Raw health & finance stay on your device/home hub. Cloud gets summaries only.</div>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="font-medium">Kill switch</div>
-                        <div class="mt-2 text-sm text-neutral-600">One button obliterates all data — local, cloud, backups — with cryptographic proof.</div>
-                    </div>
-                    <div class="rounded-2xl border border-neutral-200 p-6 bg-white/60">
-                        <div class="font-medium">Auditable flows</div>
-                        <div class="mt-2 text-sm text-neutral-600">Open data paths, third‑party audits, and visible retention policies.</div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- Vision -->
+  <section id="vision">
+    <div class="wrap">
+      <div class="grid grid-2">
+        <div class="reveal">
+          <h2>The way forward.</h2>
+          <p class="muted">Every leap in history came with a new companion — fire, language, the internet. Now your second self. Hethar isn’t an app. It’s how your life flows from here.</p>
+        </div>
+        <div class="reveal">
+          <div class="card">
+            <span class="pill">What it feels like</span>
+            <p class="muted" style="margin-top:10px">
+              Another version of you — tireless, strategic, calm — living beside you. It knows your values, anticipates your needs, and keeps you in motion without losing your freedom of choice.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- FAQ -->
-        <section id="faq" class="border-t border-neutral-200">
-            <div class="mx-auto max-w-6xl px-4 py-20">
-                <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Questions, answered.</h2>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">Is this just Agent Mode with nicer UI?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">No. Agent Mode waits for commands. Hethar maintains a continuous model of your life, plans with constraints, and acts autonomously with guardrails, proofs, and rollbacks.</p>
-                    </details>
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">How does it know what I actually want?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">It learns longitudinally. It distinguishes short‑term impulses from durable values using outcomes and counterfactuals — and it shows its reasoning before acting.</p>
-                    </details>
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">What if it makes a mistake?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">Every action ships with a diff and a compensating action. You can undo in one tap; Hethar replays the ledger and updates its policy.</p>
-                    </details>
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">Do you store my private data in the cloud?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">Crown‑jewel data lives locally. Cloud workloads use summaries/embeddings when required. You can nuke everything anytime and receive a deletion proof.</p>
-                    </details>
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">Can it move money or sign on my behalf?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">Only within explicit caps and whitelists. Actions are per‑domain signed with your keys and fully auditable by you or a third party.</p>
-                    </details>
-                    <details class="rounded-2xl border border-neutral-200 p-6 bg-white/60 group">
-                        <summary class="cursor-pointer list-none flex items-center justify-between">
-                            <span class="font-medium pr-4">What can I try today?</span>
-                            <span class="text-neutral-400 group-open:rotate-45 transition-transform">＋</span>
-                        </summary>
-                        <p class="mt-3 text-sm text-neutral-600">The Shadow Day demo: connect calendar/email; Hethar generates a simulated day plan, diffs, and outcomes vs. your baseline — no autonomous actions required.</p>
-                    </details>
-                </div>
-            </div>
-        </section>
+  <!-- Privacy & Control -->
+  <section id="privacy">
+    <div class="wrap grid grid-2">
+      <div class="reveal">
+        <h2>Privacy, by design.</h2>
+        <p class="muted">Your life isn’t our product. The Body processes raw audio/vision on-device. The Mind sends only semantic events with your consent. One-tap privacy pause. One-button total deletion with proof.</p>
+      </div>
+      <div class="reveal">
+        <div class="card">
+          <span class="pill">Control</span>
+          <ul class="list" style="margin-top:10px">
+            <li><span class="check"></span><span>Live indicator + physical privacy switch on the pendant.</span></li>
+            <li><span class="check"></span><span>Per-domain caps and whitelists for autonomous actions.</span></li>
+            <li><span class="check"></span><span>Human-in-the-loop for high-stakes decisions.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- CTA -->
-        <section id="early" class="border-t border-neutral-200 bg-black text-white">
-            <div class="mx-auto max-w-6xl px-4 py-20 text-center">
-                <h2 class="text-3xl md:text-5xl font-semibold tracking-tight">Live with a second you.</h2>
-                <p class="mt-4 text-neutral-300 max-w-2xl mx-auto">Start with Shadow Day. See how Hethar would run a better day for you — with explanations, diffs, and undo. Then enable autonomy where you're comfortable.</p>
-                <div class="mt-8 flex items-center justify-center gap-3">
-                    <a href="#" class="rounded-full px-6 py-3 bg-white text-black hover:bg-neutral-200">Request access</a>
-                    <a href="#" class="rounded-full px-6 py-3 border border-white/20 hover:bg-white/10">Read the technical brief</a>
-                </div>
-            </div>
-        </section>
+  <!-- Pricing Teaser -->
+  <section id="pricing">
+    <div class="wrap">
+      <h2 class="reveal">Start with the Mind. Upgrade to the Body.</h2>
+      <div class="grid grid-3" style="margin-top:24px">
+        <div class="card reveal">
+          <strong>Mind · Plus</strong><br>
+          <span class="muted">$19 / mo</span>
+          <p class="muted" style="margin-top:10px">Proactive digital companion. Core automations. Always-on memory.</p>
+        </div>
+        <div class="card reveal">
+          <strong>Mind · Pro</strong><br>
+          <span class="muted">$49 / mo</span>
+          <p class="muted" style="margin-top:10px">Advanced autonomy. Integrations for work, health, and finance.</p>
+        </div>
+        <div class="card reveal">
+          <strong>Mind + Body</strong><br>
+          <span class="muted">$390 device · $69 / mo</span>
+          <p class="muted" style="margin-top:10px">Embodied AI with full real-world context — vision, audio, biometrics.</p>
+        </div>
+      </div>
+      <div class="reveal" style="margin-top:18px">
+        <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Request access</a>
+      </div>
+    </div>
+  </section>
 
-        <!-- Footer -->
-        <footer class="border-t border-neutral-200 bg-neutral-50/60">
-            <div class="mx-auto max-w-6xl px-4 py-10 text-sm text-neutral-500">
-                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-                    <div class="flex items-center gap-2">
-                        <div class="h-5 w-5 rounded-full bg-black"></div>
-                        <span>Hethar</span>
-                    </div>
-                    <div class="flex gap-6">
-                        <a href="#privacy" class="hover:opacity-70">Privacy</a>
-                        <a href="#" class="hover:opacity-70">Terms</a>
-                        <a href="#" class="hover:opacity-70">Security</a>
-                    </div>
-                </div>
-                <div class="mt-4">© <script>document.write(new Date().getFullYear())</script> Hethar. All rights reserved.</div>
-            </div>
-        </footer>
-    </main>
+  <!-- Footer -->
+  <footer>
+    <div class="wrap cols">
+      <div class="small">© <span id="y"></span> Hethar. All rights reserved.</div>
+      <div class="small">Press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, {threshold:.15});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  </script>
 </body>
 </html>

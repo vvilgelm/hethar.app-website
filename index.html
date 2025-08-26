@@ -127,6 +127,20 @@
     @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
     /* --- Accessibility tweaks --- */
     :focus-visible{outline:2px solid #8ab4ff; outline-offset:3px; border-radius:8px}
+
+    /* --- Mobile adjustments --- */
+    .hide-mobile{display:none}
+    @media (min-width: 720px){
+      .hide-mobile{display:flex}
+    }
+    @media (max-width: 720px){
+      .nav{height:56px}
+      .wrap{padding:0 16px}
+      .hero{padding:72px 0 28px}
+      section{padding:64px 0}
+      .hero-cta{gap:10px}
+      .hero-cta .btn{width:100%}
+    }
   </style>
 </head>
 <body>

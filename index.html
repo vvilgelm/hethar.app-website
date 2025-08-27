@@ -149,8 +149,8 @@
     @media (min-width: 900px){
       .nav-center{display:block; position:absolute; left:50%; transform:translateX(-50%)}
     }
-    .pill-nav{display:flex; gap:6px; padding:6px; border:1px solid transparent; background:var(--pill); border-radius:999px}
-    .pill-nav a{padding:8px 12px; border-radius:999px; opacity:.9}
+    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition: padding .25s ease, gap .25s ease, box-shadow .25s ease, border-color .25s ease}
+    .pill-nav a{padding:10px 14px; border-radius:999px; opacity:.9; transition: padding .25s ease, font-size .25s ease}
     .pill-nav a:hover{background:var(--accent); opacity:1}
     .pill-nav a.active{background:var(--accent); opacity:1}
 
@@ -178,7 +178,9 @@
     header.is-scrolled .pill-nav{
       border-color: color-mix(in srgb, var(--fg) 16%, var(--line));
       box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset;
+      padding:4px 6px; gap:4px;
     }
+    header.is-scrolled .pill-nav a{ padding:8px 10px; font-size:13px }
 
     /* Top-of-page: no visual limits */
     header.at-top{background:transparent; box-shadow:none}

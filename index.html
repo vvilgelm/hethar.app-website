@@ -147,8 +147,10 @@
     .nav{position:relative}
     .nav-center{display:none}
     @media (min-width: 900px){
-      .nav-center{display:block; position:absolute; left:50%; transform:translateX(-50%)}
+      .nav-center{display:block}
+      header.at-top .nav-center{position:absolute; left:50%; transform:translateX(-50%)}
     }
+    .nav-frame{display:flex; align-items:center; gap:12px}
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition: padding .25s ease, gap .25s ease, box-shadow .25s ease, border-color .25s ease}
     .pill-nav a{padding:10px 14px; border-radius:999px; opacity:.9; transition: padding .25s ease, font-size .25s ease}
     .pill-nav a:hover{background:var(--accent); opacity:1}
@@ -175,9 +177,10 @@
 
     /* Magnet header contents to center on scroll (desktop) */
     @media (min-width: 900px){
-      header.is-scrolled .nav{justify-content:center; gap:12px}
+      header.is-scrolled .nav{justify-content:center}
       header.is-scrolled .nav-center{position:static; transform:none}
-      header.is-scrolled .nav > .btn.primary{padding:10px 14px}
+      header.is-scrolled .nav-frame{padding:6px 10px; border-radius:999px; border:1px solid color-mix(in srgb, var(--fg) 14%, var(--line)); background:color-mix(in srgb, var(--pill) 88%, transparent); backdrop-filter:saturate(200%) blur(18px); -webkit-backdrop-filter:saturate(200%) blur(18px); box-shadow:0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset}
+      header.at-top .nav-frame{padding:0; border:none; background:transparent; box-shadow:none}
     }
 
     header.is-scrolled .pill-nav{
@@ -199,24 +202,26 @@
   <!-- Header -->
   <header>
     <div class="wrap nav">
-      <div class="logo">
-        <span class="logo-dot" aria-hidden="true"></span>
-        <a href="#top" aria-label="Hethar home">Hethar</a>
-      </div>
-      <div class="nav-center hide-mobile">
-        <nav class="pill-nav">
-          <a href="#essence">Essence</a>
-          <a href="#how">How it works</a>
-          <a href="#vision">Vision</a>
-          <a href="#privacy">Privacy</a>
-        </nav>
+      <div class="nav-frame">
+        <div class="logo">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <a href="#top" aria-label="Hethar home">Hethar</a>
+        </div>
+        <div class="nav-center hide-mobile">
+          <nav class="pill-nav">
+            <a href="#essence">Essence</a>
+            <a href="#how">How it works</a>
+            <a href="#vision">Vision</a>
+            <a href="#privacy">Privacy</a>
+          </nav>
+        </div>
+        <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Request access</a>
       </div>
       <button class="hamburger" id="mnav-btn" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
           <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.6" stroke-linecap="round"/>
         </svg>
       </button>
-      <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Request access</a>
     </div>
   </header>
 

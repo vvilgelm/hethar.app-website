@@ -152,6 +152,7 @@
       header.at-top .nav-center{position:absolute; left:50%; transform:translateX(-50%)}
     }
     .nav-frame{display:flex; align-items:center; gap:12px}
+    header.at-top .nav-frame{justify-content:space-between; width:100%}
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition: padding .25s ease, gap .25s ease, box-shadow .25s ease, border-color .25s ease}
     .pill-nav a{padding:10px 14px; border-radius:999px; opacity:.9; transition: padding .25s ease, font-size .25s ease}
     .pill-nav a:hover{background:var(--accent); opacity:1}
@@ -181,7 +182,7 @@
       header.is-scrolled .nav{justify-content:center}
       header.is-scrolled .nav-center{position:static; transform:none}
       header.is-scrolled .nav-frame{padding:6px 10px; border-radius:999px; border:1px solid color-mix(in srgb, var(--fg) 14%, var(--line)); background:color-mix(in srgb, var(--pill) 88%, transparent); backdrop-filter:saturate(200%) blur(18px); -webkit-backdrop-filter:saturate(200%) blur(18px); box-shadow:0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset}
-      header.at-top .nav-frame{padding:0; border:none; background:transparent; box-shadow:none}
+      header.at-top .nav-frame{padding:0; border:none; background:transparent; box-shadow:none; width:100%; justify-content:space-between}
     }
 
     header.is-scrolled .pill-nav{

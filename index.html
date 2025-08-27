@@ -49,9 +49,9 @@
     .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
     header{
       position:sticky;top:0;z-index:1000;
-      backdrop-filter:saturate(180%) blur(18px);
-      -webkit-backdrop-filter:saturate(180%) blur(18px);
-      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter:none; /* no wide strip blur */
+      -webkit-backdrop-filter:none;
+      background: transparent;
       border-bottom: none;
     }
     .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
@@ -169,16 +169,17 @@
     /* Sticky header polish */
     header.is-scrolled{
       box-shadow: 0 6px 20px rgba(0,0,0,.22);
-      backdrop-filter:saturate(220%) blur(24px);
-      -webkit-backdrop-filter:saturate(220%) blur(24px);
-      background: color-mix(in srgb, var(--bg) 82%, transparent);
-      border-bottom-color: color-mix(in srgb, var(--fg) 12%, var(--line));
+      background: transparent; /* header remains clear; only pill is blurred */
+      border-bottom-color: transparent;
     }
 
     header.is-scrolled .pill-nav{
       border-color: color-mix(in srgb, var(--fg) 16%, var(--line));
       box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset;
       padding:4px 6px; gap:4px;
+      background: color-mix(in srgb, var(--pill) 88%, transparent);
+      backdrop-filter: saturate(200%) blur(18px);
+      -webkit-backdrop-filter: saturate(200%) blur(18px);
     }
     header.is-scrolled .pill-nav a{ padding:8px 10px; font-size:13px }
 

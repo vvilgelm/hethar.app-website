@@ -369,18 +369,36 @@
     const sections = ['what','sucks','different','vision','access'];
     const navLinks = Array.from(document.querySelectorAll('.pill-nav a'));
     const map = { what:'#what', sucks:'#sucks', different:'#different', access:'#access', vision:'#vision' };
+    const setActive = (id)=>{
+      navLinks.forEach(a=>a.classList.remove('active'));
+      const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
+      if(target) target.classList.add('active');
+    };
+
     const spy = new IntersectionObserver((entries)=>{
       entries.forEach(entry=>{
         const id = entry.target.id;
         if(!sections.includes(id)) return;
         if(entry.isIntersecting){
-          navLinks.forEach(a=>a.classList.remove('active'));
-          const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
-          if(target) target.classList.add('active');
+          setActive(id);
         }
       });
     }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
     sections.forEach(id=>{ const el = document.getElementById(id); if(el) spy.observe(el); });
+
+    // Fallback scroll-based spy (handles edge cases where IO misses updates)
+    const fallbackSpy = ()=>{
+      const y = (window.scrollY||document.documentElement.scrollTop) + window.innerHeight*0.35;
+      let current = sections[0];
+      for(const id of sections){
+        const el = document.getElementById(id); if(!el) continue;
+        if(el.offsetTop <= y) current = id;
+      }
+      setActive(current);
+    };
+    window.addEventListener('scroll', fallbackSpy, {passive:true});
+    window.addEventListener('resize', fallbackSpy, {passive:true});
+    fallbackSpy();
 
     // Cal.com embed (element-click)
     (function (C, A, L) {

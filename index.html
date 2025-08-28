@@ -36,8 +36,10 @@
     header{position:sticky;top:0;z-index:1000;background:transparent;border-bottom:none}
     .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
     .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo svg{height:18px;width:auto;display:block;position:relative;top:1px}
     .nav-center{display:none}
     @media (min-width:900px){ .nav-center{display:block} }
+    @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px}
     .pill-nav a{padding:10px 14px;border-radius:999px;opacity:.9}
     .pill-nav a:hover{background:var(--accent);opacity:1}
@@ -182,7 +184,7 @@
     <div class="hero-grid">
       <div>
         <span class="tag reveal">⚡ Early Access · Q4 2025</span>
-        <h1 class="h1 reveal" style="transition-delay:.05s">👉 Second brain? Cute. Get a second you.</h1>
+        <h1 class="h1 reveal" style="transition-delay:.05s"> Second brain? Cute. Get a second you.</h1>
         <p class="lede reveal" style="transition-delay:.1s">
           Every ‘AI assistant’ is mid. They wait for prompts like it’s still 2023.<br>
           Hethar lives with you, decides for you, and actually runs your life.
@@ -223,7 +225,7 @@
   <!-- Section 2: Why Yours Sucks -->
   <section id="sucks">
     <div class="wrap">
-      <h2 class="reveal">👉 Your AI assistant is mid.</h2>
+      <h2 class="reveal"> Your AI assistant is mid.</h2>
       <p class="muted reveal" style="max-width:820px">
         They wait for you to prompt them. They forget everything you tell them.
         They brag about being “agents” but can’t even run your calendar.
@@ -236,7 +238,7 @@
       </div>
 
       <div class="reveal" style="margin-top:18px;text-align:center">
-        <a class="btn primary" href="mailto:ditch@hethar.app?subject=Drop%20your%20assistant">👉 Drop your assistant today →</a>
+        <a class="btn primary" href="mailto:ditch@hethar.app?subject=Drop%20your%20assistant"> Drop your assistant today →</a>
       </div>
     </div>
   </section>
@@ -244,7 +246,7 @@
   <!-- Section 3: How We’re Different -->
   <section id="different">
     <div class="wrap">
-      <h2 class="reveal">👉 Not a copilot. A co-you.</h2>
+      <h2 class="reveal"> Not a copilot. A co-you.</h2>
       <p class="muted reveal" style="max-width:820px">
         Hethar doesn’t wait. It moves. It doesn’t just remember. It decides. It doesn’t just respond. It lives with you.
       </p>
@@ -269,7 +271,7 @@
       </div>
 
       <div class="reveal" style="margin-top:18px;text-align:center">
-        <div class="small muted">👉 If your AI isn’t living with you, it’s dead weight.</div>
+        <div class="small muted"> If your AI isn’t living with you, it’s dead weight.</div>
       </div>
     </div>
   </section>
@@ -277,7 +279,7 @@
   <!-- Section 4: Vision -->
   <section id="vision">
     <div class="wrap">
-      <h2 class="reveal">👉 Stop flexing brain apps. Start living with a second self.</h2>
+      <h2 class="reveal"> Stop flexing brain apps. Start living with a second self.</h2>
 
       <div class="grid grid-2" style="margin-top:24px">
         <div class="card reveal"><p class="muted">Every leap in history came with a new companion: fire, language, internet.</p></div>
@@ -291,7 +293,7 @@
   <!-- Final CTA -->
   <section id="access" class="tweet-cta">
     <div class="wrap" style="text-align:center">
-      <h2 class="reveal">👉 fuck AI assistants. get an AI that lives with you</h2>
+      <h2 class="reveal"> fuck AI assistants. get an AI that lives with you</h2>
       <p class="reveal">Everything else is mid. Live with a second you.</p>
       <div class="hero-cta reveal" style="margin-top:18px">
         <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20The%20Team">Join The Team</a>

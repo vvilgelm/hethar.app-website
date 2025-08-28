@@ -2,485 +2,261 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hethar — Your Second Self</title>
-  <meta name="description" content="Hethar is a persistent AI companion — a second you that lives with you, learns your entire digital and real-world context, and proactively manages life on your behalf." />
-  <meta name="theme-color" content="#0b0b0c" />
-  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hethar — Not a copilot. A co-you.</title>
+  <meta name="description" content="Every ‘AI assistant’ is mid. Hethar lives with you, decides for you, and actually runs your life. Not a copilot. A co-you." />
+  <meta property="og:title" content="Hethar — Second brain? Cute. Get a second you." />
+  <meta property="og:description" content="Assistants wait for prompts. Hethar lives with you and makes moves." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hethar.app/" />
+  <meta property="og:image" content="https://hethar.app/og.png" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%230A84FF'/%3E%3C/svg%3E">
+
   <style>
-    /* --- Base: Apple-like, 2018 minimal --- */
     :root{
-      --bg:#0b0b0c;
-      --fg:#e9eaec;
-      --muted:#b7bbc2;
-      --line:#202226;
-      --cta:#ffffff;
-      --cta-bg:#0b0b0c;
-      --pill:#111215;
-      --accent: rgba(255,255,255,0.08);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius: 16px;
-    }
-    @media (prefers-color-scheme: light) {
-      :root{
-        --bg:#fafafa;
-        --fg:#0b0b0c;
-        --muted:#4d5057;
-        --line:#e9eaec;
-        --cta:#fff;
-        --cta-bg:#0b0b0c;
-        --pill:#ffffff;
-        --accent: rgba(11,11,12,0.05);
-        --shadow: 0 8px 24px rgba(0,0,0,.08);
-      }
+      --bg:#000; --fg:#fff; --muted:#9aa0a6; --line:#101010; --card:#0a0a0a;
+      --accent:#0A84FF; --accent2:#5cc8ff;
+      --maxw:1200px; --pad:clamp(16px,2.4vw,28px);
+      --h1:clamp(40px,6.8vw,88px); --h2:clamp(28px,4.6vw,48px); --h3:clamp(20px,2.6vw,28px);
+      --lead:clamp(18px,2.1vw,22px); --text:clamp(15px,1.7vw,18px); --radius:16px;
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display","SF Pro Text","Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--fg);
-      background: radial-gradient(1200px 600px at 50% -10%, rgba(255,255,255,0.08), transparent 60%), var(--bg);
-      letter-spacing:-0.01em;
-    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; scroll-behavior:smooth;}
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;display:block}
-    /* --- Layout --- */
-    .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
-    header{
-      position:sticky;top:0;z-index:1000;
-      backdrop-filter:none; /* no wide strip blur */
-      -webkit-backdrop-filter:none;
-      background: transparent;
-      border-bottom: none;
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .logo{display:flex;align-items:center;gap:10px;font-weight:700}
-    .logo svg{height:20px;width:auto;display:block}
-    .logo-dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(180deg,#fff, #9aa0a6);box-shadow:0 0 20px rgba(255,255,255,.35)}
-    nav a{opacity:.85;margin:0 10px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 18px;border-radius:999px;border:1px solid var(--line);
-      background:var(--pill); color:var(--fg); transition:transform .2s ease, background .2s ease, border-color .2s ease;
-    }
-    .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--fg) 35%, var(--line));}
-    .btn.primary{background:var(--cta-bg);color:var(--cta);border-color:transparent}
-    .ghost{border:none;background:transparent}
-    /* --- Hero --- */
-    .hero{padding:96px 0 40px;border-bottom:1px solid var(--line)}
-    .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--pill);opacity:.9}
-    .h1{
-      font-weight:800;
-      line-height:1.02;
-      letter-spacing:-0.02em;
-      margin:16px 0 12px;
-      font-size: clamp(36px, 5vw, 72px);
-    }
-    .lede{
-      font-size: clamp(16px, 2.2vw, 22px);
-      color:var(--muted);
-      max-width: 820px;
-    }
-    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-    .hero-media{
-      margin:48px auto 0; max-width:940px; border-radius:24px; background:linear-gradient(180deg, var(--accent), transparent 70%);
-      box-shadow: var(--shadow); border:1px solid var(--line); overflow:hidden; position:relative;
-    }
-    .pendant{
-      width:100%; aspect-ratio: 16/9; display:grid; place-items:center;
-      background:
-        radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
-        radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.04), transparent);
-    }
-    .pendant svg{width:220px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.35))}
-    /* --- Sections --- */
-    section{padding:88px 0;border-bottom:1px solid var(--line)}
-    h2{
-      font-size: clamp(28px, 3.6vw, 44px);
-      letter-spacing:-0.02em; margin:0 0 12px;
-    }
+    .container{max-width:var(--maxw);margin:0 auto;padding-inline:var(--pad)}
     .muted{color:var(--muted)}
-    .grid{display:grid;gap:28px}
-    @media (min-width:900px){
-      .grid-2{grid-template-columns: 1fr 1fr}
-      .grid-3{grid-template-columns: repeat(3,1fr)}
-    }
-    .card{
-      border:1px solid var(--line); background:var(--pill); border-radius: var(--radius); padding:24px;
-    }
-    .list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
-    .list li{display:flex;gap:10px}
-    .check{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#9aa0a6);margin-top:5px;flex:none}
-    /* --- Split --- */
-    .split{display:grid;gap:32px}
-    @media (min-width:1000px){.split{grid-template-columns: 1.1fr .9fr;align-items:center}}
-    .pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:var(--pill);font-size:12px}
-    /* --- Footer --- */
-    footer{padding:56px 0;color:var(--muted)}
-    .small{font-size:13px}
-    .cols{display:grid;gap:18px}
-    @media (min-width:860px){.cols{grid-template-columns:1fr auto}}
-    /* --- Animations --- */
-    .reveal{opacity:0; transform: translateY(14px); transition: opacity .8s ease, transform .8s ease}
-    .reveal.on{opacity:1; transform: translateY(0)}
-    .fade-in{animation:fade .9s ease both}
-    @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
-    /* --- Accessibility tweaks --- */
-    :focus-visible{outline:2px solid #8ab4ff; outline-offset:3px; border-radius:8px}
+    .btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:12px 18px;font-weight:700;letter-spacing:.2px;transition:.18s}
+    .btn.primary{background:#fff;color:#000;box-shadow:0 10px 30px rgba(255,255,255,.12)}
+    .btn.primary:hover{transform:translateY(-1px)}
+    .btn.ghost{border:1px solid #222;background:transparent;color:#fff}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #1b1b1b;background:#0c0c0c;color:#c7c7c7;font-size:12px}
 
-    /* --- Mobile adjustments --- */
-    .hide-mobile{display:none}
-    @media (min-width: 720px){
-      .hide-mobile{display:flex}
-    }
-    @media (max-width: 720px){
-      .nav{height:56px}
-      .wrap{padding:0 16px}
-      .hero{padding:72px 0 28px}
-      section{padding:64px 0}
-      .hero-cta{gap:10px}
-      .hero-cta .btn{width:100%}
-    }
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,.6);backdrop-filter:saturate(120%) blur(10px);border-bottom:1px solid var(--line)}
+    .nav-wrap{height:64px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{width:26px;height:26px;border-radius:50%;background:
+      radial-gradient(120% 120% at 30% 30%, #38b6ff 0%, #0A84FF 35%, #0046ff 72%, #00132e 100%);
+      box-shadow:0 0 0 2px #0a0a0a inset,0 10px 30px rgba(10,132,255,.35)}
+    .nav-mid{display:flex;gap:22px;align-items:center}
+    .nav-right{display:flex;gap:10px;align-items:center}
+    .nav a{color:#cfcfcf}
+    .nav a:hover{color:#fff}
 
-    /* --- Desktop centered pill nav --- */
-    .nav{position:relative}
-    .nav-center{display:none}
-    @media (min-width: 900px){
-      .nav-center{display:block}
-      header.at-top .nav-center{position:absolute; left:50%; transform:translateX(-50%)}
-    }
-    .nav-frame{display:flex; align-items:center; gap:12px}
-    header.at-top .nav-frame{justify-content:space-between; width:100%}
-    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition: padding .25s ease, gap .25s ease, box-shadow .25s ease, border-color .25s ease}
-    .pill-nav a{padding:10px 14px; border-radius:999px; opacity:.9; transition: padding .25s ease, font-size .25s ease}
-    .pill-nav a:hover{background:var(--accent); opacity:1}
-    .pill-nav a.active{background:var(--accent); opacity:1}
+    /* HERO */
+    header.hero{border-bottom:1px solid var(--line);padding-block:clamp(80px,12vh,160px)}
+    .hero-grid{display:grid;gap:clamp(24px,2.4vw,40px);grid-template-columns:1.1fr .9fr}
+    @media (max-width: 980px){.hero-grid{grid-template-columns:1fr}}
+    .h1{font-size:var(--h1);line-height:.98;letter-spacing:-.02em;font-weight:850}
+    .lead{font-size:var(--lead);color:var(--muted);line-height:1.45}
+    .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px}
 
-    /* --- Mobile hamburger + sheet --- */
-    .hamburger{display:inline-flex; align-items:center; justify-content:center; padding:10px; border:1px solid var(--line); border-radius:8px; background:var(--pill)}
-    @media (min-width: 720px){.hamburger{display:none}}
-    .hamburger svg{stroke:currentColor}
-    .mnav{position:fixed; inset:0; z-index:1200}
-    .mnav[hidden]{display:none}
-    .mnav-backdrop{position:fixed; inset:0; background:rgba(0,0,0,.35); opacity:0; transition:opacity .2s; pointer-events:none}
-    .mnav-sheet{position:fixed; top:0; left:0; right:0; background:var(--pill); border-bottom:1px solid var(--line); transform:translateY(-100%); transition:transform .25s; box-shadow:var(--shadow)}
-    .mnav.open .mnav-backdrop{opacity:1; pointer-events:auto}
-    .mnav.open .mnav-sheet{transform:translateY(0)}
-    .mnav-links{display:grid; gap:12px; padding:14px 20px}
+    /* Pendant visual */
+    .pendant-wrap{display:grid;place-items:center}
+    .pendant{position:relative;aspect-ratio:1/1;width:min(80%,460px);border-radius:50%;
+      background:
+        radial-gradient(120% 120% at 30% 30%, #38b6ff 0%, #0A84FF 35%, #0046ff 72%, #000 100%),
+        radial-gradient(80% 80% at 70% 70%, rgba(255,255,255,.12), transparent 60%);
+      box-shadow:0 0 0 1px rgba(255,255,255,.06) inset, 0 40px 100px rgba(10,132,255,.25), 0 18px 40px rgba(0,0,0,.6) inset;
+      animation:float 6s ease-in-out infinite}
+    .pendant::before{content:"";position:absolute;inset:10%;border-radius:50%;
+      background:radial-gradient(120% 120% at 25% 25%, rgba(255,255,255,.6), rgba(255,255,255,.03) 40%, rgba(0,0,0,.45) 100%);
+      mix-blend-mode:screen}
+    .ring{position:absolute;width:38%;aspect-ratio:1/1;top:-6%;left:50%;transform:translateX(-50%);border-radius:50%;
+      background:radial-gradient(120% 120% at 30% 30%, #ededed, #b8b8b8 50%, #333 100%);box-shadow:0 2px 10px rgba(0,0,0,.55)}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
-    /* Sticky header polish */
-    header.is-scrolled{
-      box-shadow: 0 6px 20px rgba(0,0,0,.22);
-      background: transparent; /* header remains clear; only pill is blurred */
-      border-bottom-color: transparent;
-    }
+    /* Sections */
+    section{padding-block:clamp(64px,10vh,120px);border-bottom:1px solid var(--line)}
+    .title{font-size:var(--h2);letter-spacing:-.02em;line-height:1.05;margin:0 0 12px}
+    .grid-3{display:grid;gap:clamp(16px,2vw,22px);grid-template-columns:repeat(3,1fr)}
+    .grid-2{display:grid;gap:clamp(16px,2vw,22px);grid-template-columns:1fr 1fr}
+    @media (max-width: 980px){.grid-3{grid-template-columns:1fr} .grid-2{grid-template-columns:1fr}}
+    .card{background:linear-gradient(180deg, var(--card), #050505 100%);border:1px solid #141414;border-radius:var(--radius);padding:clamp(16px,2vw,22px);box-shadow:0 12px 40px rgba(0,0,0,.35)}
+    .tweet{border:1px solid #141414;background:#0a0a0a;border-radius:14px;padding:16px 18px;font-weight:650}
+    .tweet small{display:block;color:var(--muted);font-weight:500;margin-top:6px}
 
-    /* Magnet header contents to center on scroll (desktop) */
-    @media (min-width: 900px){
-      header.is-scrolled .nav{justify-content:center}
-      header.is-scrolled .nav-center{position:static; transform:none}
-      header.is-scrolled .nav-frame{padding:6px 10px; border-radius:999px; border:1px solid color-mix(in srgb, var(--fg) 14%, var(--line)); background:color-mix(in srgb, var(--pill) 88%, transparent); backdrop-filter:saturate(200%) blur(18px); -webkit-backdrop-filter:saturate(200%) blur(18px); box-shadow:0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset}
-      header.at-top .nav-frame{padding:0; border:none; background:transparent; box-shadow:none; width:100%; justify-content:space-between}
-    }
+    .center{max-width:900px;margin:0 auto;text-align:center}
+    .center .title{margin-bottom:8px}
+    .center .lead{margin:8px auto 0;max-width:760px}
 
-    header.is-scrolled .pill-nav{
-      border-color: color-mix(in srgb, var(--fg) 16%, var(--line));
-      box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset;
-      padding:4px 6px; gap:4px;
-      background: color-mix(in srgb, var(--pill) 88%, transparent);
-      backdrop-filter: saturate(200%) blur(18px);
-      -webkit-backdrop-filter: saturate(200%) blur(18px);
-    }
-    header.is-scrolled .pill-nav a{ padding:8px 10px; font-size:13px }
-
-    /* Top-of-page: no visual limits */
-    header.at-top{background:transparent; box-shadow:none}
-    header.at-top .pill-nav{border-color:transparent; box-shadow:none; background:transparent}
-
-    /* --- Final CTA: tweet-style section --- */
-    section.tweet-cta{background:#000; color:#fff; border:none; padding:120px 0}
-    section.tweet-cta h2{font-size:clamp(36px, 7.5vw, 86px); line-height:1.02; letter-spacing:-0.02em; margin:0 0 10px}
-    section.tweet-cta p{color:rgba(255,255,255,.68)}
-    .tweet-cta .hero-cta{justify-content:center; gap:12px}
-    .tweet-cta .btn{background:transparent; color:#fff; border-color:rgba(255,255,255,.22)}
-    .tweet-cta .btn.primary{background:#fff; color:#000; border-color:transparent; font-weight:700}
-    @media (max-width: 720px){ .tweet-cta .hero-cta .btn{width:auto} }
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(16px);transition:all .7s ease}
+    .reveal.on{opacity:1;transform:translateY(0)}
+    /* Footer-ish CTA */
+    .final{background:#000;padding-block:clamp(72px,12vh,140px)}
+    .final h2{font-size:clamp(28px,5.2vw,56px);line-height:1.02;letter-spacing:-.02em;margin:0 0 18px}
+    .final .cta-row{justify-content:center}
+    .tiny{font-size:12px;color:#7a7a7a}
   </style>
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="wrap nav">
-      <div class="nav-frame">
-        <div class="logo">
-          <a href="#top" aria-label="Hethar home" style="display:inline-flex;align-items:center">
-            <svg width="209" height="271" viewBox="0 0 209 271" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hethar logo" role="img">
-              <path d="M123.5 113.5V270H86V113.5H41V202.5H1V1H41V75H167.5V1H208V202.5L168 203L167.5 113.5H123.5Z" fill="currentColor" stroke="currentColor"/>
-            </svg>
-          </a>
-        </div>
-        <div class="nav-center hide-mobile">
-          <nav class="pill-nav">
-            <a href="#what">What it is</a>
-            <a href="#why">Why yours sucks</a>
-            <a href="#different">How we’re different</a>
-            <a href="#access">Access</a>
-          </nav>
-        </div>
-        <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team">Join the Team</a>
-        <a class="btn" href="mailto:demo@hethar.app?subject=Book%20a%20Demo">Book a Demo</a>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-wrap">
+      <div class="brand"><span class="logo" aria-hidden="true"></span> Hethar</div>
+      <div class="nav-mid">
+        <a href="#what">What it is</a>
+        <a href="#sucks">Why yours sucks</a>
+        <a href="#different">How we’re different</a>
+        <a href="#access">Access</a>
       </div>
-      <button class="hamburger" id="mnav-btn" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M4 6h16M4 12h16M4 18h16" stroke-width="1.6" stroke-linecap="round"/>
-        </svg>
-      </button>
+      <div class="nav-right">
+        <a class="btn ghost" href="#team">Join the Team</a>
+        <a class="btn primary" href="#demo">Book a Demo</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero container" id="what">
+    <div class="hero-grid">
+      <div class="reveal on">
+        <span class="pill">⚡ Early Access · Q4 2025</span>
+        <h1 class="h1" style="margin:12px 0 10px">👉 Second brain? Cute. Get a second you.</h1>
+        <p class="lead">Every “AI assistant” is mid. They wait for prompts like it’s still 2023.<br>
+          Hethar lives with you, decides for you, and actually runs your life.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="#sucks">Drop your assistant →</a>
+          <a class="btn ghost" href="#demo">Schedule a call</a>
+        </div>
+        <div class="muted" style="margin-top:12px;font-size:13px">Not a tool. Not a copilot. A co-you.</div>
+      </div>
+      <div class="pendant-wrap reveal">
+        <div class="pendant" aria-hidden="true"><span class="ring"></span></div>
+        <div class="muted" style="margin-top:12px;font-size:13px;text-align:center">
+          The Body: vision, audio, biometrics. Feeding context to The Mind.
+        </div>
+      </div>
     </div>
   </header>
 
-  <!-- Mobile sheet nav -->
-  <div class="mnav" id="mnav" hidden>
-    <div class="mnav-backdrop" id="mnav-backdrop"></div>
-    <div class="mnav-sheet">
-      <div class="wrap" style="padding:12px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; height:56px">
-        <div class="logo" aria-hidden="true">
-          <span style="display:inline-flex;align-items:center">
-            <svg width="209" height="271" viewBox="0 0 209 271" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M123.5 113.5V270H86V113.5H41V202.5H1V1H41V75H167.5V1H208V202.5L168 203L167.5 113.5H123.5Z" fill="currentColor" stroke="currentColor"/>
-            </svg>
-          </span>
-        </div>
-        <button class="hamburger" id="mnav-close" aria-label="Close menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M6 6l12 12M18 6L6 18" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <nav class="mnav-links">
-        <a class="btn" href="#what">What it is</a>
-        <a class="btn" href="#why">Why yours sucks</a>
-        <a class="btn" href="#different">How we’re different</a>
-        <a class="btn" href="#access">Access</a>
-        <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team">Join the Team</a>
-        <a class="btn" href="mailto:demo@hethar.app?subject=Book%20a%20Demo">Book a Demo</a>
-      </nav>
-    </div>
-  </div>
+  <!-- WHY YOURS SUCKS -->
+  <section class="container" id="sucks">
+    <h2 class="title reveal">👉 Your AI assistant is mid.</h2>
+    <p class="lead muted reveal">They wait for you to prompt them.<br>
+      They forget everything you tell them.<br>
+      They brag about being “agents” but can’t even run your calendar.</p>
 
-  <!-- Hero -->
-  <main id="what" class="wrap hero">
-    <span class="tag reveal">⚡ Early Access · Q4 2025</span>
-    <h1 class="h1 reveal" style="transition-delay:.05s">👉 Second brain? Cute. Get a second you.</h1>
-    <p class="lede reveal" style="transition-delay:.1s">Every ‘AI assistant’ is mid. They wait for prompts like it’s still 2023. Hethar lives with you, decides for you, and actually runs your life.</p>
-    <div class="hero-cta reveal" style="transition-delay:.15s">
-      <a class="btn primary" href="mailto:ditch@hethar.app?subject=Drop%20your%20assistant">Drop your assistant →</a>
-      <a class="btn ghost" href="mailto:call@hethar.app?subject=Schedule%20a%20call">Schedule a call</a>
+    <div class="grid-3" style="margin-top:16px">
+      <div class="tweet reveal">
+        <div style="font-weight:800">Copilots ≠ pilots</div>
+        <small>They just autocomplete tasks.</small>
+      </div>
+      <div class="tweet reveal">
+        <div style="font-weight:800">Memory ≠ intelligence</div>
+        <small>Remembering ≠ knowing what to do.</small>
+      </div>
+      <div class="tweet reveal">
+        <div style="font-weight:800">Assistants ≠ partners</div>
+        <small>They’re order-takers, not decision-makers.</small>
+      </div>
     </div>
-    <div class="small muted reveal" style="margin-top:10px">Not a tool. Not a copilot. A co‑you.</div>
 
-    <div class="hero-media reveal" style="transition-delay:.2s">
-      <div class="pendant">
-        <!-- Simple pendant placeholder SVG (hero visual) -->
-        <svg viewBox="0 0 200 300" role="img" aria-label="Hethar Pendant">
-          <defs>
-            <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0%" stop-color="#f5f7fa"/>
-              <stop offset="100%" stop-color="#c9cdd4"/>
-            </linearGradient>
-          </defs>
-          <!-- chain -->
-          <path d="M 20 30 C 60 10, 140 10, 180 30" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="6" stroke-linecap="round"/>
-          <!-- body -->
-          <ellipse cx="100" cy="170" rx="55" ry="75" fill="url(#metal)" />
-          <!-- lens -->
-          <circle cx="100" cy="140" r="14" fill="#0b0b0c" />
-          <circle cx="100" cy="140" r="4" fill="#9aa0a6" />
-          <!-- mic slits -->
-          <rect x="88" y="195" width="24" height="4" rx="2" fill="#a8adb7" />
-        </svg>
-      </div>
-      <div class="small muted" style="padding:10px 14px">The Body: vision, audio, biometrics. Feeding context to The Mind.</div>
-    </div>
-  </main>
-
-  <!-- Why Yours Sucks -->
-  <section id="why">
-    <div class="wrap">
-      <h2 class="reveal">👉 Your AI assistant is mid.</h2>
-      <p class="muted reveal" style="max-width:820px">They wait for you to prompt them. They forget everything you tell them. They brag about being “agents” but can’t even run your calendar.</p>
-      <div class="grid grid-3" style="margin-top:24px">
-        <div class="card reveal"><strong>Copilots ≠ pilots</strong><br><span class="muted">They just autocomplete tasks.</span></div>
-        <div class="card reveal"><strong>Memory ≠ intelligence</strong><br><span class="muted">Remembering ≠ knowing what to do.</span></div>
-        <div class="card reveal"><strong>Assistants ≠ partners</strong><br><span class="muted">They’re order-takers, not decision-makers.</span></div>
-      </div>
-      <div class="reveal" style="margin-top:18px; text-align:center">
-        <a class="btn primary" href="mailto:ditch@hethar.app?subject=Drop%20your%20assistant">👉 Drop your assistant today →</a>
-      </div>
+    <div class="center" style="margin-top:26px">
+      <a class="btn primary" href="#access">👉 Drop your assistant today →</a>
     </div>
   </section>
 
-  <!-- How We're Different -->
-  <section id="different">
-    <div class="wrap">
-      <h2 class="reveal">👉 Not a copilot. A co‑you.</h2>
-      <p class="muted reveal" style="max-width:820px">Hethar doesn’t wait. It moves. It doesn’t just remember. It decides. It doesn’t just respond. It lives with you.</p>
-      <div class="grid grid-2" style="margin-top:28px">
-        <div class="card reveal">
-          <span class="pill">The Mind</span>
-          <ul class="list" style="margin-top:10px">
-            <li><span class="check"></span><span>Lives across phone, laptop, cloud.</span></li>
-            <li><span class="check"></span><span>Understands email, calendar, health, money.</span></li>
-            <li><span class="check"></span><span>Acts before you ask.</span></li>
-          </ul>
-        </div>
-        <div class="card reveal">
-          <span class="pill">The Body</span>
-          <ul class="list" style="margin-top:10px">
-            <li><span class="check"></span><span>Pendant with vision, audio, biometrics.</span></li>
-            <li><span class="check"></span><span>Sees, hears, and feels what you do.</span></li>
-            <li><span class="check"></span><span>Feeds real‑world context to The Mind.</span></li>
-          </ul>
-        </div>
+  <!-- HOW WE’RE DIFFERENT -->
+  <section class="container" id="different">
+    <h2 class="title reveal">👉 Not a copilot. A co-you.</h2>
+    <p class="lead reveal">Hethar doesn’t wait. It moves.<br>
+      It doesn’t just remember. It decides.<br>
+      It doesn’t just respond. It lives with you.</p>
+
+    <div class="grid-2" style="margin-top:18px">
+      <div class="card reveal">
+        <div class="muted" style="text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:6px">The Mind</div>
+        <h3 class="h3" style="margin:0 0 8px">Your digital world</h3>
+        <ul style="margin:0;padding-left:18px;line-height:1.6">
+          <li>Lives across phone, laptop, cloud.</li>
+          <li>Knows email, calendar, health, money.</li>
+          <li>Acts before you ask.</li>
+        </ul>
       </div>
-      <div class="reveal" style="margin-top:18px; text-align:center">
-        <div class="small muted">👉 If your AI isn’t living with you, it’s dead weight.</div>
+      <div class="card reveal">
+        <div class="muted" style="text-transform:uppercase;letter-spacing:.16em;font-size:12px;margin-bottom:6px">The Body</div>
+        <h3 class="h3" style="margin:0 0 8px">Your real-world context</h3>
+        <ul style="margin:0;padding-left:18px;line-height:1.6">
+          <li>Pendant with vision, audio, biometrics.</li>
+          <li>Sees, hears, and feels what you do.</li>
+          <li>Feeds real-world context to The Mind.</li>
+        </ul>
       </div>
+    </div>
+
+    <div class="center" style="margin-top:22px">
+      <div class="tiny">👉 If your AI isn’t living with you, it’s dead weight.</div>
     </div>
   </section>
 
-  <!-- Vision -->
-  <section id="vision">
-    <div class="wrap">
-      <h2 class="reveal">👉 Stop flexing brain apps. Start living with a second self.</h2>
-      <div class="grid grid-2" style="margin-top:24px">
-        <div class="card reveal">
-          <p class="muted">Every leap in history came with a new companion: fire, language, internet.</p>
-        </div>
-        <div class="card reveal">
-          <p class="muted">Assistants and copilots are stepping stones. The next leap isn’t an app. It’s a second self.</p>
-        </div>
+  <!-- VISION -->
+  <section class="container center" id="vision">
+    <h2 class="title reveal">👉 Stop flexing brain apps. Start living with a second self.</h2>
+
+    <div class="tweet reveal" style="margin-top:14px">Every leap in history came with a new companion: fire, language, internet.</div>
+    <div class="tweet reveal" style="margin-top:10px">Assistants and copilots are stepping stones.</div>
+    <div class="tweet reveal" style="margin-top:10px">The next leap isn’t an app.</div>
+    <div class="tweet reveal" style="margin-top:10px">It’s a second self.</div>
+
+    <h3 class="h3 reveal" style="margin-top:18px; font-size:clamp(22px,3.4vw,32px); letter-spacing:-.01em">
+      You don’t “use” Hethar. You live with it.
+    </h3>
+  </section>
+
+  <!-- ACCESS (simple form) -->
+  <section class="container center" id="access">
+    <h2 class="title reveal">Be first in.</h2>
+    <p class="lead muted reveal">Early access opens Q4 2025. Drop your email — we’ll tap you when a spot opens.</p>
+    <form class="reveal" onsubmit="join(event)" style="display:grid;grid-template-columns:1fr auto;gap:10px;max-width:620px;margin:16px auto 0">
+      <input id="email" type="email" required placeholder="you@domain.com"
+        style="padding:14px 16px;border-radius:12px;border:1px solid #1b1b1b;background:#0c0c0c;color:#fff;outline:none" />
+      <button class="btn primary" type="submit">Join Early Access</button>
+      <small id="msg" class="tiny" style="grid-column:1 / -1;display:none">Thanks — you’re on the list.</small>
+    </form>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="final">
+    <div class="container center">
+      <h2 class="reveal">👉 fuck AI assistants. get an AI that lives with you.</h2>
+      <div class="cta-row reveal">
+        <a class="btn primary" href="#team">Join The Team</a>
+        <a class="btn ghost" href="#demo">Schedule a Call</a>
       </div>
-      <div class="reveal" style="margin-top:18px">
-        <p class="muted">You don’t “use” Hethar. You live with it.</p>
-      </div>
+      <div class="tiny" style="margin-top:12px">Assistants wait. Hethar moves.</div>
     </div>
   </section>
 
-  <!-- Access / Final CTA -->
-  <section id="access" class="tweet-cta">
-    <div class="wrap" style="text-align:center">
-      <h2 class="reveal">👉 fuck AI assistants. get an AI that lives with you</h2>
-      <p class="reveal">Raw. Real. No fluff. Live with a second you.</p>
-      <div class="hero-cta reveal" style="margin-top:18px">
-        <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20The%20Team">Join The Team</a>
-        <a class="btn" href="mailto:call@hethar.app?subject=Schedule%20a%20Call">Schedule a Call</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing Teaser -->
-  <section id="pricing">
-    <div class="wrap">
-      <h2 class="reveal">Start with the Mind. Upgrade to the Body.</h2>
-      <div class="grid grid-3" style="margin-top:24px">
-        <div class="card reveal">
-          <strong>Mind · Plus</strong><br>
-          <span class="muted">$19 / mo</span>
-          <p class="muted" style="margin-top:10px">Proactive digital companion. Core automations. Always-on memory.</p>
-        </div>
-        <div class="card reveal">
-          <strong>Mind · Pro</strong><br>
-          <span class="muted">$49 / mo</span>
-          <p class="muted" style="margin-top:10px">Advanced autonomy. Integrations for work, health, and finance.</p>
-        </div>
-        <div class="card reveal">
-          <strong>Mind + Body</strong><br>
-          <span class="muted">$390 device · $69 / mo</span>
-          <p class="muted" style="margin-top:10px">Embodied AI with full real-world context — vision, audio, biometrics.</p>
-        </div>
-      </div>
-      <div class="reveal" style="margin-top:18px">
-        <a class="btn primary" href="mailto:early@hethar.app?subject=Hethar%20Early%20Access">Request access</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="wrap cols">
-      <div class="small">© <span id="y"></span> Hethar. All rights reserved.</div>
-      <div class="small">Press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></div>
-    </div>
+  <!-- FOOTER -->
+  <footer class="container" style="padding-block:36px;color:#bdbdbd;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+    <div class="brand"><span class="logo" aria-hidden="true"></span> Hethar</div>
+    <div>© <span id="year"></span> Hethar — All rights reserved.</div>
   </footer>
 
   <script>
     // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', e=>{
-        const id = a.getAttribute('href').slice(1);
-        const el = document.getElementById(id);
-        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
-      });
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
 
     // Reveal on scroll
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
-      });
-    }, {threshold:.15});
-    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    const IO = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); IO.unobserve(e.target) } });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el=> IO.observe(el));
 
-    // Mobile nav toggle
-    const mbtn = document.getElementById('mnav-btn');
-    const mnav = document.getElementById('mnav');
-    const mclose = document.getElementById('mnav-close');
-    const mbackdrop = document.getElementById('mnav-backdrop');
-    const openMenu = ()=>{ mnav.hidden = false; requestAnimationFrame(()=>{ mnav.classList.add('open'); mbtn.setAttribute('aria-expanded','true'); }); };
-    const closeMenu = ()=>{ mnav.classList.remove('open'); mbtn.setAttribute('aria-expanded','false'); setTimeout(()=>{ mnav.hidden = true; }, 220); };
-    if(mbtn){ mbtn.addEventListener('click', openMenu); }
-    if(mclose){ mclose.addEventListener('click', closeMenu); }
-    if(mbackdrop){ mbackdrop.addEventListener('click', closeMenu); }
-    // Close on nav click
-    document.querySelectorAll('.mnav-links a').forEach(a=>a.addEventListener('click', closeMenu));
-
-    // Sticky header shadow
-    const headerEl = document.querySelector('header');
-    const updateHeaderShadow = ()=>{
-      const y = window.scrollY || document.documentElement.scrollTop;
-      if(y <= 2){
-        headerEl.classList.add('at-top');
-        headerEl.classList.remove('is-scrolled');
-      } else {
-        headerEl.classList.remove('at-top');
-        if(y > 8) headerEl.classList.add('is-scrolled'); else headerEl.classList.remove('is-scrolled');
-      }
-    };
-    updateHeaderShadow();
-    window.addEventListener('scroll', updateHeaderShadow, {passive:true});
-
-    // Scrollspy active link highlighting
-    const sections = ['what','why','different','vision','access'];
-    const allLinks = Array.from(document.querySelectorAll('.pill-nav a, .mnav-links a')).filter(a=>a.getAttribute('href').startsWith('#'));
-    const linkFor = (id)=> allLinks.filter(a=>a.getAttribute('href') === `#${id}`);
-    const spyObserver = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const id = entry.target.id;
-        if(!sections.includes(id)) return;
-        if(entry.isIntersecting){
-          // Clear active
-          allLinks.forEach(a=>a.classList.remove('active'));
-          // Mark all matching links active
-          linkFor(id).forEach(a=>a.classList.add('active'));
-        }
-      });
-    }, {rootMargin: '-40% 0px -55% 0px', threshold: 0});
-    sections.forEach(id=>{ const el = document.getElementById(id); if(el) spyObserver.observe(el); });
+    // Fake join handler (replace with your endpoint)
+    function join(e){
+      e.preventDefault();
+      const btn = e.target.querySelector('button[type="submit"]');
+      const msg = document.getElementById('msg');
+      btn.disabled = true; btn.textContent = 'Submitting…';
+      setTimeout(()=>{ msg.style.display='block'; btn.disabled=false; btn.textContent='Join Early Access'; e.target.reset(); }, 900);
+    }
   </script>
 </body>
 </html>

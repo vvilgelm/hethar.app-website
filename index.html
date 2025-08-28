@@ -140,7 +140,7 @@
 
       <div style="display:flex;gap:10px;align-items:center">
         <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team">Join the Team</a>
-        <a class="btn" href="mailto:demo@hethar.app?subject=Book%20a%20Demo">Book a Demo</a>
+        <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Book a Demo</a>
         <button class="hamburger" id="mnav-btn" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -174,7 +174,7 @@
         <a class="btn" href="#different">How we’re different</a>
         <a class="btn" href="#access">Access</a>
         <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team">Join the Team</a>
-        <a class="btn" href="mailto:demo@hethar.app?subject=Book%20a%20Demo">Book a Demo</a>
+        <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Book a Demo</a>
       </nav>
     </div>
   </div>
@@ -359,6 +359,13 @@
       });
     }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
     sections.forEach(id=>{ const el = document.getElementById(id); if(el) spy.observe(el); });
+
+    // Cal.com embed (element-click)
+    (function (C, A, L) {
+      let p = function (a, ar) { a.q.push(ar); };
+      let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", {origin:"https://app.cal.com"});
+    Cal.ns["30min"]("ui", {hideEventTypeDetails:false, layout:"month_view"});
   </script>
 </body>
 </html>

@@ -40,8 +40,8 @@
     .nav-center{display:none}
     @media (min-width:900px){ .nav-center{display:block} }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
-    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px}
-    .pill-nav a{padding:10px 14px;border-radius:999px;opacity:.9}
+    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding .25s ease, gap .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease}
+    .pill-nav a{padding:10px 14px;border-radius:999px;opacity:.9; transition:padding .25s ease, font-size .25s ease}
     .pill-nav a:hover{background:var(--accent);opacity:1}
     .pill-nav a.active{background:var(--accent);opacity:1}
     .btn{
@@ -102,6 +102,19 @@
     .tweet-cta .hero-cta{justify-content:center;gap:12px}
     .tweet-cta .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.22)}
     .tweet-cta .btn.primary{background:#fff;color:#000;border-color:transparent;font-weight:700}
+
+    /* --- Shrink on scroll (desktop) --- */
+    @media (min-width:900px){
+      header.is-scrolled .pill-nav{
+        padding:6px; gap:4px;
+        border-color: color-mix(in srgb, var(--fg) 16%, var(--line));
+        background: color-mix(in srgb, var(--pill) 88%, transparent);
+        backdrop-filter: saturate(200%) blur(14px);
+        box-shadow: 0 8px 24px rgba(0,0,0,.25), 0 0 0 1px rgba(255,255,255,.06) inset;
+      }
+      header.is-scrolled .pill-nav a{ padding:8px 10px; }
+      header.is-scrolled .btn{ padding:10px 14px; }
+    }
 
     /* --- Reveal --- */
     .reveal{opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease}
@@ -342,6 +355,15 @@
     if(mclose){ mclose.addEventListener('click', closeMenu); }
     if(mbackdrop){ mbackdrop.addEventListener('click', closeMenu); }
     document.querySelectorAll('.mnav-links a').forEach(a=>a.addEventListener('click', closeMenu));
+
+    // Shrink header on scroll
+    const headerEl = document.querySelector('header');
+    const updateHeader = ()=>{
+      if((window.scrollY||document.documentElement.scrollTop) > 8){ headerEl.classList.add('is-scrolled'); }
+      else { headerEl.classList.remove('is-scrolled'); }
+    };
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, {passive:true});
 
     // Scrollspy active state for center nav
     const sections = ['what','sucks','different','vision','access'];

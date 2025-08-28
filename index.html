@@ -198,6 +198,15 @@
     /* Top-of-page: no visual limits */
     header.at-top{background:transparent; box-shadow:none}
     header.at-top .pill-nav{border-color:transparent; box-shadow:none; background:transparent}
+
+    /* --- Final CTA: tweet-style section --- */
+    section.tweet-cta{background:#000; color:#fff; border:none; padding:120px 0}
+    section.tweet-cta h2{font-size:clamp(36px, 7.5vw, 86px); line-height:1.02; letter-spacing:-0.02em; margin:0 0 10px}
+    section.tweet-cta p{color:rgba(255,255,255,.68)}
+    .tweet-cta .hero-cta{justify-content:center; gap:12px}
+    .tweet-cta .btn{background:transparent; color:#fff; border-color:rgba(255,255,255,.22)}
+    .tweet-cta .btn.primary{background:#fff; color:#000; border-color:transparent; font-weight:700}
+    @media (max-width: 720px){ .tweet-cta .hero-cta .btn{width:auto} }
   </style>
 </head>
 <body>
@@ -360,13 +369,13 @@
   </section>
 
   <!-- Access / Final CTA -->
-  <section id="access">
+  <section id="access" class="tweet-cta">
     <div class="wrap" style="text-align:center">
       <h2 class="reveal">👉 fuck AI assistants. get an AI that lives with you</h2>
-      <p class="muted reveal">Raw. Real. No fluff. Live with a second you.</p>
-      <div class="hero-cta reveal" style="justify-content:center; margin-top:18px">
+      <p class="reveal">Raw. Real. No fluff. Live with a second you.</p>
+      <div class="hero-cta reveal" style="margin-top:18px">
         <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20The%20Team">Join The Team</a>
-        <a class="btn ghost" href="mailto:call@hethar.app?subject=Schedule%20a%20Call">Schedule a Call</a>
+        <a class="btn" href="mailto:call@hethar.app?subject=Schedule%20a%20Call">Schedule a Call</a>
       </div>
     </div>
   </section>

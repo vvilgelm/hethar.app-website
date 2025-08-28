@@ -363,7 +363,15 @@
       else { headerEl.classList.remove('is-scrolled'); }
     };
     updateHeader();
-    window.addEventListener('scroll', updateHeader, {passive:true});
+    // rAF-ticked scroll handler to avoid missed updates
+    let ticking=false;
+    const onScroll=()=>{
+      if(!ticking){
+        requestAnimationFrame(()=>{ updateHeader(); fallbackSpy(); ticking=false; });
+        ticking=true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
 
     // Scrollspy active state for center nav
     const sections = ['what','sucks','different','vision','access'];
@@ -399,8 +407,7 @@
       }
       setActive(current);
     };
-    window.addEventListener('scroll', fallbackSpy, {passive:true});
-    window.addEventListener('resize', fallbackSpy, {passive:true});
+    window.addEventListener('resize', ()=>{ fallbackSpy(); updateHeader(); }, {passive:true});
     fallbackSpy();
 
     // Cal.com embed (element-click)

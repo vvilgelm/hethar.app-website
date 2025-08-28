@@ -373,7 +373,7 @@
     };
     window.addEventListener('scroll', onScroll, {passive:true});
 
-    // Scrollspy active state for center nav
+    // Scrollspy active state for center nav (pure scroll-based)
     const sections = ['what','sucks','different','vision','access'];
     const navLinks = Array.from(document.querySelectorAll('.pill-nav a'));
     const map = { what:'#what', sucks:'#sucks', different:'#different', access:'#access', vision:'#vision' };
@@ -383,27 +383,17 @@
       if(target) target.classList.add('active');
     };
 
-    const spy = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        const id = entry.target.id;
-        if(!sections.includes(id)) return;
-        if(entry.isIntersecting){
-          setActive(id);
-        }
-      });
-    }, {rootMargin:'-40% 0px -55% 0px', threshold:0});
-    sections.forEach(id=>{ const el = document.getElementById(id); if(el) spy.observe(el); });
-
-    // Fallback scroll-based spy (handles edge cases where IO misses updates)
     const fallbackSpy = ()=>{
-      const mid = (window.scrollY||document.documentElement.scrollTop) + window.innerHeight*0.5;
+      const headerH = 64; // approximate header height
+      const y = (window.scrollY||document.documentElement.scrollTop) + headerH + window.innerHeight*0.1;
       let current = sections[0];
       for(const id of sections){
         const el = document.getElementById(id); if(!el) continue;
-        const top = el.offsetTop;
-        const bottom = top + el.offsetHeight - 1;
-        if(mid >= top && mid <= bottom){ current = id; break; }
-        if(top <= mid) current = id; // progressive fallback when near boundaries
+        const rect = el.getBoundingClientRect();
+        const top = rect.top + (window.scrollY||document.documentElement.scrollTop);
+        const bottom = top + el.offsetHeight;
+        if(y >= top && y < bottom){ current = id; break; }
+        if(top <= y) current = id;
       }
       setActive(current);
     };

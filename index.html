@@ -55,6 +55,7 @@
     .pill-nav a.active::after{ transform:translateX(-50%) scaleX(1) }
     .pill-nav a:hover{background:var(--accent);opacity:1}
     .pill-nav a.active{background:var(--accent);opacity:1}
+    .nav a{ text-underline-offset: 3px }
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
       padding:12px 18px;border-radius:10px;border:1px solid var(--line);
@@ -64,6 +65,7 @@
     }
     .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--fg) 35%, var(--line));}
     .btn.primary{background:var(--cta-bg);color:var(--cta);border-color:transparent}
+    .btn.primary:hover{ filter: brightness(0.96) }
     .hamburger{display:inline-flex;align-items:center;justify-content:center;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--pill)}
     @media (min-width:900px){ .hamburger{display:none} }
 

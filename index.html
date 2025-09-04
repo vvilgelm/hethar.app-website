@@ -104,6 +104,8 @@
     section::before, section::after{ content:""; position:absolute; left:0; right:0; height:36px; pointer-events:none }
     section::before{ top:-1px; background: linear-gradient(180deg, rgba(0,0,0,0.35), transparent) }
     section::after{ bottom:-1px; background: linear-gradient(0deg, rgba(0,0,0,0.25), transparent) }
+    /* Centered text measure for section intros */
+    section > .wrap > p{ max-width:900px; margin:10px auto 0 }
     h2{font-size:clamp(28px,3.6vw,44px);letter-spacing:-0.02em;margin:0 0 12px; text-wrap: balance}
     .muted{color:var(--muted)}
     .grid{display:grid;gap:28px}

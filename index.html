@@ -45,10 +45,10 @@
     /* Premium nav transitions */
     .nav{transition:height var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), backdrop-filter var(--dur) var(--ease)}
     header.is-scrolled .nav{height:56px; background:rgba(0,0,0,.45); backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid color-mix(in srgb, var(--line) 85%, transparent)}
-    .logo{display:flex;align-items:center;gap:10px;font-weight:700}
+    .logo{display:flex;align-items:center;gap:10px;font-weight:700; transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease) }
     .logo svg{height:18px;width:auto;display:block;position:relative;top:1px}
     .nav-center{display:none}
-    @media (min-width:900px){ .nav-center{display:block} }
+    @media (min-width:900px){ .nav-center{display:block; transition: transform var(--dur) var(--ease) } }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding var(--dur) var(--ease), gap var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease); position:relative}
     .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding var(--dur) var(--ease), font-size var(--dur) var(--ease), background .2s var(--ease); font-size:13.5px; letter-spacing:.2px; position:relative; z-index:2}
@@ -74,6 +74,15 @@
     .btn.primary:hover{ filter: brightness(0.96) }
     .hamburger{display:inline-flex;align-items:center;justify-content:center;padding:10px;border:1px solid var(--line);border-radius:8px;background:var(--pill)}
     @media (min-width:900px){ .hamburger{display:none} }
+
+    /* Nav magnet to center (desktop) */
+    @media (min-width:1100px){
+      header.magnet .wrap.nav{ justify-content:center; gap:18px }
+      header.magnet .logo{ transform: translateX(64px); opacity:.95 }
+      header.magnet #nav-actions{ transform: translateX(-64px); opacity:.98 }
+      header.magnet .pill-nav{ background: color-mix(in srgb, var(--pill) 92%, transparent); box-shadow: 0 10px 28px rgba(0,0,0,.28), 0 0 0 1px rgba(255,255,255,.06) inset; border-color: color-mix(in srgb, var(--fg) 14%, var(--line)) }
+      #nav-actions{ transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease) }
+    }
 
     /* --- Mobile sheet nav --- */
     .mnav{position:fixed;inset:0;z-index:1200}
@@ -144,6 +153,11 @@
     .tweet-cta .hero-cta{justify-content:center;gap:12px}
     .tweet-cta .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.22)}
     .tweet-cta .btn.primary{background:#fff;color:#000;border-color:transparent;font-weight:700}
+
+    /* Cursor glow */
+    .cursor-glow{ position:fixed; left:0; top:0; width:240px; height:240px; margin:-120px 0 0 -120px; pointer-events:none; z-index:0;
+      background: radial-gradient(closest-side, rgba(255,255,255,.10), transparent 65%); mix-blend-mode: screen; filter: blur(22px); opacity:0; transition: opacity .3s var(--ease) }
+    body:hover .cursor-glow{ opacity:.16 }
 
     /* --- Shrink on scroll (desktop) --- */
     @media (min-width:900px){
@@ -365,7 +379,7 @@
       </nav>
       </div>
 
-      <div style="display:flex;gap:10px;align-items:center">
+      <div id="nav-actions" style="display:flex;gap:10px;align-items:center">
         <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team">Join the Team</a>
         <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Book a Demo</a>
         <button class="hamburger" id="mnav-btn" aria-label="Open menu" aria-controls="mnav" aria-expanded="false">
@@ -376,6 +390,7 @@
       </div>
     </div>
   </header>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
   <!-- Scroll progress bar -->
   <div id="progress" style="position:fixed;top:64px;left:0;height:2px;width:0;background:linear-gradient(90deg,#fff,#8ab4ff);z-index:999;transform-origin:0 50%"></div>
 
@@ -727,6 +742,26 @@
       btn.addEventListener('pointerenter', ()=>btn.classList.add('ripple'));
       btn.addEventListener('pointerleave', ()=>btn.classList.remove('ripple'));
     });
+
+    // Cursor glow
+    const glow = document.getElementById('cursorGlow');
+    if(glow){
+      window.addEventListener('pointermove', (e)=>{
+        glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }, {passive:true});
+    }
+
+    // Nav magnet on scroll (desktop)
+    const magnetThreshold = 160;
+    const setMagnet = ()=>{
+      const y = (document.documentElement.scrollTop||window.scrollY);
+      if(y > magnetThreshold) headerEl.classList.add('magnet');
+      else headerEl.classList.remove('magnet');
+      updateActivePillPosition();
+    };
+    window.addEventListener('scroll', setMagnet, {passive:true});
+    window.addEventListener('resize', setMagnet, {passive:true});
+    setMagnet();
   </script>
 </body>
 </html>

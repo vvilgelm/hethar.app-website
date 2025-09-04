@@ -82,7 +82,10 @@
     /* --- Hero --- */
     .hero{padding:96px 0 40px;border-bottom:1px solid var(--line)}
     .hero-grid{display:grid;gap:36px}
-    @media (min-width:1100px){ .hero-grid{grid-template-columns:1.15fr .85fr; align-items:center} }
+    @media (min-width:1100px){ .hero-grid{grid-template-columns:minmax(0,900px) 520px; align-items:center; justify-content:center; gap:48px} }
+    .hero .text{ max-width:900px; margin:0 auto; text-align:center }
+    .hero .text .hero-cta{ justify-content:center }
+    @media (min-width:1100px){ .hero-visual{ transform: translateY(6px) } }
     .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--pill);opacity:.9}
     .tag{ border-color: color-mix(in srgb, var(--line) 75%, transparent); background: color-mix(in srgb, var(--pill) 96%, transparent) }
     .h1{font-weight:850;line-height:1.02;letter-spacing:-0.02em;margin:18px 0 12px;font-size:clamp(42px,7.2vw,96px)}
@@ -401,7 +404,7 @@
   <!-- Hero (2-column: text left, visual right) -->
   <main id="what" class="wrap hero" style="min-height:88vh;display:block">
     <div class="hero-grid">
-      <div>
+      <div class="text">
         <span class="tag reveal">⚡ Early Access · Q4 2025</span>
         <h1 class="h1 reveal" style="transition-delay:.05s"> Second brain? Cute. Get a second you.</h1>
     <p class="lede reveal" style="transition-delay:.1s">

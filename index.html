@@ -15,6 +15,7 @@
       --cta:#ffffff; --cta-bg:#0b0b0c; --pill:#111215; --accent: rgba(255,255,255,0.08);
       --shadow: 0 10px 30px rgba(0,0,0,.35); --radius: 16px;
       --ease: cubic-bezier(.2,.8,.2,1); --dur: .25s;
+      --headerH: 64px;
     }
     @media (prefers-color-scheme: light) {
       :root{ --bg:#fafafa; --fg:#0b0b0c; --muted:#4d5057; --line:#e9eaec; --cta:#fff; --cta-bg:#0b0b0c; --pill:#ffffff; --accent: rgba(11,11,12,0.05); --shadow: 0 8px 24px rgba(0,0,0,.08); }
@@ -22,7 +23,7 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     html{color-scheme:dark}
-    html{scroll-behavior:smooth; scroll-padding-top: 78px}
+    html{scroll-behavior:smooth; scroll-padding-top: var(--headerH, 78px)}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
@@ -50,6 +51,8 @@
     .nav-center{display:none}
     @media (min-width:900px){ .nav-center{display:block; transition: transform var(--dur) var(--ease) } }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
+    header .wrap.nav{ border-bottom: 1px solid transparent }
+    header.is-scrolled .wrap.nav{ border-bottom: 1px solid color-mix(in srgb, var(--line) 85%, transparent) }
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding var(--dur) var(--ease), gap var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease); position:relative}
     .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding var(--dur) var(--ease), font-size var(--dur) var(--ease), background .2s var(--ease); font-size:13.5px; letter-spacing:.2px; position:relative; z-index:2}
     .pill-nav .active-pill{ content:""; position:absolute; z-index:1; top:4px; bottom:4px; width:0; border-radius:8px; background:var(--accent); transition: left .28s var(--ease), width .28s var(--ease), opacity .28s var(--ease); opacity:0 }
@@ -360,7 +363,7 @@
 <body>
   <!-- Header / Nav -->
   <header>
-    <div class="wrap nav" style="border-bottom:1px solid color-mix(in srgb, var(--line) 85%, transparent)">
+    <div class="wrap nav">
       <div class="logo">
         <a href="#top" aria-label="Hethar home" style="display:inline-flex;align-items:center">
           <svg width="209" height="271" viewBox="0 0 209 271" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hethar logo" role="img">
@@ -471,8 +474,8 @@
     <div class="wrap" style="display:flex;gap:10px;justify-content:center">
       <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team" style="padding:12px 18px">Join the Team</a>
       <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}' style="padding:12px 18px">Book a Demo</a>
-    </div>
-  </div>
+        </div>
+      </div>
   <button id="toTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top ↑</button>
 
   <!-- Section 2: Why Yours Sucks -->
@@ -496,7 +499,7 @@
           <div class="item reveal">
             Assistants ≠ partners
             <small>They’re order-takers, not decision-makers.</small>
-          </div>
+        </div>
         </div>
 
       <div class="reveal" style="margin-top:18px;text-align:center">
@@ -634,6 +637,10 @@
     const updateHeader = ()=>{
       if((window.scrollY||document.documentElement.scrollTop) > 8){ headerEl.classList.add('is-scrolled'); }
       else { headerEl.classList.remove('is-scrolled'); }
+      const headerHeight = headerEl.querySelector('.nav')?.offsetHeight || 64;
+      document.documentElement.style.setProperty('--headerH', headerHeight+'px');
+      const progressEl = document.getElementById('progress');
+      if(progressEl){ progressEl.style.top = headerHeight + 'px'; }
     };
     updateHeader();
     // rAF-ticked scroll handler to avoid missed updates
@@ -658,7 +665,7 @@
     };
 
     const fallbackSpy = ()=>{
-      const headerH = 64; // approximate header height
+      const headerH = headerEl.querySelector('.nav')?.offsetHeight || 64;
       const y = (window.scrollY||document.documentElement.scrollTop) + headerH + window.innerHeight*0.1;
       let current = sections[0];
       for(const id of sections){

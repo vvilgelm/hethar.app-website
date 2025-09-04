@@ -144,6 +144,12 @@
     .card:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--line) 60%, transparent);background:color-mix(in srgb, var(--pill) 94%, transparent); box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 -1px 0 rgba(0,0,0,.5) inset}
     .card:active{transform:translateY(-1px) scale(.997)}
     .card:focus-visible{outline:2px solid color-mix(in srgb, var(--fg) 28%, #8ab4ff); outline-offset:3px}
+    /* Spotlight hover */
+    .card{ position:relative; overflow:hidden }
+    .card::after{ content:""; position:absolute; inset:-40% -40%; pointer-events:none; border-radius:inherit; opacity:0;
+      background: radial-gradient(240px 240px at var(--hx,50%) var(--hy,50%), rgba(255,255,255,.12), transparent 48%);
+      transition: opacity .25s var(--ease) }
+    .card.spot::after{ opacity:.9 }
     .list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
     .list li{display:flex;gap:10px}
     .check{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#9aa0a6);margin-top:5px;flex:none}
@@ -748,6 +754,43 @@
       btn.addEventListener('pointerenter', ()=>btn.classList.add('ripple'));
       btn.addEventListener('pointerleave', ()=>btn.classList.remove('ripple'));
     });
+
+    // Card spotlight tracking
+    document.querySelectorAll('.card').forEach(card=>{
+      const onMove = (e)=>{
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--hx', (e.clientX - r.left)+'px');
+        card.style.setProperty('--hy', (e.clientY - r.top)+'px');
+      };
+      card.addEventListener('pointermove', onMove, {passive:true});
+      card.addEventListener('pointerenter', ()=>card.classList.add('spot'));
+      card.addEventListener('pointerleave', ()=>card.classList.remove('spot'));
+    });
+
+    // Dynamic magnet centering (desktop)
+    function updateMagnetOffsets(){
+      const w = window.innerWidth;
+      if(w < 1100){ headerEl.classList.remove('magnet'); return; }
+      const wrap = document.querySelector('.wrap.nav');
+      const logo = wrap?.querySelector('.logo');
+      const nav = wrap?.querySelector('.pill-nav');
+      const actions = document.getElementById('nav-actions');
+      if(!wrap || !logo || !nav || !actions) return;
+      const wrapRect = wrap.getBoundingClientRect();
+      const centerX = wrapRect.left + wrapRect.width/2;
+      const logoRect = logo.getBoundingClientRect();
+      const navRect = nav.getBoundingClientRect();
+      const actionsRect = actions.getBoundingClientRect();
+      const leftClusterRight = Math.max(logoRect.right, navRect.left + navRect.width/2);
+      const rightClusterLeft = Math.min(actionsRect.left, navRect.left + navRect.width/2);
+      const clusterCenter = (leftClusterRight + rightClusterLeft)/2;
+      const shift = Math.round(centerX - clusterCenter);
+      logo.style.transform = `translateX(${Math.max(0, shift)}px)`;
+      actions.style.transform = `translateX(${Math.min(0, -shift)}px)`;
+    }
+    window.addEventListener('resize', updateMagnetOffsets, {passive:true});
+    window.addEventListener('load', updateMagnetOffsets, {once:true});
+    updateMagnetOffsets();
 
     // Cursor glow
     const glow = document.getElementById('cursorGlow');

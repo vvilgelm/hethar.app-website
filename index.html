@@ -96,6 +96,20 @@
     .mnav.open .mnav-sheet{transform:translateY(0)}
     .mnav-links{display:grid;gap:12px;padding:14px 20px}
 
+    /* --- Section progress rail --- */
+    .rail{ position:fixed; left:20px; top:calc(var(--headerH) + 24px); bottom:24px; display:none; z-index:50 }
+    @media (min-width:1100px){ .rail{ display:flex; flex-direction:column; gap:14px } }
+    .rail a{ width:12px; height:12px; border-radius:50%; display:block;
+      border:1px solid var(--line);
+      background:
+        conic-gradient(var(--fg) calc(var(--p,0)*1%), transparent 0),
+        color-mix(in srgb, var(--pill) 92%, transparent);
+      box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--bg) 92%, #000);
+      transition: transform .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease) }
+    .rail a:hover{ transform: scale(1.15); border-color: color-mix(in srgb, var(--fg) 22%, var(--line)) }
+    .rail a[aria-current="page"]{ border-color: color-mix(in srgb, var(--fg) 35%, var(--line));
+      background: conic-gradient(#fff calc(var(--p,1)*1%), transparent 0), color-mix(in srgb, var(--pill) 92%, transparent) }
+
     /* --- Hero --- */
     .hero{padding:96px 0 40px;border-bottom:1px solid var(--line)}
     .hero-grid{display:grid;gap:36px}
@@ -399,6 +413,14 @@
       </div>
     </div>
   </header>
+  <!-- Left progress rail -->
+  <nav class="rail" aria-label="Section progress">
+    <a href="#what" data-id="what" aria-label="What it is"></a>
+    <a href="#sucks" data-id="sucks" aria-label="Why yours sucks"></a>
+    <a href="#different" data-id="different" aria-label="How we’re different"></a>
+    <a href="#vision" data-id="vision" aria-label="Vision"></a>
+    <a href="#access" data-id="access" aria-label="Access"></a>
+  </nav>
   <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
   <!-- Scroll progress bar -->
   <div id="progress" style="position:fixed;top:64px;left:0;height:2px;width:0;background:linear-gradient(90deg,#fff,#8ab4ff);z-index:999;transform-origin:0 50%"></div>
@@ -631,33 +653,70 @@
     const mnav = document.getElementById('mnav');
     const mclose = document.getElementById('mnav-close');
     const mbackdrop = document.getElementById('mnav-backdrop');
-    const openMenu = ()=>{ mnav.hidden = false; requestAnimationFrame(()=>{ mnav.classList.add('open'); mbtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }); };
-    const closeMenu = ()=>{ mnav.classList.remove('open'); mbtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; setTimeout(()=>{ mnav.hidden = true; }, 220); };
+    let lastFocused = null;
+    const trapSelectors = 'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+    const openMenu = ()=>{
+      lastFocused = document.activeElement;
+      mnav.hidden = false;
+      requestAnimationFrame(()=>{
+        mnav.classList.add('open'); mbtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden';
+        const focusables = mnav.querySelectorAll(trapSelectors);
+        focusables.length && focusables[0].focus();
+      });
+      const onKey = (e)=>{
+        if(e.key === 'Escape'){ closeMenu(); }
+        if(e.key === 'Tab'){
+          const focusables = Array.from(mnav.querySelectorAll(trapSelectors)).filter(el=>!el.hasAttribute('disabled'));
+          if(!focusables.length) return;
+          const first = focusables[0], last = focusables[focusables.length-1];
+          if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+          else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+        }
+      };
+      mnav.addEventListener('keydown', onKey);
+      mnav._onKey = onKey;
+    };
+    const closeMenu = ()=>{
+      mnav.classList.remove('open'); mbtn.setAttribute('aria-expanded','false'); document.body.style.overflow='';
+      setTimeout(()=>{ mnav.hidden = true; }, 220);
+      if(mnav._onKey){ mnav.removeEventListener('keydown', mnav._onKey); mnav._onKey = null; }
+      lastFocused && lastFocused.focus && lastFocused.focus();
+    };
     if(mbtn){ mbtn.addEventListener('click', openMenu); }
     if(mclose){ mclose.addEventListener('click', closeMenu); }
     if(mbackdrop){ mbackdrop.addEventListener('click', closeMenu); }
     document.querySelectorAll('.mnav-links a').forEach(a=>a.addEventListener('click', closeMenu));
 
-    // Shrink header on scroll
+    // Shrink header + unified scroll loop
     const headerEl = document.querySelector('header');
-    const updateHeader = ()=>{
-      if((window.scrollY||document.documentElement.scrollTop) > 8){ headerEl.classList.add('is-scrolled'); }
-      else { headerEl.classList.remove('is-scrolled'); }
+    const progressEl = document.getElementById('progress');
+    const railLinks = Array.from(document.querySelectorAll('.rail a'));
+    let rafRunning = false;
+    function updateFrame(){
+      rafRunning = false;
+      const y = (window.scrollY||document.documentElement.scrollTop);
+      if(y > 8) headerEl.classList.add('is-scrolled'); else headerEl.classList.remove('is-scrolled');
       const headerHeight = headerEl.querySelector('.nav')?.offsetHeight || 64;
       document.documentElement.style.setProperty('--headerH', headerHeight+'px');
-      const progressEl = document.getElementById('progress');
       if(progressEl){ progressEl.style.top = headerHeight + 'px'; }
-    };
-    updateHeader();
-    // rAF-ticked scroll handler to avoid missed updates
-    let ticking=false;
-    const onScroll=()=>{
-      if(!ticking){
-        requestAnimationFrame(()=>{ updateHeader(); fallbackSpy(); ticking=false; });
-        ticking=true;
-      }
-    };
-    window.addEventListener('scroll', onScroll, {passive:true});
+      // Scroll progress + mobile dock
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const ratio = Math.max(0, Math.min(1, max ? y / max : 0));
+      if(progressEl) progressEl.style.width = (ratio*100)+'%';
+      const dock = document.getElementById('dock');
+      if(dock){ dock.style.display = (window.innerWidth < 720 && y > 320) ? 'block' : 'none'; }
+      // Auto hide header
+      autoHideTick(y);
+      // Scrollspy + rail progress
+      fallbackSpy();
+      updateActivePillPosition();
+      setMagnetTick(y);
+    }
+    function requestUpdate(){ if(!rafRunning){ rafRunning = true; requestAnimationFrame(updateFrame); } }
+    window.addEventListener('scroll', requestUpdate, {passive:true});
+    window.addEventListener('resize', requestUpdate, {passive:true});
+    requestUpdate();
 
     // Scrollspy active state for center nav (pure scroll-based)
     const sections = ['what','sucks','different','vision','access'];
@@ -668,6 +727,12 @@
       const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
       if(target){ target.classList.add('active'); target.setAttribute('aria-current','page'); }
       updateActivePillPosition();
+      // rail update
+      document.querySelectorAll('.rail a').forEach(dot=>{
+        const on = dot.getAttribute('data-id')===id;
+        if(on){ dot.setAttribute('aria-current','page'); }
+        else { dot.removeAttribute('aria-current'); }
+      });
     };
 
     const fallbackSpy = ()=>{
@@ -683,8 +748,19 @@
         if(top <= y) current = id;
       }
       setActive(current);
+      // per-section progress in rail
+      railLinks.forEach(dot=>{
+        const id = dot.getAttribute('data-id');
+        const el = document.getElementById(id);
+        if(!el) return;
+        const rect = el.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const visible = Math.max(0, Math.min(rect.bottom, vh) - Math.max(rect.top, 0));
+        const p = Math.max(0, Math.min(1, visible / Math.min(vh, el.offsetHeight)));
+        dot.style.setProperty('--p', (p*100));
+      });
     };
-    window.addEventListener('resize', ()=>{ fallbackSpy(); updateHeader(); }, {passive:true});
+    window.addEventListener('resize', ()=>{ fallbackSpy(); requestUpdate(); }, {passive:true});
     fallbackSpy();
 
     // Sliding active indicator (desktop nav)
@@ -712,20 +788,7 @@
     Cal("init", "30min", {origin:"https://app.cal.com"});
     Cal.ns["30min"]("ui", {hideEventTypeDetails:false, layout:"month_view"});
 
-    // Scroll progress + mobile dock
-    const progress = document.getElementById('progress');
-    const dock = document.getElementById('dock');
-    const onTick = ()=>{
-      const h = document.documentElement;
-      const scrolled = (h.scrollTop || window.scrollY);
-      const max = h.scrollHeight - h.clientHeight;
-      const ratio = Math.max(0, Math.min(1, max ? scrolled / max : 0));
-      if(progress) progress.style.width = (ratio*100)+'%';
-      if(dock){ dock.style.display = (window.innerWidth < 720 && scrolled > 320) ? 'block' : 'none'; }
-    };
-    window.addEventListener('scroll', onTick, {passive:true});
-    window.addEventListener('resize', onTick, {passive:true});
-    onTick();
+    // handled by unified frame
     // Back to top visibility
     const toTop = document.getElementById('toTop');
     const topTick = ()=>{
@@ -736,15 +799,13 @@
     };
     window.addEventListener('scroll', topTick, {passive:true});
     topTick();
-    // Hide header on scroll down, show on up
+    // Hide header on scroll down, show on up (integrated)
     let lastY = 0;
-    const autoHide = ()=>{
-      const y = (document.documentElement.scrollTop||window.scrollY);
+    const autoHideTick = (y)=>{
       const goingDown = y > lastY && y > 80;
       headerEl.classList.toggle('hidden', goingDown);
       lastY = y;
     };
-    window.addEventListener('scroll', autoHide, {passive:true});
     // Button ripple / highlight
     document.querySelectorAll('.btn').forEach(btn=>{
       btn.addEventListener('pointermove', e=>{
@@ -806,17 +867,12 @@
       toggleGlow();
     }
 
-    // Nav magnet on scroll (desktop)
+    // Nav magnet integrated into unified frame
     const magnetThreshold = 160;
-    const setMagnet = ()=>{
-      const y = (document.documentElement.scrollTop||window.scrollY);
+    const setMagnetTick = (y)=>{
       if(y > magnetThreshold) headerEl.classList.add('magnet');
       else headerEl.classList.remove('magnet');
-      updateActivePillPosition();
     };
-    window.addEventListener('scroll', setMagnet, {passive:true});
-    window.addEventListener('resize', setMagnet, {passive:true});
-    setMagnet();
   </script>
 </body>
 </html>

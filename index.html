@@ -38,13 +38,18 @@
     /* --- Header / Nav --- */
     header{position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;border-bottom:none}
     .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    /* Premium nav transitions */
+    .nav{transition:height .25s ease, background .25s ease, border-color .25s ease, backdrop-filter .25s ease}
+    header.is-scrolled .nav{height:56px; background:rgba(0,0,0,.45); backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid color-mix(in srgb, var(--line) 85%, transparent)}
     .logo{display:flex;align-items:center;gap:10px;font-weight:700}
     .logo svg{height:18px;width:auto;display:block;position:relative;top:1px}
     .nav-center{display:none}
     @media (min-width:900px){ .nav-center{display:block} }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding .25s ease, gap .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease}
-    .pill-nav a{padding:10px 14px;border-radius:999px;opacity:.9; transition:padding .25s ease, font-size .25s ease}
+    .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding .25s ease, font-size .25s ease, background .2s ease}
+    .pill-nav a.active{position:relative}
+    .pill-nav a.active::after{content:""; position:absolute; left:50%; bottom:-6px; width:8px; height:2px; background:var(--fg); transform:translateX(-50%); border-radius:2px}
     .pill-nav a:hover{background:var(--accent);opacity:1}
     .pill-nav a.active{background:var(--accent);opacity:1}
     .btn{

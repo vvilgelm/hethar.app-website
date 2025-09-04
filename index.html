@@ -21,6 +21,7 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     html{color-scheme:dark}
+    html{scroll-behavior:smooth; scroll-padding-top: 78px}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
@@ -251,6 +252,19 @@
     @media (prefers-reduced-motion: reduce){
       .reveal{ transition: none }
       .pendant{ animation: none; transform: none !important }
+    }
+    
+    /* --- Large screens tuning --- */
+    @media (min-width:1400px){
+      .wrap{ max-width:1320px }
+      .h1{ font-size: clamp(48px, 6.8vw, 112px) }
+      .hero-cta .btn{ font-size:16px; padding:16px 24px }
+    }
+    
+    /* --- Backdrop-filter fallback --- */
+    @supports not ((-webkit-backdrop-filter: none) or (backdrop-filter: none)){
+      header.is-scrolled .nav{ background: rgba(0,0,0,.65) }
+      header.is-scrolled .pill-nav{ background: color-mix(in srgb, var(--pill) 92%, transparent) }
     }
     /* --- Premium surfaces & footer --- */
     section:nth-of-type(even){ background: color-mix(in srgb, var(--bg) 96%, #000) }

@@ -332,6 +332,7 @@
 
     /* --- Reduced motion safeguards --- */
     @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto }
       .reveal{ transition: none }
       .pendant{ animation: none; transform: none !important }
     }
@@ -584,7 +585,7 @@
       a.addEventListener('click', e=>{
         const id = a.getAttribute('href').slice(1);
         const el = document.getElementById(id);
-        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+        if(el){ e.preventDefault(); const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; el.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'start'}); }
       });
     });
 
@@ -625,8 +626,8 @@
     const mnav = document.getElementById('mnav');
     const mclose = document.getElementById('mnav-close');
     const mbackdrop = document.getElementById('mnav-backdrop');
-    const openMenu = ()=>{ mnav.hidden = false; requestAnimationFrame(()=>{ mnav.classList.add('open'); mbtn.setAttribute('aria-expanded','true'); }); };
-    const closeMenu = ()=>{ mnav.classList.remove('open'); mbtn.setAttribute('aria-expanded','false'); setTimeout(()=>{ mnav.hidden = true; }, 220); };
+    const openMenu = ()=>{ mnav.hidden = false; requestAnimationFrame(()=>{ mnav.classList.add('open'); mbtn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; }); };
+    const closeMenu = ()=>{ mnav.classList.remove('open'); mbtn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; setTimeout(()=>{ mnav.hidden = true; }, 220); };
     if(mbtn){ mbtn.addEventListener('click', openMenu); }
     if(mclose){ mclose.addEventListener('click', closeMenu); }
     if(mbackdrop){ mbackdrop.addEventListener('click', closeMenu); }
@@ -658,9 +659,9 @@
     const navLinks = Array.from(document.querySelectorAll('.pill-nav a'));
     const map = { what:'#what', sucks:'#sucks', different:'#different', access:'#access', vision:'#vision' };
     const setActive = (id)=>{
-      navLinks.forEach(a=>a.classList.remove('active'));
+      navLinks.forEach(a=>{ a.classList.remove('active'); a.removeAttribute('aria-current'); });
       const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
-      if(target) target.classList.add('active');
+      if(target){ target.classList.add('active'); target.setAttribute('aria-current','page'); }
       updateActivePillPosition();
     };
 
@@ -753,9 +754,12 @@
     // Cursor glow
     const glow = document.getElementById('cursorGlow');
     if(glow){
-      window.addEventListener('pointermove', (e)=>{
-        glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      }, {passive:true});
+      const moveGlow = (e)=>{ glow.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`; };
+      window.addEventListener('pointermove', moveGlow, {passive:true});
+      const mediaReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const toggleGlow = ()=>{ glow.style.display = mediaReduce.matches ? 'none' : 'block'; };
+      mediaReduce.addEventListener?.('change', toggleGlow);
+      toggleGlow();
     }
 
     // Nav magnet on scroll (desktop)

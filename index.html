@@ -391,31 +391,31 @@
 
     /* --- Under-Footer Aurora Wave (unique) --- */
     .under-footer{ position:relative; height:280px; background:#000; border-top:1px solid color-mix(in srgb, var(--line) 85%, transparent); overflow:hidden }
-    .under-footer{ opacity: clamp(0, calc((var(--page-progress, 0) - 0.78) * 6), 1) }
-    .under-footer::before{ content:""; position:absolute; inset:-40% -10% -10% -10%; pointer-events:none; background:
+    .under-footer{ opacity: clamp(0, calc((var(--page-progress, 0) - 0.60) * 2.5), 1) }
+    .under-footer::before{ content:""; position:absolute; inset:-40% -10% -10% -10%; pointer-events:none; z-index:0; background:
       radial-gradient(60% 60% at 30% 20%, rgba(255,255,255,.08), transparent 60%),
       radial-gradient(50% 50% at 80% 30%, rgba(255,255,255,.06), transparent 60%);
       opacity:.35; filter: blur(10px) }
-    .uf-aurora{ position:absolute; filter: blur(36px); mix-blend-mode: screen; opacity:.35; will-change: transform }
+    .uf-aurora{ position:absolute; filter: blur(36px); mix-blend-mode: screen; opacity:.35; will-change: transform; z-index:1 }
     .uf-aurora.a1{ width:50vw; height:50vh; top:-30%; left:-10%; background: radial-gradient(55% 60% at 40% 40%, rgba(138,180,255,.22), transparent 60%); animation: drift1 10s ease-in-out infinite alternate }
     .uf-aurora.a2{ width:40vw; height:40vh; bottom:-30%; right:-8%; background: radial-gradient(55% 60% at 60% 40%, rgba(255,255,255,.18), transparent 60%); animation: drift2 12s ease-in-out infinite alternate }
     .uf-aurora.a3{ width:46vw; height:46vh; top:-10%; right:20%; background: radial-gradient(55% 60% at 50% 50%, rgba(200,220,255,.16), transparent 60%); animation: drift3 14s ease-in-out infinite alternate }
     @keyframes drift1{ from{ transform: translate(0,0) rotate(-2deg) } to{ transform: translate(4%, -2%) rotate(2deg) } }
     @keyframes drift2{ from{ transform: translate(0,0) rotate(3deg) } to{ transform: translate(-6%, 3%) rotate(-1deg) } }
     @keyframes drift3{ from{ transform: translate(0,0) } to{ transform: translate(2%, -1%) } }
-    .uf-dots{ position:absolute; inset:0; opacity:.18; pointer-events:none; background:
+    .uf-dots{ position:absolute; inset:0; opacity:.18; pointer-events:none; z-index:1; background:
       radial-gradient(circle at 1px 1px, rgba(255,255,255,.6) 1px, transparent 1px);
       background-size: 10px 10px;
       mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.85) 20%, #000 55%, rgba(0,0,0,.85) 85%, transparent 100%);
       -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.85) 20%, #000 55%, rgba(0,0,0,.85) 85%, transparent 100%);
     }
-    .uf-wave{ position:absolute; left:0; right:0; bottom:0; height:120px; opacity:.5 }
+    .uf-wave{ position:absolute; left:0; right:0; bottom:0; height:120px; opacity:.5; z-index:1 }
     .uf-wave path{ stroke: rgba(255,255,255,.12); stroke-width:1.5; fill:none; filter: drop-shadow(0 10px 30px rgba(0,0,0,.6)) }
     /* Canvas particles */
-    .ufx{ position:absolute; inset:0; mix-blend-mode:screen; opacity:.5 }
+    .ufx{ position:absolute; inset:0; mix-blend-mode:screen; opacity:.55; z-index:2 }
     @media (prefers-reduced-motion: reduce){ .ufx{ display:none } }
     /* Co-You interactive canvas */
-    .co-you{ position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:.9 }
+    .co-you{ position:absolute; inset:0; pointer-events:none; mix-blend-mode:lighten; opacity:.95; z-index:2 }
     @media (max-width:720px){ .co-you{ opacity:.7 } }
 
     /* Hero vignette overlay */
@@ -888,7 +888,7 @@
     const ufx = document.getElementById('ufx');
     if(ufx && ufx.getContext){
       const ctx = ufx.getContext('2d');
-      let w=0,h=0,px=[]; const N=60; const R=2;
+      let w=0,h=0,px=[]; const N=90; const R=2.6;
       const init=()=>{
         w = ufx.width = ufx.clientWidth * devicePixelRatio;
         h = ufx.height = ufx.clientHeight * devicePixelRatio;
@@ -907,11 +907,11 @@
         for(const p of px){
           p.x += p.vx; p.y += p.vy;
           if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
-          const grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y, R*6);
-          grd.addColorStop(0, `rgba(255,255,255,${0.18*glow})`);
+          const grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y, R*7.5);
+          grd.addColorStop(0, `rgba(255,255,255,${0.26*glow})`);
           grd.addColorStop(1, 'rgba(255,255,255,0)');
           ctx.fillStyle = grd;
-          ctx.beginPath(); ctx.arc(p.x,p.y,R*6,0,Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(p.x,p.y,R*7.5,0,Math.PI*2); ctx.fill();
         }
         requestAnimationFrame(draw);
       };
@@ -923,7 +923,7 @@
     const cy = document.getElementById('coyou');
     if(cy && cy.getContext){
       const ctx = cy.getContext('2d');
-      let w=0,h=0,pts=[]; const COUNT=120;
+      let w=0,h=0,pts=[]; const COUNT=140;
       const rnd=(a,b)=>a+Math.random()*(b-a);
       const init=()=>{
         w = cy.width = cy.clientWidth * devicePixelRatio;
@@ -940,6 +940,14 @@
       const loop=()=>{
         ctx.clearRect(0,0,w,h);
         const t = performance.now()/1000;
+        ctx.lineWidth = 1*devicePixelRatio; ctx.strokeStyle = 'rgba(255,255,255,.08)';
+        // Draw soft connecting spine between mirrored points (bezier through centers)
+        ctx.beginPath();
+        for(let i=0;i<pts.length;i+=4){
+          const p = pts[i]; const t1 = p.tx; const u1 = p.ty; const x1 = w - t1; const y1 = u1;
+          if(i===0) ctx.moveTo(x1,y1); else ctx.lineTo(x1,y1);
+        }
+        ctx.stroke();
         for(const p of pts){
           // target curve + subtle breathing
           const sx = p.tx + Math.sin(t + p.p*6)*6*devicePixelRatio;
@@ -959,10 +967,11 @@
             p.y += (dy/(d||1)) * f * 8;
           }
           // draw pair (left dot already in p.x,p.y)
-          const alpha = 0.12 + 0.12*Math.sin(t*2 + p.p*10);
+          const alpha = 0.18 + 0.14*Math.sin(t*2 + p.p*10);
           ctx.fillStyle = `rgba(255,255,255,${alpha})`;
-          ctx.beginPath(); ctx.arc(p.x,p.y,2.2*devicePixelRatio,0,Math.PI*2); ctx.fill();
-          ctx.beginPath(); ctx.arc(sx2,sy2,2.2*devicePixelRatio,0,Math.PI*2); ctx.fill();
+          const r = 2.6*devicePixelRatio;
+          ctx.beginPath(); ctx.arc(p.x,p.y,r,0,Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(sx2,sy2,r,0,Math.PI*2); ctx.fill();
         }
         requestAnimationFrame(loop);
       };

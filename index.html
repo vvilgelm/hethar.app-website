@@ -130,6 +130,43 @@
       section{padding:64px 0}
       .hero-cta .btn{width:100%}
     }
+
+    /* --- Minimal CSS Patch Overrides --- */
+    body {
+      background: var(--bg);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.4;
+      padding-top: 64px;
+    }
+    .visual-card, .card {
+      box-shadow: none !important;
+      background: var(--pill);
+      border: 1px solid var(--line);
+    }
+    .btn {
+      border-radius: 8px;
+      font-weight: 600;
+      background: transparent;
+      border: 1px solid var(--line);
+    }
+    .btn.primary {
+      background: var(--fg);
+      color: var(--bg);
+      border: none;
+    }
+    .btn:hover {
+      transform: none;
+      background: var(--accent);
+    }
+    .h1 {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+    }
+    section {
+      border: none;
+      padding: 100px 0;
+    }
   </style>
 </head>
 <body>

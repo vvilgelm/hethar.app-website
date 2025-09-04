@@ -126,6 +126,17 @@
     .small{font-size:13px}
     .hero-visual{margin:0 auto;max-width:520px}
     .visual-card{border-radius:24px;background:linear-gradient(180deg,var(--accent),transparent 70%);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;position:relative; will-change: transform; transition: transform var(--dur) var(--ease)}
+    /* Glass hero layers */
+    .glass-hero{ position:absolute; inset:0; z-index:0; pointer-events:none }
+    .glass-panel{ position:absolute; border-radius:24px; backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%);
+      border:1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 40px 120px rgba(0,0,0,.45);
+      mix-blend-mode: screen; opacity:.13; will-change: transform }
+    .glass-panel.p1{ width:60vw; max-width:900px; height:36vh; min-height:260px; top:-8%; left:-12%; transform: rotate(-7deg) translateY(var(--gy,0px)) }
+    .glass-panel.p2{ width:48vw; max-width:760px; height:30vh; min-height:220px; top:8%; right:-14%; transform: rotate(6deg) translateY(calc(var(--gy,0px)*.8)) }
+    .glass-panel.p3{ width:54vw; max-width:820px; height:34vh; min-height:240px; bottom:-12%; left:4%; transform: rotate(-3deg) translateY(calc(var(--gy,0px)*.6)) }
+    @media (max-width: 900px){ .glass-hero{ display:none } }
     .pendant{width:100%;aspect-ratio:4/3;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .25s ease;will-change:transform;background:
         radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
         radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
@@ -456,6 +467,11 @@
 
   <!-- Hero (2-column: text left, visual right) -->
   <main id="what" class="wrap hero" style="min-height:88vh;display:block">
+    <div class="glass-hero" aria-hidden="true">
+      <div class="glass-panel p1"></div>
+      <div class="glass-panel p2"></div>
+      <div class="glass-panel p3"></div>
+    </div>
     <div class="hero-grid">
       <div class="text">
         <span class="tag reveal">⚡ Early Access · Q4 2025</span>
@@ -712,6 +728,9 @@
       fallbackSpy();
       updateActivePillPosition();
       setMagnetTick(y);
+      // Glass layers parallax
+      const gy = Math.round(y * -0.06);
+      document.documentElement.style.setProperty('--gy', gy + 'px');
     }
     function requestUpdate(){ if(!rafRunning){ rafRunning = true; requestAnimationFrame(updateFrame); } }
     window.addEventListener('scroll', requestUpdate, {passive:true});

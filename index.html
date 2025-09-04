@@ -202,6 +202,31 @@
     .btn.primary:hover{ background: color-mix(in srgb, var(--fg) 92%, #d9d9d9) }
     ::selection{ background: color-mix(in srgb, var(--fg) 18%, transparent); color: var(--fg) }
     :focus-visible{ outline:2px solid color-mix(in srgb, var(--fg) 50%, #8ab4ff); outline-offset:3px; border-radius:10px }
+
+    /* --- Premium dark background texture --- */
+    body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(circle at 10% 10%, rgba(255,255,255,.04), transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(255,255,255,.03), transparent 40%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 24px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 24px);
+      opacity:.14 }
+    body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
+      background: radial-gradient(1000px 600px at 50% -20%, rgba(255,255,255,.08), transparent 60%);
+      mix-blend-mode: screen; opacity:.18 }
+
+    /* --- Balanced typography and layout scale --- */
+    .wrap{ max-width: 1240px; padding: 0 28px }
+    .h1{ font-size: clamp(44px, 7.5vw, 104px); line-height: 1.02; margin: 14px 0 12px; text-wrap: balance }
+    h2{ font-size: clamp(30px, 4.6vw, 56px) }
+    .lead{ max-width: 900px; letter-spacing:-0.01em }
+
+    /* --- Reduced motion safeguards --- */
+    @media (prefers-reduced-motion: reduce){
+      .reveal{ transition: none }
+      .pendant{ animation: none; transform: none !important }
+    }
   </style>
 </head>
 <body>

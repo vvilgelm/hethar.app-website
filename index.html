@@ -357,6 +357,8 @@
       </div>
     </div>
   </header>
+  <!-- Scroll progress bar -->
+  <div id="progress" style="position:fixed;top:64px;left:0;height:2px;width:0;background:linear-gradient(90deg,#fff,#8ab4ff);z-index:999;transform-origin:0 50%"></div>
 
   <!-- Mobile sheet nav -->
   <div class="mnav" id="mnav" hidden>
@@ -388,7 +390,7 @@
   </div>
 
   <!-- Hero (2-column: text left, visual right) -->
-  <main id="what" class="wrap hero">
+  <main id="what" class="wrap hero" style="min-height:88vh;display:block">
     <div class="hero-grid">
       <div>
         <span class="tag reveal">⚡ Early Access · Q4 2025</span>
@@ -429,6 +431,14 @@
       </div>
     </div>
   </main>
+
+  <!-- Mobile action dock -->
+  <div id="dock" style="position:fixed;left:0;right:0;bottom:12px;display:none;z-index:60">
+    <div class="wrap" style="display:flex;gap:10px;justify-content:center">
+      <a class="btn primary" href="mailto:team@hethar.app?subject=Join%20the%20Team" style="padding:12px 18px">Join the Team</a>
+      <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}' style="padding:12px 18px">Book a Demo</a>
+    </div>
+  </div>
 
   <!-- Section 2: Why Yours Sucks -->
   <section id="sucks">
@@ -634,6 +644,21 @@
       let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
     Cal("init", "30min", {origin:"https://app.cal.com"});
     Cal.ns["30min"]("ui", {hideEventTypeDetails:false, layout:"month_view"});
+
+    // Scroll progress + mobile dock
+    const progress = document.getElementById('progress');
+    const dock = document.getElementById('dock');
+    const onTick = ()=>{
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop || window.scrollY);
+      const max = h.scrollHeight - h.clientHeight;
+      const ratio = Math.max(0, Math.min(1, max ? scrolled / max : 0));
+      if(progress) progress.style.width = (ratio*100)+'%';
+      if(dock){ dock.style.display = (window.innerWidth < 720 && scrolled > 320) ? 'block' : 'none'; }
+    };
+    window.addEventListener('scroll', onTick, {passive:true});
+    window.addEventListener('resize', onTick, {passive:true});
+    onTick();
   </script>
 </body>
 </html>

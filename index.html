@@ -390,7 +390,7 @@
     .footer-bottom{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; color: var(--muted); font-size:13px; padding-top:28px; margin-top:28px; border-top:1px solid color-mix(in srgb, var(--line) 80%, transparent) }
 
     /* --- Under-Footer Aurora Wave (unique) --- */
-    .under-footer{ position:relative; height:240px; background:#000; border-top:1px solid color-mix(in srgb, var(--line) 85%, transparent); overflow:hidden }
+    .under-footer{ position:relative; height:280px; background:#000; border-top:1px solid color-mix(in srgb, var(--line) 85%, transparent); overflow:hidden }
     .under-footer{ opacity: clamp(0, calc((var(--page-progress, 0) - 0.78) * 6), 1) }
     .under-footer::before{ content:""; position:absolute; inset:-40% -10% -10% -10%; pointer-events:none; background:
       radial-gradient(60% 60% at 30% 20%, rgba(255,255,255,.08), transparent 60%),
@@ -411,6 +411,9 @@
     }
     .uf-wave{ position:absolute; left:0; right:0; bottom:0; height:120px; opacity:.5 }
     .uf-wave path{ stroke: rgba(255,255,255,.12); stroke-width:1.5; fill:none; filter: drop-shadow(0 10px 30px rgba(0,0,0,.6)) }
+    /* Canvas particles */
+    .ufx{ position:absolute; inset:0; mix-blend-mode:screen; opacity:.5 }
+    @media (prefers-reduced-motion: reduce){ .ufx{ display:none } }
 
     /* Hero vignette overlay */
     .hero{ position:relative }
@@ -684,6 +687,7 @@
 
   <!-- Under-Footer unique band -->
   <div class="under-footer" aria-hidden="true">
+    <canvas class="ufx" id="ufx"></canvas>
     <div class="uf-aurora a1"></div>
     <div class="uf-aurora a2"></div>
     <div class="uf-aurora a3"></div>
@@ -876,6 +880,40 @@
     Cal.ns["30min"]("ui", {hideEventTypeDetails:false, layout:"month_view"});
 
     // handled by unified frame
+    // Under-footer particles (lightweight)
+    const ufx = document.getElementById('ufx');
+    if(ufx && ufx.getContext){
+      const ctx = ufx.getContext('2d');
+      let w=0,h=0,px=[]; const N=60; const R=2;
+      const init=()=>{
+        w = ufx.width = ufx.clientWidth * devicePixelRatio;
+        h = ufx.height = ufx.clientHeight * devicePixelRatio;
+        px = Array.from({length:N}, ()=>({
+          x: Math.random()*w,
+          y: Math.random()*h,
+          vx: (Math.random()-.5)*.3*devicePixelRatio,
+          vy: (Math.random()-.5)*.3*devicePixelRatio,
+        }));
+      };
+      init();
+      const draw=()=>{
+        ctx.clearRect(0,0,w,h);
+        const pprog = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--page-progress')||'0');
+        const glow = Math.min(1, Math.max(0, (pprog-0.75)*4 ));
+        for(const p of px){
+          p.x += p.vx; p.y += p.vy;
+          if(p.x<0||p.x>w) p.vx*=-1; if(p.y<0||p.y>h) p.vy*=-1;
+          const grd = ctx.createRadialGradient(p.x,p.y,0,p.x,p.y, R*6);
+          grd.addColorStop(0, `rgba(255,255,255,${0.18*glow})`);
+          grd.addColorStop(1, 'rgba(255,255,255,0)');
+          ctx.fillStyle = grd;
+          ctx.beginPath(); ctx.arc(p.x,p.y,R*6,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      };
+      requestAnimationFrame(draw);
+      window.addEventListener('resize', init, {passive:true});
+    }
     // Back to top visibility
     const toTop = document.getElementById('toTop');
     const topTick = ()=>{

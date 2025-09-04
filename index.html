@@ -242,6 +242,16 @@
       .reveal{ transition: none }
       .pendant{ animation: none; transform: none !important }
     }
+    /* --- Premium surfaces & footer --- */
+    section:nth-of-type(even){ background: color-mix(in srgb, var(--bg) 96%, #000) }
+    footer{ border-top:1px solid color-mix(in srgb, var(--line) 90%, transparent); background: color-mix(in srgb, var(--bg) 98%, #000) }
+
+    /* Hero vignette overlay */
+    .hero{ position:relative }
+    .hero::before{ content:""; position:absolute; inset:-6% -2% 45% -2%; pointer-events:none; background:
+      radial-gradient(60% 60% at 30% 0%, rgba(255,255,255,.08), transparent 60%),
+      radial-gradient(50% 50% at 85% 10%, rgba(255,255,255,.05), transparent 60%);
+      opacity:.35 }
   </style>
 </head>
 <body>

@@ -248,6 +248,15 @@
     *::-webkit-scrollbar-thumb{ background:#1f1f1f; border:2px solid #0b0b0c; border-radius:10px }
     *::-webkit-scrollbar-track{ background:#0b0b0c }
 
+    /* Back to top button */
+    #toTop{ position:fixed; right:16px; bottom:16px; z-index:80; display:none;
+      background: color-mix(in srgb, var(--pill) 92%, transparent); color: var(--fg);
+      border:1px solid color-mix(in srgb, var(--line) 85%, transparent); border-radius:10px;
+      padding:10px 12px; box-shadow:0 8px 24px rgba(0,0,0,.3);
+      transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease) }
+    #toTop.show{ display:block; opacity:1; transform:translateY(0) }
+    #toTop.hide{ opacity:0; transform:translateY(6px) }
+
     /* Premium hover/focus refinements */
     .hero-cta .btn:hover{ box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset }
     .pill-nav a:focus-visible{ outline:2px solid color-mix(in srgb, var(--fg) 35%, #8ab4ff); outline-offset:3px; border-radius:8px }
@@ -439,6 +448,7 @@
       <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}' style="padding:12px 18px">Book a Demo</a>
     </div>
   </div>
+  <button id="toTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">Top ↑</button>
 
   <!-- Section 2: Why Yours Sucks -->
   <section id="sucks">
@@ -659,6 +669,16 @@
     window.addEventListener('scroll', onTick, {passive:true});
     window.addEventListener('resize', onTick, {passive:true});
     onTick();
+    // Back to top visibility
+    const toTop = document.getElementById('toTop');
+    const topTick = ()=>{
+      const y = (document.documentElement.scrollTop||window.scrollY);
+      if(!toTop) return;
+      if(y > 800){ toTop.classList.add('show'); toTop.classList.remove('hide'); }
+      else { toTop.classList.add('hide'); toTop.classList.remove('show'); }
+    };
+    window.addEventListener('scroll', topTick, {passive:true});
+    topTick();
   </script>
 </body>
 </html>

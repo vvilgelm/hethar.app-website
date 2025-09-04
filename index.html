@@ -717,52 +717,43 @@
     window.addEventListener('resize', requestUpdate, {passive:true});
     requestUpdate();
 
-    // Scrollspy active state for center nav (pure scroll-based)
+    // Scrollspy (center-line detection, robust to spacing)
     const sections = ['what','sucks','different','vision','access'];
     const navLinks = Array.from(document.querySelectorAll('.pill-nav a'));
     const map = { what:'#what', sucks:'#sucks', different:'#different', access:'#access', vision:'#vision' };
+    let lastActiveId = null;
     const setActive = (id)=>{
+      if(id === lastActiveId) return;
+      lastActiveId = id;
       navLinks.forEach(a=>{ a.classList.remove('active'); a.removeAttribute('aria-current'); });
       const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
       if(target){ target.classList.add('active'); target.setAttribute('aria-current','page'); }
       updateActivePillPosition();
-      
     };
 
     const fallbackSpy = ()=>{
       const headerH = headerEl.querySelector('.nav')?.offsetHeight || 64;
-      const y = (window.scrollY||document.documentElement.scrollTop) + headerH + window.innerHeight*0.1;
-      let current = sections[0];
+      const scrollYAbs = (window.scrollY||document.documentElement.scrollTop);
+      // Use a center probe line, offset below header
+      const probeY = scrollYAbs + headerH + Math.min(280, Math.max(120, window.innerHeight * 0.35));
+      let bestId = sections[0];
+      let bestDist = Infinity;
       for(const id of sections){
         const el = document.getElementById(id); if(!el) continue;
         const rect = el.getBoundingClientRect();
-        const top = rect.top + (window.scrollY||document.documentElement.scrollTop);
+        const top = rect.top + scrollYAbs;
         const bottom = top + el.offsetHeight;
-        if(y >= top && y < bottom){ current = id; break; }
-        if(top <= y) current = id;
+        const center = (top + bottom) / 2;
+        const dist = Math.abs(center - probeY);
+        // Prefer sections that actually intersect probe line, else closest by center
+        const intersects = probeY >= top && probeY < bottom;
+        const score = intersects ? -1 : dist; // intersecting wins
+        if(score < bestDist){ bestDist = score; bestId = id; }
       }
-      setActive(current);
-      
+      setActive(bestId);
     };
     window.addEventListener('resize', ()=>{ fallbackSpy(); requestUpdate(); }, {passive:true});
     fallbackSpy();
-
-    // IntersectionObserver-based scrollspy (center-line detection)
-    try{
-      const spyObserver = new IntersectionObserver((entries)=>{
-        // Choose the most central intersecting section
-        let chosen = null; let best = -Infinity;
-        entries.forEach(e=>{
-          if(!e.isIntersecting) return;
-          const rect = e.target.getBoundingClientRect();
-          const center = rect.top + rect.height/2;
-          const distToCenter = -Math.abs(center - (window.innerHeight/2));
-          if(distToCenter > best){ best = distToCenter; chosen = e.target.id; }
-        });
-        if(chosen) setActive(chosen);
-      }, { root: null, rootMargin: '-35% 0px -35% 0px', threshold: [0, 0.01, 0.25, 0.5, 0.75, 1] });
-      sections.forEach(id=>{ const el = document.getElementById(id); if(el) spyObserver.observe(el); });
-    }catch(err){ /* fallback already handles */ }
 
     // Sliding active indicator (desktop nav)
     const navEl = document.querySelector('.pill-nav');

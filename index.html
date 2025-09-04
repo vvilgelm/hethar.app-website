@@ -229,6 +229,19 @@
     *::-webkit-scrollbar-thumb{ background:#1f1f1f; border:2px solid #0b0b0c; border-radius:10px }
     *::-webkit-scrollbar-track{ background:#0b0b0c }
 
+    /* Hero visual focal overlay */
+    .visual-card::after{ content:""; position:absolute; inset:0; pointer-events:none;
+      background: radial-gradient(40% 40% at 50% 35%, rgba(255,255,255,.08), transparent 60%),
+                  radial-gradient(25% 25% at 70% 25%, rgba(255,255,255,.06), transparent 60%);
+      mix-blend-mode: screen; opacity:.45 }
+
+    /* Active nav emphasis */
+    .pill-nav a.active{ background: var(--accent); color:#000 }
+    @media (min-width:1100px){
+      h2{ font-size: clamp(32px, 4.8vw, 60px) }
+      .grid{ gap: 36px }
+    }
+
     /* --- Premium dark background texture --- */
     body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background:

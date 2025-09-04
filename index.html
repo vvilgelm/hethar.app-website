@@ -97,7 +97,8 @@
     .muted{color:var(--muted)}
     .grid{display:grid;gap:28px}
     @media (min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} .grid-3{grid-template-columns:repeat(3,1fr)} }
-    .card{border:1px solid var(--line);background:var(--pill);border-radius:var(--radius);padding:24px}
+    .card{border:1px solid var(--line);background:var(--pill);border-radius:var(--radius);padding:24px;transition:transform .2s ease, background .2s ease, border-color .2s ease}
+    .card:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--line) 65%, transparent);background:color-mix(in srgb, var(--pill) 94%, transparent)}
     .list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
     .list li{display:flex;gap:10px}
     .check{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#9aa0a6);margin-top:5px;flex:none}
@@ -125,7 +126,7 @@
     }
 
     /* --- Reveal --- */
-    .reveal{opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease}
+    .reveal{opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease; transition-delay:var(--d, 0s)}
     .reveal.on{opacity:1; transform:translateY(0)}
 
     /* --- Responsive tweaks --- */
@@ -416,6 +417,8 @@
       });
     }, {threshold:.15});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+    // Staggered delay for siblings
+    document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.setProperty('--d', (i*0.05)+'s'); });
 
     // Micro parallax for hero pendant
     const pend = document.querySelector('.pendant');

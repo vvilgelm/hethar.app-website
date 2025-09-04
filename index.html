@@ -234,6 +234,11 @@
     *::-webkit-scrollbar-thumb{ background:#1f1f1f; border:2px solid #0b0b0c; border-radius:10px }
     *::-webkit-scrollbar-track{ background:#0b0b0c }
 
+    /* Premium hover/focus refinements */
+    .hero-cta .btn:hover{ box-shadow: 0 0 0 1px rgba(255,255,255,.14) inset }
+    .pill-nav a:focus-visible{ outline:2px solid color-mix(in srgb, var(--fg) 35%, #8ab4ff); outline-offset:3px; border-radius:8px }
+    .lead{ margin-top: 6px }
+
     /* Hero visual focal overlay */
     .visual-card::after{ content:""; position:absolute; inset:0; pointer-events:none;
       background: radial-gradient(40% 40% at 50% 35%, rgba(255,255,255,.08), transparent 60%),

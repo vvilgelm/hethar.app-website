@@ -168,6 +168,18 @@
       padding: 100px 0;
     }
 
+    /* --- Premium vibe refinements --- */
+    html{ scroll-behavior:smooth }
+    .wrap{ max-width:1200px; padding:0 24px }
+    section{ padding: clamp(80px, 12vw, 140px) 0; scroll-margin-top: 76px }
+    .h1{ line-height:1.02; margin: 12px 0 10px }
+    .lead{ letter-spacing:-0.01em }
+    .card{ border-color: color-mix(in srgb, var(--line) 80%, transparent) }
+    .pill{ border-color: color-mix(in srgb, var(--line) 70%, transparent) }
+    .pill-nav a{ border-radius:10px; position:relative }
+    .pill-nav a.active::after{ content:""; position:absolute; left:50%; bottom:-8px; width:8px; height:2px; background:var(--fg); transform:translateX(-50%); border-radius:2px }
+    header.is-scrolled .nav{ background:rgba(0,0,0,.45); backdrop-filter:saturate(160%) blur(10px); border-bottom:1px solid color-mix(in srgb, var(--line) 85%, transparent) }
+
     /* --- High-end polish overrides --- */
     .wrap{ max-width:1200px; padding:0 24px }
     section{ padding: clamp(80px, 12vw, 140px) 0; scroll-margin-top:72px }

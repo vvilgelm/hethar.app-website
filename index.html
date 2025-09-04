@@ -370,6 +370,25 @@
     section:nth-of-type(even){ background: color-mix(in srgb, var(--bg) 96%, #000) }
     footer{ border-top:1px solid color-mix(in srgb, var(--line) 90%, transparent); background: color-mix(in srgb, var(--bg) 98%, #000) }
 
+    /* --- Super Footer (Nia-like) --- */
+    footer.superfooter{ position:relative; overflow:hidden; padding:80px 0 28px; background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 98%, #000), #000); border-top:1px solid color-mix(in srgb, var(--line) 80%, transparent) }
+    footer.superfooter::before{ content:""; position:absolute; inset:0; opacity:.18; pointer-events:none;
+      background:
+        radial-gradient(circle at 1px 1px, rgba(255,255,255,.25) 1px, transparent 1px);
+      background-size: 8px 8px;
+      mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.9) 18%, #000 46%, rgba(0,0,0,.9) 86%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.9) 18%, #000 46%, rgba(0,0,0,.9) 86%, transparent 100%);
+    }
+    .footer-grid{ display:grid; gap:28px; align-items:start }
+    @media (min-width:900px){ .footer-grid{ grid-template-columns: 1.3fr 1fr 1fr 1fr } }
+    .footer-brand{ color: var(--muted); max-width:520px }
+    .footer-brand .logo svg{ height:18px; width:auto }
+    .footer-col h4{ margin:0 0 10px; font-size:14px; letter-spacing:.2px; color: color-mix(in srgb, var(--muted) 88%, #fff) }
+    .footer-links{ list-style:none; margin:0; padding:0; display:grid; gap:8px }
+    .footer-links a{ color: color-mix(in srgb, var(--muted) 90%, #fff); font-size:14px }
+    .footer-links a:hover{ color: #fff }
+    .footer-bottom{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; color: var(--muted); font-size:13px; padding-top:28px; margin-top:28px; border-top:1px solid color-mix(in srgb, var(--line) 80%, transparent) }
+
     /* Hero vignette overlay */
     .hero{ position:relative }
     .hero::before{ content:""; position:absolute; inset:-6% -2% 45% -2%; pointer-events:none; background:
@@ -592,10 +611,51 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="wrap" style="display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;color:var(--muted); font-size:13px">
-      <div>© <span id="y"></span> Hethar. All rights reserved.</div>
-      <div>Press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></div>
+  <footer class="superfooter">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo" style="display:flex;align-items:center;gap:10px">
+            <svg width="209" height="271" viewBox="0 0 209 271" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Hethar logo" role="img">
+              <path d="M123.5 113.5V270H86V113.5H41V202.5H1V1H41V75H167.5V1H208V202.5L168 203L167.5 113.5H123.5Z" fill="currentColor" stroke="currentColor"/>
+            </svg>
+            <strong>Hethar</strong>
+          </div>
+          <p style="margin:10px 0 0">The AI that lives with you. Not a tool. Not a copilot. A co-you.</p>
+          <p class="muted" style="margin:8px 0 0">Press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></p>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#what">What it is</a></li>
+            <li><a href="#vision">Vision</a></li>
+            <li><a href="mailto:team@hethar.app?subject=Join%20the%20Team">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul class="footer-links">
+            <li><a href="#different">How we’re different</a></li>
+            <li><a href="#access">Access</a></li>
+            <li><a href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Book a Demo</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul class="footer-links">
+            <li><a href="/privacy.html">Privacy</a></li>
+            <li><a href="/terms.html">Terms</a></li>
+            <li><a href="mailto:security@hethar.app">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>© <span id="y"></span> Hethar, Inc. All rights reserved.</div>
+        <div style="display:flex;gap:14px">
+          <a href="#access">Join The Team</a>
+          <a href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Schedule a Call</a>
+        </div>
+      </div>
     </div>
   </footer>
 

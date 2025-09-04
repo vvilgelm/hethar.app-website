@@ -248,6 +248,15 @@
       .pendant svg{ width:260px }
     }
 
+    /* Prefer higher contrast where requested */
+    @media (prefers-contrast: more){
+      .muted{ color: color-mix(in srgb, var(--muted) 80%, #e6eaee) }
+      .btn{ border-color: color-mix(in srgb, var(--line) 80%, transparent) }
+      header.is-scrolled .nav{ background: rgba(0,0,0,.6) }
+      .card{ border-color: color-mix(in srgb, var(--line) 70%, transparent) }
+      .pill-nav a{ background: color-mix(in srgb, var(--pill) 92%, transparent) }
+    }
+
     /* --- Premium dark background texture --- */
     body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background:

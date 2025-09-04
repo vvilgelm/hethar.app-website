@@ -519,8 +519,11 @@
       });
     }, {threshold:.15});
     document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-    // Staggered delay for siblings
-    document.querySelectorAll('.reveal').forEach((el,i)=>{ el.style.setProperty('--d', (i*0.05)+'s'); });
+    // Staggered delay per section/container
+    document.querySelectorAll('section .wrap, .hero-grid, .mnav-links').forEach(container=>{
+      const items = container.querySelectorAll('.reveal');
+      items.forEach((el,i)=> el.style.setProperty('--d', (i*0.06)+'s'));
+    });
 
     // Micro parallax for hero pendant
     const pend = document.querySelector('.pendant');

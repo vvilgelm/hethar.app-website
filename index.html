@@ -85,9 +85,9 @@
     .hero-visual{margin:0 auto;max-width:520px}
     .visual-card{border-radius:24px;background:linear-gradient(180deg,var(--accent),transparent 70%);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;position:relative}
     .pendant{width:100%;aspect-ratio:4/3;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .25s ease;will-change:transform;background:
-      radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
-      radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
-      linear-gradient(180deg, rgba(255,255,255,.04), transparent);
+        radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), transparent);
       animation:float 6s ease-in-out infinite}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
@@ -203,6 +203,15 @@
     ::selection{ background: color-mix(in srgb, var(--fg) 18%, transparent); color: var(--fg) }
     :focus-visible{ outline:2px solid color-mix(in srgb, var(--fg) 50%, #8ab4ff); outline-offset:3px; border-radius:10px }
 
+    /* --- Cadence + CTA sizing (Apple-like rhythm) --- */
+    .hero{ padding: 120px 0 56px }
+    section{ padding: clamp(100px, 14vw, 180px) 0 }
+    h2{ margin: 0 0 16px }
+    .grid{ gap: 32px }
+    .hero-cta .btn{ font-size: 15px; padding: 14px 22px }
+    .hero-cta .btn.primary{ font-weight: 800 }
+    .btn{ border-radius: 10px }
+
     /* --- Premium dark background texture --- */
     body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
       background:
@@ -247,7 +256,7 @@
           <a href="#sucks">Why yours sucks</a>
           <a href="#different">How we’re different</a>
           <a href="#access">Access</a>
-        </nav>
+      </nav>
       </div>
 
       <div style="display:flex;gap:10px;align-items:center">
@@ -297,34 +306,34 @@
       <div>
         <span class="tag reveal">⚡ Early Access · Q4 2025</span>
         <h1 class="h1 reveal" style="transition-delay:.05s"> Second brain? Cute. Get a second you.</h1>
-        <p class="lede reveal" style="transition-delay:.1s">
+    <p class="lede reveal" style="transition-delay:.1s">
           Every ‘AI assistant’ is mid. They wait for prompts like it’s still 2023.<br>
           Hethar lives with you, decides for you, and actually runs your life.
-        </p>
-        <div class="hero-cta reveal" style="transition-delay:.15s">
+    </p>
+    <div class="hero-cta reveal" style="transition-delay:.15s">
           <a class="btn primary" href="mailto:ditch@hethar.app?subject=Drop%20your%20assistant">Drop your assistant →</a>
           <a class="btn" href="#" data-cal-link="vlad-wilhelm-hethar/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","theme":"auto"}'>Schedule a call</a>
         </div>
         <div class="small muted reveal" style="margin-top:10px">Not a tool. Not a copilot. A co-you.</div>
-      </div>
+    </div>
 
       <div class="hero-visual">
         <div class="visual-card reveal">
-          <div class="pendant">
+      <div class="pendant">
             <!-- Pendant placeholder -->
             <svg viewBox="0 0 200 300" role="img" aria-label="Hethar Pendant" style="filter:drop-shadow(0 30px 30px rgba(0,0,0,.35)); width:220px;">
-              <defs>
-                <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stop-color="#f5f7fa"/>
-                  <stop offset="100%" stop-color="#c9cdd4"/>
-                </linearGradient>
-              </defs>
-              <path d="M 20 30 C 60 10, 140 10, 180 30" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="6" stroke-linecap="round"/>
-              <ellipse cx="100" cy="170" rx="55" ry="75" fill="url(#metal)" />
-              <circle cx="100" cy="140" r="14" fill="#0b0b0c" />
-              <circle cx="100" cy="140" r="4" fill="#9aa0a6" />
-              <rect x="88" y="195" width="24" height="4" rx="2" fill="#a8adb7" />
-            </svg>
+          <defs>
+            <linearGradient id="metal" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0%" stop-color="#f5f7fa"/>
+              <stop offset="100%" stop-color="#c9cdd4"/>
+            </linearGradient>
+          </defs>
+          <path d="M 20 30 C 60 10, 140 10, 180 30" fill="none" stroke="rgba(255,255,255,.6)" stroke-width="6" stroke-linecap="round"/>
+          <ellipse cx="100" cy="170" rx="55" ry="75" fill="url(#metal)" />
+          <circle cx="100" cy="140" r="14" fill="#0b0b0c" />
+          <circle cx="100" cy="140" r="4" fill="#9aa0a6" />
+          <rect x="88" y="195" width="24" height="4" rx="2" fill="#a8adb7" />
+        </svg>
           </div>
         </div>
         <div class="small muted" style="padding:10px 2px;text-align:center">
@@ -343,7 +352,7 @@
         They brag about being “agents” but can’t even run your calendar.
       </p>
 
-      <div class="grid grid-3" style="margin-top:24px">
+        <div class="grid grid-3" style="margin-top:24px">
         <div class="card reveal"><strong>Copilots ≠ pilots</strong><br><span class="muted">They just autocomplete tasks.</span></div>
         <div class="card reveal"><strong>Memory ≠ intelligence</strong><br><span class="muted">Remembering ≠ knowing what to do.</span></div>
         <div class="card reveal"><strong>Assistants ≠ partners</strong><br><span class="muted">They’re order-takers, not decision-makers.</span></div>

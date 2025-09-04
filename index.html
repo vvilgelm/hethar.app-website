@@ -747,6 +747,23 @@
     window.addEventListener('resize', ()=>{ fallbackSpy(); requestUpdate(); }, {passive:true});
     fallbackSpy();
 
+    // IntersectionObserver-based scrollspy (center-line detection)
+    try{
+      const spyObserver = new IntersectionObserver((entries)=>{
+        // Choose the most central intersecting section
+        let chosen = null; let best = -Infinity;
+        entries.forEach(e=>{
+          if(!e.isIntersecting) return;
+          const rect = e.target.getBoundingClientRect();
+          const center = rect.top + rect.height/2;
+          const distToCenter = -Math.abs(center - (window.innerHeight/2));
+          if(distToCenter > best){ best = distToCenter; chosen = e.target.id; }
+        });
+        if(chosen) setActive(chosen);
+      }, { root: null, rootMargin: '-35% 0px -35% 0px', threshold: [0, 0.01, 0.25, 0.5, 0.75, 1] });
+      sections.forEach(id=>{ const el = document.getElementById(id); if(el) spyObserver.observe(el); });
+    }catch(err){ /* fallback already handles */ }
+
     // Sliding active indicator (desktop nav)
     const navEl = document.querySelector('.pill-nav');
     const activePill = navEl ? navEl.querySelector('.active-pill') : null;

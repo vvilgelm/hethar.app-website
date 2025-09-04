@@ -47,14 +47,14 @@
     @media (min-width:900px){ .nav-center{display:block} }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
     .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding .25s ease, gap .25s ease, border-color .25s ease, box-shadow .25s ease, background .25s ease}
-    .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding .25s ease, font-size .25s ease, background .2s ease}
+    .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding .25s ease, font-size .25s ease, background .2s ease; font-size:13.5px; letter-spacing:.2px}
     .pill-nav a.active{position:relative}
     .pill-nav a.active::after{content:""; position:absolute; left:50%; bottom:-6px; width:8px; height:2px; background:var(--fg); transform:translateX(-50%); border-radius:2px}
     .pill-nav a:hover{background:var(--accent);opacity:1}
     .pill-nav a.active{background:var(--accent);opacity:1}
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 18px;border-radius:999px;border:1px solid var(--line);
+      padding:12px 18px;border-radius:10px;border:1px solid var(--line);
       background:var(--pill); color:var(--fg);
       transition:transform .2s ease, background .2s ease, border-color .2s ease;
       font-weight:700; letter-spacing:.2px;

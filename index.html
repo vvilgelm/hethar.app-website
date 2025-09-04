@@ -50,13 +50,12 @@
     .nav-center{display:none}
     @media (min-width:900px){ .nav-center{display:block} }
     @media (min-width:900px){ header.is-scrolled .logo svg{height:16px; top:0} }
-    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding var(--dur) var(--ease), gap var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease)}
-    .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding var(--dur) var(--ease), font-size var(--dur) var(--ease), background .2s var(--ease); font-size:13.5px; letter-spacing:.2px; position:relative}
-    .pill-nav a::after{content:""; position:absolute; left:50%; bottom:-6px; width:16px; height:2px; background:var(--fg); transform:translateX(-50%) scaleX(0); transform-origin:center; border-radius:2px; transition:transform .22s var(--ease)}
-    .pill-nav a:hover::after{ transform:translateX(-50%) scaleX(1) }
-    .pill-nav a.active::after{ transform:translateX(-50%) scaleX(1) }
+    .pill-nav{display:flex; gap:6px; padding:8px; border:1px solid transparent; background:var(--pill); border-radius:999px; transition:padding var(--dur) var(--ease), gap var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), background var(--dur) var(--ease); position:relative}
+    .pill-nav a{padding:10px 14px;border-radius:10px;opacity:.9; transition:padding var(--dur) var(--ease), font-size var(--dur) var(--ease), background .2s var(--ease); font-size:13.5px; letter-spacing:.2px; position:relative; z-index:2}
+    .pill-nav .active-pill{ content:""; position:absolute; z-index:1; top:4px; bottom:4px; width:0; border-radius:8px; background:var(--accent); transition: left .28s var(--ease), width .28s var(--ease), opacity .28s var(--ease); opacity:0 }
+    .pill-nav a.active ~ .active-pill{ opacity:1 }
     .pill-nav a:hover{background:var(--accent);opacity:1}
-    .pill-nav a.active{background:var(--accent);opacity:1}
+    .pill-nav a.active{opacity:1}
     .nav a{ text-underline-offset: 3px }
     .btn{
       display:inline-flex;align-items:center;justify-content:center;
@@ -362,6 +361,7 @@
           <a href="#sucks">Why yours sucks</a>
           <a href="#different">How we’re different</a>
           <a href="#access">Access</a>
+          <span class="active-pill" aria-hidden="true"></span>
       </nav>
       </div>
 
@@ -639,6 +639,7 @@
       navLinks.forEach(a=>a.classList.remove('active'));
       const target = document.querySelector(`.pill-nav a[href='${map[id]}']`);
       if(target) target.classList.add('active');
+      updateActivePillPosition();
     };
 
     const fallbackSpy = ()=>{
@@ -657,6 +658,24 @@
     };
     window.addEventListener('resize', ()=>{ fallbackSpy(); updateHeader(); }, {passive:true});
     fallbackSpy();
+
+    // Sliding active indicator (desktop nav)
+    const navEl = document.querySelector('.pill-nav');
+    const activePill = navEl ? navEl.querySelector('.active-pill') : null;
+    function updateActivePillPosition(){
+      if(!navEl || !activePill) return;
+      const active = navEl.querySelector('a.active') || navEl.querySelector('a');
+      if(!active){ activePill.style.opacity = 0; return; }
+      const navRect = navEl.getBoundingClientRect();
+      const aRect = active.getBoundingClientRect();
+      const left = Math.max(4, aRect.left - navRect.left - 6);
+      const width = Math.max(0, aRect.width + 12);
+      activePill.style.left = left + 'px';
+      activePill.style.width = width + 'px';
+      activePill.style.opacity = 1;
+    }
+    updateActivePillPosition();
+    window.addEventListener('resize', updateActivePillPosition, {passive:true});
 
     // Cal.com embed (element-click)
     (function (C, A, L) {

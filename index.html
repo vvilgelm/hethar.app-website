@@ -64,7 +64,12 @@
       background:var(--pill); color:var(--fg);
       transition:transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
       font-weight:700; letter-spacing:.2px;
+      position:relative; overflow:hidden
     }
+    .btn::after{ content:""; position:absolute; inset:-40% -40%; pointer-events:none;
+      background: radial-gradient(220px 220px at var(--rx,50%) var(--ry,50%), rgba(255,255,255,.18), transparent 45%);
+      opacity:0; transition: opacity .35s var(--ease) }
+    .btn.ripple::after{ opacity:1 }
     .btn:hover{transform:translateY(-1px);border-color:color-mix(in srgb, var(--fg) 35%, var(--line));}
     .btn.primary{background:var(--cta-bg);color:var(--cta);border-color:transparent}
     .btn.primary:hover{ filter: brightness(0.96) }
@@ -693,6 +698,16 @@
       lastY = y;
     };
     window.addEventListener('scroll', autoHide, {passive:true});
+    // Button ripple / highlight
+    document.querySelectorAll('.btn').forEach(btn=>{
+      btn.addEventListener('pointermove', e=>{
+        const r = btn.getBoundingClientRect();
+        btn.style.setProperty('--rx', (e.clientX - r.left)+'px');
+        btn.style.setProperty('--ry', (e.clientY - r.top)+'px');
+      }, {passive:true});
+      btn.addEventListener('pointerenter', ()=>btn.classList.add('ripple'));
+      btn.addEventListener('pointerleave', ()=>btn.classList.remove('ripple'));
+    });
   </script>
 </body>
 </html>

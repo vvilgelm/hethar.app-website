@@ -39,7 +39,8 @@
     .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
 
     /* --- Header / Nav --- */
-    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;border-bottom:none}
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;background:transparent;border-bottom:none; transition: transform var(--dur) var(--ease)}
+    header.hidden{ transform: translateY(-100%) }
     .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
     /* Premium nav transitions */
     .nav{transition:height var(--dur) var(--ease), background var(--dur) var(--ease), border-color var(--dur) var(--ease), backdrop-filter var(--dur) var(--ease)}
@@ -683,6 +684,15 @@
     };
     window.addEventListener('scroll', topTick, {passive:true});
     topTick();
+    // Hide header on scroll down, show on up
+    let lastY = 0;
+    const autoHide = ()=>{
+      const y = (document.documentElement.scrollTop||window.scrollY);
+      const goingDown = y > lastY && y > 80;
+      headerEl.classList.toggle('hidden', goingDown);
+      lastY = y;
+    };
+    window.addEventListener('scroll', autoHide, {passive:true});
   </script>
 </body>
 </html>

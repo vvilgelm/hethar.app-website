@@ -414,6 +414,9 @@
     /* Canvas particles */
     .ufx{ position:absolute; inset:0; mix-blend-mode:screen; opacity:.5 }
     @media (prefers-reduced-motion: reduce){ .ufx{ display:none } }
+    /* Co-You interactive canvas */
+    .co-you{ position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:.9 }
+    @media (max-width:720px){ .co-you{ opacity:.7 } }
 
     /* Hero vignette overlay */
     .hero{ position:relative }
@@ -688,6 +691,7 @@
   <!-- Under-Footer unique band -->
   <div class="under-footer" aria-hidden="true">
     <canvas class="ufx" id="ufx"></canvas>
+    <canvas class="co-you" id="coyou"></canvas>
     <div class="uf-aurora a1"></div>
     <div class="uf-aurora a2"></div>
     <div class="uf-aurora a3"></div>
@@ -912,6 +916,57 @@
         requestAnimationFrame(draw);
       };
       requestAnimationFrame(draw);
+      window.addEventListener('resize', init, {passive:true});
+    }
+
+    // "Co-You" generative signature: dots align into a mirrored you when hovered
+    const cy = document.getElementById('coyou');
+    if(cy && cy.getContext){
+      const ctx = cy.getContext('2d');
+      let w=0,h=0,pts=[]; const COUNT=120;
+      const rnd=(a,b)=>a+Math.random()*(b-a);
+      const init=()=>{
+        w = cy.width = cy.clientWidth * devicePixelRatio;
+        h = cy.height = cy.clientHeight * devicePixelRatio;
+        pts = Array.from({length:COUNT}, (_,i)=>{
+          const t = i/COUNT;
+          return { x:rnd(0,w), y:rnd(h*0.15,h*0.85), tx:w*0.25 + Math.sin(t*Math.PI*2)*w*0.2, ty:h*0.5 + Math.cos(t*Math.PI*2)*h*0.18, p:Math.random() };
+        });
+      };
+      init();
+      let mx = -1, my = -1; // mouse
+      cy.addEventListener('pointermove', e=>{ const r=cy.getBoundingClientRect(); mx=(e.clientX-r.left)*devicePixelRatio; my=(e.clientY-r.top)*devicePixelRatio; }, {passive:true});
+      cy.addEventListener('pointerleave', ()=>{ mx=-1; my=-1; });
+      const loop=()=>{
+        ctx.clearRect(0,0,w,h);
+        const t = performance.now()/1000;
+        for(const p of pts){
+          // target curve + subtle breathing
+          const sx = p.tx + Math.sin(t + p.p*6)*6*devicePixelRatio;
+          const sy = p.ty + Math.cos(t*1.2 + p.p*5)*4*devicePixelRatio;
+          // mirror right side to form "co-you"
+          const sx2 = w - sx;
+          const sy2 = sy;
+          // attraction
+          const k = 0.06;
+          p.x += (sx - p.x)*k;
+          p.y += (sy - p.y)*k;
+          // mouse repel to let user sculpt the signature
+          if(mx>=0){
+            const dx = p.x - mx, dy = p.y - my; const d = Math.hypot(dx,dy);
+            const f = Math.max(0, 120*devicePixelRatio - d) / (120*devicePixelRatio);
+            p.x += (dx/(d||1)) * f * 8;
+            p.y += (dy/(d||1)) * f * 8;
+          }
+          // draw pair (left dot already in p.x,p.y)
+          const alpha = 0.12 + 0.12*Math.sin(t*2 + p.p*10);
+          ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+          ctx.beginPath(); ctx.arc(p.x,p.y,2.2*devicePixelRatio,0,Math.PI*2); ctx.fill();
+          ctx.beginPath(); ctx.arc(sx2,sy2,2.2*devicePixelRatio,0,Math.PI*2); ctx.fill();
+        }
+        requestAnimationFrame(loop);
+      };
+      requestAnimationFrame(loop);
       window.addEventListener('resize', init, {passive:true});
     }
     // Back to top visibility

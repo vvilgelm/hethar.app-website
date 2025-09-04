@@ -94,13 +94,14 @@
     .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
     .small{font-size:13px}
     .hero-visual{margin:0 auto;max-width:520px}
-    .visual-card{border-radius:24px;background:linear-gradient(180deg,var(--accent),transparent 70%);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;position:relative}
+    .visual-card{border-radius:24px;background:linear-gradient(180deg,var(--accent),transparent 70%);box-shadow:var(--shadow);border:1px solid var(--line);overflow:hidden;position:relative; will-change: transform; transition: transform var(--dur) var(--ease)}
     .pendant{width:100%;aspect-ratio:4/3;display:grid;place-items:center;transform-style:preserve-3d;transition:transform .25s ease;will-change:transform;background:
         radial-gradient(180px 220px at 30% 30%, rgba(255,255,255,.08), transparent 60%),
         radial-gradient(300px 240px at 80% 20%, rgba(255,255,255,.06), transparent 60%),
         linear-gradient(180deg, rgba(255,255,255,.04), transparent);
       animation:float 6s ease-in-out infinite}
     @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    .visual-card:hover{ transform: translateY(-2px) }
 
     /* --- Sections --- */
     section{padding:88px 0;border-bottom:1px solid var(--line); position:relative}

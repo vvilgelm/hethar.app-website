@@ -80,7 +80,7 @@
     @media (min-width:1100px){ .hero-grid{grid-template-columns:1.15fr .85fr; align-items:center} }
     .tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:var(--pill);opacity:.9}
     .h1{font-weight:850;line-height:1.02;letter-spacing:-0.02em;margin:18px 0 12px;font-size:clamp(42px,7.2vw,96px)}
-    .lede{font-size:clamp(16px,2.2vw,22px);color:var(--muted);max-width:900px}
+    .lede{font-size:clamp(16px,2.2vw,22px);color:var(--muted);max-width:900px; line-height:1.55}
     .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
     .small{font-size:13px}
     .hero-visual{margin:0 auto;max-width:520px}
@@ -98,8 +98,10 @@
     .muted{color:var(--muted)}
     .grid{display:grid;gap:28px}
     @media (min-width:900px){ .grid-2{grid-template-columns:1fr 1fr} .grid-3{grid-template-columns:repeat(3,1fr)} }
-    .card{border:1px solid var(--line);background:var(--pill);border-radius:var(--radius);padding:24px;transition:transform .2s ease, background .2s ease, border-color .2s ease}
-    .card:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--line) 65%, transparent);background:color-mix(in srgb, var(--pill) 94%, transparent)}
+    .card{border:1px solid var(--line);background:var(--pill);border-radius:var(--radius);padding:24px;transition:transform .2s ease, background .2s ease, border-color .2s ease, box-shadow .2s ease; box-shadow:0 1px 0 rgba(255,255,255,.04) inset, 0 -1px 0 rgba(0,0,0,.4) inset}
+    .card:hover{transform:translateY(-2px);border-color:color-mix(in srgb, var(--line) 60%, transparent);background:color-mix(in srgb, var(--pill) 94%, transparent); box-shadow:0 2px 0 rgba(255,255,255,.04) inset, 0 -1px 0 rgba(0,0,0,.5) inset}
+    .card:active{transform:translateY(-1px) scale(.997)}
+    .card:focus-visible{outline:2px solid color-mix(in srgb, var(--fg) 28%, #8ab4ff); outline-offset:3px}
     .list{margin:0;padding:0;list-style:none;display:grid;gap:12px}
     .list li{display:flex;gap:10px}
     .check{width:18px;height:18px;border-radius:50%;background:linear-gradient(180deg,#fff,#9aa0a6);margin-top:5px;flex:none}
@@ -218,6 +220,12 @@
     .hero-cta .btn{ font-size: 15px; padding: 14px 22px }
     .hero-cta .btn.primary{ font-weight: 800 }
     .btn{ border-radius: 10px }
+    .btn:active{ transform: translateY(0) scale(.99) }
+
+    /* Subtle scrollbar */
+    *::-webkit-scrollbar{ width:10px; height:10px }
+    *::-webkit-scrollbar-thumb{ background:#1f1f1f; border:2px solid #0b0b0c; border-radius:10px }
+    *::-webkit-scrollbar-track{ background:#0b0b0c }
 
     /* --- Premium dark background texture --- */
     body::before{ content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;

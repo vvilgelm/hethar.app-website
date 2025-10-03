@@ -208,92 +208,6 @@
       100% { opacity: 0; transform: translateY(-4px); }
     }
     
-    /* --- Operator Takeover primitives --- */
-    .hero-line {
-      position: relative;
-      display: inline-block;
-      font-variation-settings: "wght" 800;
-      text-rendering: geometricPrecision;
-    }
-
-    /* 1) Kill-stroke (precise strike-through sweep) */
-    .operator-strike {
-      position: absolute;
-      left: 0; right: 0;
-      top: 52%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
-      transform: scaleX(0);
-      transform-origin: left center;
-      will-change: transform;
-    }
-
-    /* 2) Global scanline pass */
-    .operator-scanline {
-      position: fixed;
-      left: 0; right: 0;
-      top: -2px;
-      height: 2px;
-      z-index: 9999;
-      pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
-      opacity: 0;
-    }
-
-    /* 3) Ghost echo during delete */
-    .operator-ghost {
-      position: absolute;
-      inset: 0;
-      color: #90EE90;
-      opacity: 0;
-      pointer-events: none;
-      mix-blend-mode: screen;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-      transform: translateY(2px);
-      filter: blur(.2px);
-    }
-
-    /* 4) Terminal whisper (bottom-left) */
-    .operator-whisper {
-      position: fixed;
-      left: 20px; bottom: 20px;
-      color: var(--muted);
-      font: 12px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,"Courier New",monospace;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity .22s var(--ease), transform .22s var(--ease);
-      pointer-events: none;
-      z-index: 9998;
-    }
-
-    /* Cursor magnet effect (brief) */
-    .cursor-magnet {
-      animation: magnet .28s var(--ease) 1 both;
-    }
-    @keyframes magnet {
-      from { text-shadow: none; transform: translateY(0) }
-      to   { text-shadow: 0 0 14px rgba(255,255,255,.18); transform: translateY(-0.5px) }
-    }
-
-    /* Scanline travel */
-    @keyframes scan {
-      0% { transform: translateY(-2px); opacity: .0 }
-      10% { opacity: .6 }
-      100% { transform: translateY(100vh); opacity: 0 }
-    }
-
-    /* Strike expand */
-    @keyframes strike {
-      from { transform: scaleX(0) }
-      to   { transform: scaleX(1) }
-    }
-
-    /* Optional: darken bg subtly during takeover */
-    .body-dim {
-      transition: background-color .28s var(--ease);
-      background-color: color-mix(in srgb, var(--ink) 92%, #000 8%);
-    }
-    
     /* ============================================ */
     /* WORLD BOOT SEQUENCE (aperture + shutters) */
     /* ============================================ */
@@ -398,7 +312,7 @@
       <!-- Hero -->
       <section id="hero" class="fullscreen fold">
       <div class="container">
-        <h1 class="h1 hero-line" id="hero-headline"></h1>
+        <h1 class="h1" id="hero-headline"></h1>
         <p class="hero-sub"><span class="muted" id="hero-sub"></span></p>
         <p id="adaptive-line" class="adaptive-line"></p>
         <div class="cta-row">

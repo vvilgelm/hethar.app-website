@@ -404,8 +404,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('reduced-motion');
   }
   
-  // Cold open
-  coldOpen();
+  // Cold open - Matrix operator style
+  if (typeof coldOpenMatrix === 'function') {
+    coldOpenMatrix();
+  } else {
+    coldOpen();
+  }
   
   setTimeout(() => {
     // Init predictive hover on all interactive elements

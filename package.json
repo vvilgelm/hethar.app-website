@@ -1,0 +1,26 @@
+{
+  "name": "hethar.app-website",
+  "version": "1.0.0",
+  "main": "create-assets-quick.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvilgelm/hethar.app-website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvilgelm/hethar.app-website/issues"
+  },
+  "homepage": "https://github.com/vvilgelm/hethar.app-website#readme",
+  "description": "",
+  "devDependencies": {
+    "sharp": "^0.34.4"
+  }
+}

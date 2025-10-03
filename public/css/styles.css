@@ -1,4 +1,4 @@
-/* Hethar Design System */
+/* Hethar Design System - Exact Implementation */
 
 /* Typography */
 .h1, .h2, .line {
@@ -11,6 +11,20 @@
   font-size: clamp(40px, 8vw, 120px);
   line-height: 1.05;
   margin-bottom: 1rem;
+}
+
+.h1.breath {
+  animation: breath 6s ease-in-out infinite;
+}
+
+.echo {
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+@keyframes breath {
+  0% { transform: scale(0.998); }
+  50% { transform: scale(1); }
+  100% { transform: scale(0.998); }
 }
 
 .h2 {
@@ -115,13 +129,6 @@ section {
   margin-bottom: 3rem;
 }
 
-@media (min-width: 768px) {
-  .contrast-grid {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-  }
-}
-
 .vision-lines {
   margin-top: 3rem;
 }
@@ -181,6 +188,25 @@ section {
   outline-offset: 3px;
 }
 
+/* Whispers */
+.whisper {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  color: var(--muted);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
+  pointer-events: none;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+.whisper.on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Footer */
 footer {
   padding: 2rem 0;
@@ -202,7 +228,8 @@ footer {
   }
 }
 
-.footer-left, .footer-right {
+.footer-left,
+.footer-right {
   font-size: 14px;
   color: var(--muted);
 }
@@ -216,53 +243,11 @@ footer {
   text-decoration: underline;
 }
 
-/* Motion */
-.h1.breath {
-  animation: breath 6s ease-in-out infinite;
-}
-
-.echo {
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-@keyframes breath {
-  0% { transform: scale(0.998); }
-  50% { transform: scale(1); }
-  100% { transform: scale(0.998); }
-}
-
-/* Whispers */
-.whisper {
-  position: fixed;
-  left: 24px;
-  bottom: 24px;
-  color: var(--muted);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.22s var(--ease), transform 0.22s var(--ease);
-  pointer-events: none;
-  font-size: 14px;
-  z-index: 1000;
-}
-
-.whisper.on {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
-  }
-  
-  .h1.breath {
-    animation: none;
-  }
-  
-  .echo {
-    text-shadow: none;
   }
 }
 
@@ -271,28 +256,28 @@ footer {
   .container {
     padding: 0 1.5rem;
   }
-  
+
   .h1 {
     font-size: clamp(32px, 10vw, 48px);
   }
-  
+
   .h2 {
     font-size: clamp(28px, 8vw, 40px);
   }
-  
+
   .line {
     font-size: clamp(28px, 8vw, 48px);
   }
-  
+
   .vision-line {
     font-size: clamp(20px, 6vw, 32px);
   }
-  
+
   .cta-row {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .btn {
     width: 100%;
     justify-content: center;
@@ -315,9 +300,8 @@ a:focus-visible {
   .muted {
     color: #B0B4B8;
   }
-  
+
   .btn {
     border-width: 2px;
   }
 }
-

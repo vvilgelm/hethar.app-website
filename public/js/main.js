@@ -65,53 +65,40 @@ function populateContent() {
 
 populateContent();
 
-// 0. Sound: 1s low room tone on first entry (-24 LUFS ≈ 0.063 volume)
-function playEntryTone() {
-  if (sessionStorage.getItem('entryTonePlayed')) return;
+// 0. Sound — Room tone on first entry (1s, -24 LUFS equivalent)
+const playRoomTone = () => {
+  if (sessionStorage.getItem('roomTonePlayed')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   
   try {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    const ctx = new AudioContext();
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     
-    // Create very subtle room tone (60Hz + 120Hz harmonics)
-    const osc1 = ctx.createOscillator();
-    const osc2 = ctx.createOscillator();
-    const gain = ctx.createGain();
+    // Low frequency oscillator (presence hum)
+    const oscillator = audioCtx.createOscillator();
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(110, audioCtx.currentTime); // Low A
     
-    osc1.type = 'sine';
-    osc1.frequency.value = 60;  // Deep bass
-    osc2.type = 'sine';
-    osc2.frequency.value = 120; // First harmonic
+    // Gain node (very quiet: -24 LUFS ≈ 0.063 linear gain)
+    const gainNode = audioCtx.createGain();
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.1); // Fade in
+    gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime + 0.9); // Hold
+    gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.0); // Fade out
     
-    // -24 LUFS ≈ 0.063 gain (very quiet, barely perceptible)
-    gain.gain.value = 0.063;
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
     
-    osc1.connect(gain);
-    osc2.connect(gain);
-    gain.connect(ctx.destination);
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + 1.0);
     
-    const now = ctx.currentTime;
-    osc1.start(now);
-    osc2.start(now);
-    osc1.stop(now + 1.0);
-    osc2.stop(now + 1.0);
-    
-    sessionStorage.setItem('entryTonePlayed', '1');
+    sessionStorage.setItem('roomTonePlayed', '1');
   } catch (e) {
-    // Silently fail if Web Audio not supported
+    // Silent fail (autoplay blocked or AudioContext unavailable)
   }
-}
-
-// Play tone on first user interaction (browsers require user gesture)
-const playOnce = () => {
-  playEntryTone();
-  ['click', 'keydown', 'touchstart'].forEach(ev => 
-    document.removeEventListener(ev, playOnce)
-  );
 };
-['click', 'keydown', 'touchstart'].forEach(ev => 
-  document.addEventListener(ev, playOnce, { once: true, passive: true })
-);
+
+// Play room tone after 400ms (with entry fade)
+setTimeout(playRoomTone, 400);
 
 // 1. Entry lock + fade (400ms delay, then 1.2s scroll lock)
 document.documentElement.classList.add('no-scroll');

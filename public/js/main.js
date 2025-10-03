@@ -1,4 +1,4 @@
-// Hethar Main Behaviors - Exact Implementation
+// Hethar Presence Design System - Full Spec v1.0
 
 // Populate ALL content from COPY object (single source of truth)
 function populateContent() {
@@ -42,15 +42,15 @@ function populateContent() {
   document.getElementById('different-right').textContent = C.different.right;
   document.getElementById('different-kicker').textContent = C.different.kicker;
   
-  // Vision
+  // Vision (full-screen scroll lines)
   document.getElementById('vision-head').textContent = C.vision.head;
   const visionLines = document.getElementById('vision-lines');
   visionLines.innerHTML = '';
   C.vision.lines.forEach(line => {
-    const p = document.createElement('p');
-    p.className = 'vision-line';
-    p.textContent = line;
-    visionLines.appendChild(p);
+    const div = document.createElement('div');
+    div.className = 'vision-line echo';
+    div.textContent = line;
+    visionLines.appendChild(div);
   });
   document.getElementById('vision-closer').textContent = C.vision.closer;
   
@@ -65,7 +65,7 @@ function populateContent() {
 
 populateContent();
 
-// 1. Entry lock + fade
+// 1. Entry lock + fade (400ms delay, then 1.2s scroll lock)
 document.documentElement.classList.add('no-scroll');
 setTimeout(() => document.documentElement.classList.remove('no-scroll'), 1200);
 
@@ -86,7 +86,7 @@ if (window.__CITY && !sessionStorage.getItem('geoLineShown')) {
   }
 }
 
-// 4. Whispers: idle / exit / seeking
+// 4. Whispers: idle / exit / seeking (exact spec timing: 1600ms fade)
 let idle;
 const whisper = (msg) => {
   const w = document.createElement('div');
@@ -94,7 +94,7 @@ const whisper = (msg) => {
   w.textContent = msg;
   document.body.appendChild(w);
   requestAnimationFrame(() => w.classList.add('on'));
-  setTimeout(() => w.classList.remove('on'), 1400);
+  setTimeout(() => w.classList.remove('on'), 1600);
   setTimeout(() => w.remove(), 2000);
 };
 
@@ -121,7 +121,7 @@ window.addEventListener('mouseout', e => {
   if (e.relatedTarget === null) whisper('don\'t worry. i keep going.');
 });
 
-// 5. Anticipation (pre-hover nudge)
+// 5. Anticipation (pre-hover nudge) - 80ms timing
 const anticipate = (el, r = 40) => {
   const b = () => el.getBoundingClientRect();
   let armed = false;
@@ -130,6 +130,7 @@ const anticipate = (el, r = 40) => {
     const inZone = e.clientX > R.left - r && e.clientX < R.right + r && e.clientY > R.top - r && e.clientY < R.bottom + r;
     if (inZone && !armed) {
       armed = true;
+      el.style.transition = 'transform 0.08s cubic-bezier(.22,.61,.36,1)';
       el.style.transform = 'translateY(-1px)';
     }
     if (!inZone && armed) {
@@ -143,17 +144,19 @@ setTimeout(() => {
   document.querySelectorAll('.btn, a').forEach(anticipate);
 }, 100);
 
-// 6. Echo cursor lag (for .echo headlines)
+// 6. Echo cursor lag (120-180ms lag via 0.08 lerp factor) - opacity 0.08
 const echoEls = [...document.querySelectorAll('.echo')];
 let targetX = 0, targetY = 0, echoX = 0, echoY = 0;
+
 window.addEventListener('mousemove', e => {
   targetX = e.clientX;
   targetY = e.clientY;
 }, { passive: true });
 
 const tick = () => {
-  echoX += (targetX - echoX) * 0.12;
-  echoY += (targetY - echoY) * 0.12;
+  // 0.08 lerp factor creates ~150ms lag at 60fps
+  echoX += (targetX - echoX) * 0.08;
+  echoY += (targetY - echoY) * 0.08;
   const dx = Math.round((echoX - window.innerWidth / 2) / 400);
   const dy = Math.round((echoY - window.innerHeight / 2) / 400);
   echoEls.forEach(el => {

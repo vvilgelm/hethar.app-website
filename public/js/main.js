@@ -170,7 +170,7 @@ window.addEventListener('scroll', () => {
 // Exit intent
 window.addEventListener('mouseout', e => {
   if (e.relatedTarget === null && e.clientY < 10) {
-    whisper('don't worry. i keep going.');
+    whisper('don\'t worry. i keep going.');
   }
 });
 

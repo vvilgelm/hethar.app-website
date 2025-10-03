@@ -138,132 +138,129 @@ function coldOpen() {
 }
 
 // ============================================
-// OPERATOR TAKEOVER (Matrix breach)
+// OPERATOR TAKEOVER (Beam Collapse)
 // ============================================
 /**
+ * Phase 5-8: Operator Takeover
  * Call this AFTER cold open completes.
  * Requirements:
  *  - <h1 id="hero-headline" class="hero-line">…</h1> exists
- *  - The hero line currently shows existing text (will be replaced)
  */
-function operatorTakeover() {
-  const line = document.getElementById('hero-headline');
-  if (!line) return;
+async function operatorTakeover() {
+  const hero = document.getElementById('hero-headline');
+  if (!hero) return;
+  
+  const original = hero.textContent.trim();
+  if (!original) return;
 
-  // Safety: snapshot the current text
-  const original = line.textContent.trim();
-  if (!original) return; // Don't run if line is empty
-
-  // Layer: ghost echo for the delete moment
-  const ghost = document.createElement('div');
-  ghost.className = 'operator-ghost';
-  ghost.textContent = original;
-  line.appendChild(ghost);
-
-  // Layer: precise strike element
+  // Create layers
   const strike = document.createElement('div');
   strike.className = 'operator-strike';
-  line.appendChild(strike);
+  strike.id = 'strike';
+  hero.appendChild(strike);
 
-  // Layer: global scanline
   const scan = document.createElement('div');
   scan.className = 'operator-scanline';
+  scan.id = 'scan';
   document.body.appendChild(scan);
 
-  // 0) Brief stillness so it feels intentional
-  setTimeout(() => {
-    // 1) Slow, deliberate delete with green echo
-    slowDeleteWithGhost(line, ghost, original, () => {
-      // 2) Kill-stroke across the now-empty line
-      strike.style.animation = 'strike .22s var(--ease) forwards';
+  // Helper: sleep
+  const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-      // 3) Single scanline sweep + subtle dim
-      requestAnimationFrame(() => {
-        document.body.classList.add('body-dim');
-        scan.style.animation = 'scan .6s var(--ease) forwards';
-        // 4) Terminal whisper
-        terminalWhisper('[link established] operator: control transferred');
-      });
+  // Phase 5: Crossout Verdict (250ms)
+  // Strike draws left → right across the line
+  strike.style.opacity = '1';
+  strike.style.transform = 'scaleX(1)';
+  strike.style.transition = 'transform .25s var(--ease), opacity .25s var(--ease)';
+  await sleep(260);
 
-      // 5) Cursor magnet micro-jolt on the line
-      line.classList.add('cursor-magnet');
+  // Phase 6: Line Seize + Scan (600ms)
+  // Scanline sweeps top → bottom + background dims + audio click
+  try {
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
+    gainNode.gain.setValueAtTime(0.015, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    oscillator.start(audioCtx.currentTime);
+    oscillator.stop(audioCtx.currentTime + 0.1);
+  } catch (e) {
+    // Silent fail
+  }
+  
+  document.body.classList.add('scan-dim');
+  scan.style.transition = 'transform .60s linear';
+  scan.style.transform = 'translateY(100vh)';
+  await sleep(620);
 
-      // 6) Retype with authority
-      setTimeout(() => {
-        line.classList.remove('cursor-magnet');
-        typeCommandClean(line, 'retire the prompt.', 28 /*speed*/, () => {
-          // cleanup overlays after finish
-          setTimeout(() => {
-            strike.remove();
-            ghost.remove();
-            scan.remove();
-            setTimeout(() => document.body.classList.remove('body-dim'), 200);
-          }, 200);
-        });
-      }, 320);
+  // Phase 7: Beam Collapse (320ms)
+  // Wrap content in beam span for scale transforms
+  if (!hero.querySelector('.beam')) {
+    const span = document.createElement('span');
+    span.className = 'beam';
+    span.textContent = hero.textContent;
+    // Remove text nodes only
+    [...hero.childNodes].forEach(n => {
+      if (n.nodeType === Node.TEXT_NODE) hero.removeChild(n);
     });
-  }, 400);
-}
+    hero.insertBefore(span, hero.firstChild);
+  }
+  const beam = hero.querySelector('.beam');
 
-/** Deletes text one char at a time; ghost echoes during the operation */
-function slowDeleteWithGhost(lineEl, ghostEl, text, done) {
-  let i = text.length;
-  const base = document.createTextNode(text);
-  lineEl.firstChild && lineEl.removeChild(lineEl.firstChild);
-  lineEl.insertBefore(base, ghostEl);
+  // Collapse X → Y
+  beam.classList.add('collapse-x');
+  await sleep(210);
+  beam.classList.add('collapse-y');
+  await sleep(130);
 
-  const tick = () => {
-    if (i <= 0) {
-      // fully deleted
-      base.nodeValue = '';
-      ghostEl.style.opacity = '0'; // hide any remainder
-      return setTimeout(done, 90);
-    }
-    // delete one char (slower than typing) + show ghost briefly
-    base.nodeValue = text.slice(0, i - 1);
-    ghostEl.textContent = text.slice(0, i);
-    ghostEl.style.opacity = '0.14';
-    ghostEl.style.transform = 'translateY(2px)';
-    setTimeout(() => { ghostEl.style.opacity = '0' }, 140);
-    i--;
-    setTimeout(tick, 42 + Math.random() * 22); // slight humanization
-  };
-  tick();
-}
+  // Reset strike & scan
+  strike.style.opacity = '0';
+  scan.style.transition = 'none';
+  scan.style.transform = 'translateY(-100vh)';
 
-/** Types the target string with confident cadence (no cursor blink) */
-function typeCommandClean(lineEl, target, cps = 30, done) {
-  // Clear line content (remove text nodes only, keep layers)
-  [...lineEl.childNodes].forEach(n => {
-    if (n.nodeType === Node.TEXT_NODE) lineEl.removeChild(n);
-  });
-  const textNode = document.createTextNode('');
-  lineEl.insertBefore(textNode, lineEl.firstChild);
+  // Phase 8: Command Injection (retype "retire the prompt.")
+  // Reset beam for new text
+  beam.classList.remove('collapse-x', 'collapse-y');
+  beam.style.transform = 'none';
+  beam.textContent = '';
 
-  let i = 0;
-  const step = () => {
-    if (i > target.length) return done && done();
-    textNode.nodeValue = target.slice(0, i++);
-    setTimeout(step, Math.max(8, 1000 / cps)); // faster than human, not robotic
-  };
-  step();
-}
+  const line = 'retire the prompt.';
+  
+  // Type with subtle echo ghosts
+  for (let i = 0; i < line.length; i++) {
+    beam.textContent += line[i];
+    
+    // Optional echo: ghost char behind each typed glyph
+    const ghost = document.createElement('span');
+    ghost.textContent = line[i];
+    ghost.style.cssText = `
+      position: absolute;
+      opacity: 0.08;
+      transform: translate(1px, 1px);
+      pointer-events: none;
+      user-select: none;
+      font: inherit;
+    `;
+    const rect = hero.getBoundingClientRect();
+    ghost.style.left = rect.left + 'px';
+    ghost.style.top = rect.top + 'px';
+    document.body.appendChild(ghost);
+    setTimeout(() => ghost.remove(), 180);
+    
+    await sleep(22); // 1.1× faster than normal typing
+  }
 
-/** Bottom-left terminal whisper */
-function terminalWhisper(msg) {
-  const w = document.createElement('div');
-  w.className = 'operator-whisper';
-  w.textContent = msg;
-  document.body.appendChild(w);
-  requestAnimationFrame(() => {
-    w.style.opacity = '1';
-    w.style.transform = 'translateY(0)';
-  });
-  setTimeout(() => {
-    w.style.opacity = '0';
-    w.style.transform = 'translateY(6px)';
-    setTimeout(() => w.remove(), 220);
-  }, 1600);
+  // Hold, then cleanup
+  await sleep(600);
+  
+  // Remove overlays
+  strike.remove();
+  scan.remove();
+  setTimeout(() => document.body.classList.remove('scan-dim'), 180);
 }
 
 // ============================================

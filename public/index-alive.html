@@ -220,12 +220,13 @@
     .operator-strike {
       position: absolute;
       left: 0; right: 0;
-      top: 52%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.85), transparent);
+      top: 50%;
+      height: 1px;
+      background: rgba(255,255,255,.7);
       transform: scaleX(0);
       transform-origin: left center;
-      will-change: transform;
+      pointer-events: none;
+      opacity: 0;
     }
 
     /* 2) Global scanline pass */
@@ -236,62 +237,32 @@
       height: 2px;
       z-index: 9999;
       pointer-events: none;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,0));
-      opacity: 0;
+      background: rgba(255,255,255,.12);
+      filter: drop-shadow(0 0 8px rgba(255,255,255,.08));
+      transform: translateY(-100vh);
     }
 
-    /* 3) Ghost echo during delete */
-    .operator-ghost {
-      position: absolute;
-      inset: 0;
-      color: #90EE90;
-      opacity: 0;
-      pointer-events: none;
-      mix-blend-mode: screen;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Courier New", monospace;
-      transform: translateY(2px);
-      filter: blur(.2px);
+    /* 3) Beam element for collapse */
+    .beam {
+      display: inline-block;
+      overflow: hidden;
+      transform-origin: center center;
+    }
+    
+    .beam.collapse-x {
+      transition: transform .20s var(--ease);
+      transform: scaleX(.02);
+    }
+    
+    .beam.collapse-y {
+      transition: transform .12s var(--ease);
+      transform: scaleY(.02);
     }
 
-    /* 4) Terminal whisper (bottom-left) */
-    .operator-whisper {
-      position: fixed;
-      left: 20px; bottom: 20px;
-      color: var(--muted);
-      font: 12px/1.3 ui-monospace,SFMono-Regular,Menlo,Monaco,"Courier New",monospace;
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity .22s var(--ease), transform .22s var(--ease);
-      pointer-events: none;
-      z-index: 9998;
-    }
-
-    /* Cursor magnet effect (brief) */
-    .cursor-magnet {
-      animation: magnet .28s var(--ease) 1 both;
-    }
-    @keyframes magnet {
-      from { text-shadow: none; transform: translateY(0) }
-      to   { text-shadow: 0 0 14px rgba(255,255,255,.18); transform: translateY(-0.5px) }
-    }
-
-    /* Scanline travel */
-    @keyframes scan {
-      0% { transform: translateY(-2px); opacity: .0 }
-      10% { opacity: .6 }
-      100% { transform: translateY(100vh); opacity: 0 }
-    }
-
-    /* Strike expand */
-    @keyframes strike {
-      from { transform: scaleX(0) }
-      to   { transform: scaleX(1) }
-    }
-
-    /* Optional: darken bg subtly during takeover */
-    .body-dim {
-      transition: background-color .28s var(--ease);
-      background-color: color-mix(in srgb, var(--ink) 92%, #000 8%);
+    /* 4) Background dim during scan */
+    body.scan-dim {
+      background: #080808;
+      transition: background .6s linear;
     }
       
     /* Reduced motion */

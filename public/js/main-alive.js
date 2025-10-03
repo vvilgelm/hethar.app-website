@@ -133,14 +133,14 @@ const interludes = C.interludes;
 
 function cutToBlack() {
   const o = document.createElement('div');
-  o.style.cssText = 'position:fixed;inset:0;background:#000;color:#fff;display:grid;place-items:center;opacity:0;transition:opacity .18s ease;z-index:9999;';
-  o.innerHTML = `<div style="font:800 clamp(28px,6vw,80px)/1 system-ui;text-transform:lowercase;">${interludes[Math.floor(Math.random() * interludes.length)]}</div>`;
+  o.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;text-align:center;opacity:0;transition:opacity .3s ease;z-index:9999;pointer-events:none;';
+  o.innerHTML = `<div style="font:800 clamp(28px,6vw,80px)/1 system-ui;text-transform:lowercase;text-shadow:0 2px 20px rgba(0,0,0,0.8);">${interludes[Math.floor(Math.random() * interludes.length)]}</div>`;
   document.body.appendChild(o);
   requestAnimationFrame(() => o.style.opacity = 1);
   setTimeout(() => {
     o.style.opacity = 0;
-    setTimeout(() => o.remove(), 180);
-  }, 520);
+    setTimeout(() => o.remove(), 300);
+  }, 1800); // Stays for 1.8s (longer)
 }
 
 window.addEventListener('scroll', () => {

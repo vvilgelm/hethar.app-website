@@ -103,30 +103,12 @@ function coldOpen() {
       // Silent fail
     }
     
-    // Create scanline
-    const scanline = document.createElement('div');
-    scanline.style.cssText = `
-      position:fixed;
-      top:0;
-      left:0;
-      right:0;
-      height:2px;
-      background:rgba(0,255,0,0.3);
-      box-shadow:0 0 20px rgba(0,255,0,0.4);
-      z-index:10001;
-      animation:scanline-sweep 0.6s cubic-bezier(.22,.61,.36,1) forwards;
-    `;
-    document.body.appendChild(scanline);
-    
-    // Darken background as scanline passes
+    // Subtle background shift (no scanline)
     overlay.style.background = 'linear-gradient(180deg, #050505 0%, #000 100%)';
-    overlay.style.transition = 'background 0.6s ease';
+    overlay.style.transition = 'background 0.3s ease';
     
-    setTimeout(() => {
-      scanline.remove();
-      // Phase 4: RE-TYPE with confidence
-      setTimeout(() => retypeCommand(), 100);
-    }, 600);
+    // Phase 4: RE-TYPE with confidence
+    setTimeout(() => retypeCommand(), 200);
   }
   
   function retypeCommand() {

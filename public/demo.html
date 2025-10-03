@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hethar Effects Demo</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    :root {
+      --ink: #0A0A0A;
+      --paper: #FFFFFF;
+      --muted: #8A8D91;
+    }
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      padding: 40px;
+      opacity: 1;
+    }
+    .demo-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 1px solid #333;
+      padding: 40px 0;
+    }
+    h1 {
+      font-size: clamp(40px, 8vw, 120px);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .subtle-breath {
+      animation: breath-subtle 6s ease-in-out infinite;
+    }
+    .obvious-breath {
+      animation: breath-obvious 3s ease-in-out infinite;
+    }
+    @keyframes breath-subtle {
+      0%, 100% { transform: scale(0.998); }
+      50% { transform: scale(1); }
+    }
+    @keyframes breath-obvious {
+      0%, 100% { transform: scale(0.95); }
+      50% { transform: scale(1.05); }
+    }
+    .echo-test {
+      text-shadow: 4px 4px 0 rgba(255, 255, 255, 0.3);
+      transition: text-shadow 0.3s;
+    }
+    .btn {
+      display: inline-block;
+      padding: 16px 24px;
+      border: 1px solid var(--paper);
+      border-radius: 999px;
+      margin: 20px 10px;
+      text-decoration: none;
+      color: var(--paper);
+      transition: transform 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-4px) scale(1.05);
+    }
+    .whisper-demo {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      opacity: 0;
+      animation: whisper-appear 4s ease-in-out infinite;
+    }
+    @keyframes whisper-appear {
+      0%, 100% { opacity: 0; transform: translateY(6px); }
+      10%, 90% { opacity: 1; transform: translateY(0); }
+    }
+    p {
+      color: var(--muted);
+      max-width: 600px;
+      text-align: center;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <!-- 1. Obvious Breath -->
+  <div class="demo-section">
+    <p style="color: #0f0; margin-bottom: 40px;">✓ OBVIOUS breath animation (watch it grow/shrink)</p>
+    <h1 class="obvious-breath">retire the prompt.</h1>
+    <p>This version scales 0.95 → 1.05 (10% change) so you can clearly see it working</p>
+  </div>
+  
+  <!-- 2. Subtle Breath (Production) -->
+  <div class="demo-section">
+    <p style="color: #ff0; margin-bottom: 40px;">⚠️ SUBTLE breath animation (production version - barely visible)</p>
+    <h1 class="subtle-breath">retire the prompt.</h1>
+    <p>This is the actual effect: 0.998 → 1.000 (0.2% change) - watch very closely</p>
+  </div>
+  
+  <!-- 3. Hover Effects -->
+  <div class="demo-section">
+    <p style="color: #0f0; margin-bottom: 40px;">✓ HOVER effects</p>
+    <a href="#" class="btn">drop your assistant →</a>
+    <a href="#" class="btn">schedule nothing</a>
+    <p>Hover these buttons - they lift up and scale</p>
+  </div>
+  
+  <!-- 4. Echo Shadow -->
+  <div class="demo-section">
+    <p style="color: #0f0; margin-bottom: 40px;">✓ ECHO shadow (move mouse over it)</p>
+    <h1 class="echo-test" id="echo-headline">presence over prompts.</h1>
+    <p>Move your cursor in circles over this headline - shadow follows with delay</p>
+  </div>
+  
+  <!-- 5. Whisper -->
+  <div class="demo-section">
+    <p style="color: #0f0; margin-bottom: 40px;">✓ WHISPER animation (bottom-left, loops)</p>
+    <p>Watch the bottom-left corner - whisper appears every 4 seconds</p>
+  </div>
+  
+  <div class="whisper-demo">you paused. i noticed.</div>
+  
+  <script>
+    // Echo cursor lag effect
+    const echoEl = document.getElementById('echo-headline');
+    let targetX = 0, targetY = 0, echoX = 0, echoY = 0;
+    
+    window.addEventListener('mousemove', e => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+    }, { passive: true });
+    
+    const tick = () => {
+      echoX += (targetX - echoX) * 0.08;
+      echoY += (targetY - echoY) * 0.08;
+      const dx = Math.round((echoX - window.innerWidth / 2) / 200);
+      const dy = Math.round((echoY - window.innerHeight / 2) / 200);
+      echoEl.style.textShadow = `${dx}px ${dy}px 0 rgba(255,255,255,.3)`;
+      requestAnimationFrame(tick);
+    };
+    tick();
+  </script>
+</body>
+</html>
+

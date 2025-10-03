@@ -6,6 +6,105 @@ const track = (event, payload = {}) => {
   window.dataLayer.push({ event, ...payload, ts: Date.now() });
 };
 
+// Populate ALL content from COPY object (single source of truth)
+function populateContent() {
+  if (!window.COPY) {
+    console.error('COPY object not loaded');
+    return;
+  }
+  
+  const C = window.COPY;
+  
+  // Hero
+  const heroH1 = document.getElementById('hero-headline');
+  if (heroH1) {
+    heroH1.textContent = C.heroHeadline;
+    heroH1.setAttribute('data-text', C.heroHeadline);
+  }
+  
+  const heroSub = document.getElementById('hero-sub');
+  if (heroSub) heroSub.textContent = C.heroSub;
+  
+  const heroPrimary = document.getElementById('hero-cta-primary');
+  if (heroPrimary) heroPrimary.textContent = 'drop your assistant →';
+  
+  const heroSecondary = document.getElementById('hero-cta-secondary');
+  if (heroSecondary) heroSecondary.textContent = 'schedule nothing';
+  
+  // Interjections
+  document.querySelectorAll('[data-inject-index]').forEach(el => {
+    const idx = parseInt(el.getAttribute('data-inject-index'));
+    if (C.interjections[idx]) {
+      el.textContent = C.interjections[idx];
+    }
+  });
+  
+  // Contrast
+  const contrastHead = document.getElementById('contrast-head');
+  if (contrastHead) contrastHead.textContent = C.contrast.head;
+  
+  const contrastGrid = document.getElementById('contrast-grid');
+  if (contrastGrid) {
+    contrastGrid.innerHTML = '';
+    C.contrast.lines.forEach(line => {
+      const div = document.createElement('div');
+      div.className = 'contrast-item';
+      const p = document.createElement('p');
+      p.className = 'statement';
+      p.textContent = line;
+      div.appendChild(p);
+      contrastGrid.appendChild(div);
+    });
+  }
+  
+  const contrastCTA = document.getElementById('contrast-cta');
+  if (contrastCTA) contrastCTA.textContent = C.contrast.cta;
+  
+  // Different
+  const differentHead = document.getElementById('different-head');
+  if (differentHead) differentHead.textContent = C.different.head;
+  
+  const differentLeft = document.getElementById('different-left');
+  if (differentLeft) differentLeft.textContent = C.different.left;
+  
+  const differentRight = document.getElementById('different-right');
+  if (differentRight) differentRight.textContent = C.different.right;
+  
+  const differentKicker = document.getElementById('different-kicker');
+  if (differentKicker) differentKicker.textContent = C.different.kicker;
+  
+  // Vision
+  const visionHead = document.getElementById('vision-head');
+  if (visionHead) visionHead.textContent = C.vision.head;
+  
+  const visionLines = document.getElementById('vision-lines');
+  if (visionLines) {
+    visionLines.innerHTML = '';
+    C.vision.lines.forEach(line => {
+      const p = document.createElement('p');
+      p.className = 'vision-line';
+      p.textContent = line;
+      visionLines.appendChild(p);
+    });
+  }
+  
+  const visionCloser = document.getElementById('vision-closer');
+  if (visionCloser) visionCloser.textContent = C.vision.closer;
+  
+  // Final
+  const finalHead = document.getElementById('final-head');
+  if (finalHead) finalHead.textContent = C.final.head;
+  
+  const finalPrimary = document.getElementById('final-cta-primary');
+  if (finalPrimary) finalPrimary.textContent = C.final.primary;
+  
+  const finalSecondary = document.getElementById('final-cta-secondary');
+  if (finalSecondary) finalSecondary.textContent = C.final.secondary;
+}
+
+// Populate content immediately
+populateContent();
+
 // 1. Entry lock + fade
 document.documentElement.classList.add('no-scroll');
 setTimeout(() => {
@@ -96,7 +195,10 @@ const anticipate = (el, r = 40) => {
   }, { passive: true });
 };
 
-document.querySelectorAll('.btn, a').forEach(anticipate);
+// Apply anticipation after content is loaded
+setTimeout(() => {
+  document.querySelectorAll('.btn, a').forEach(anticipate);
+}, 100);
 
 // 6. Echo cursor lag (for .echo headlines)
 const echoEls = [...document.querySelectorAll('.echo')];
@@ -130,15 +232,16 @@ if (prefersReduced) {
 }
 
 // 8. Event hooks (analytics-ready)
-document.querySelectorAll('.btn').forEach(b =>
-  b.addEventListener('click', () =>
-    track('cta_click', { label: b.textContent.trim() })
-  )
-);
+setTimeout(() => {
+  document.querySelectorAll('.btn').forEach(b =>
+    b.addEventListener('click', () =>
+      track('cta_click', { label: b.textContent.trim() })
+    )
+  );
+}, 200);
 
 // Set current year in footer
 const yearEl = document.getElementById('year');
 if (yearEl) {
   yearEl.textContent = new Date().getFullYear();
 }
-

@@ -4,85 +4,153 @@
 const C = window.COPY;
 
 // ============================================
-// 1. COLD OPEN (typing/deleting + echo cursor)
+// 1. COLD OPEN (OPERATOR BREACH - Matrix style)
 // ============================================
 
 function coldOpen() {
   const overlay = document.createElement('div');
   overlay.id = 'cold-open';
-  overlay.style.cssText = 'position:fixed;inset:0;background:#000;color:#fff;display:grid;place-items:center;z-index:10000;';
+  overlay.style.cssText = 'position:fixed;inset:0;background:#000;color:#fff;display:grid;place-items:center;z-index:10000;overflow:hidden;';
+  
+  const textContainer = document.createElement('div');
+  textContainer.style.cssText = 'position:relative;font:700 clamp(32px,6vw,64px)/1.1 monospace;text-align:center;min-height:2em;';
   
   const text = document.createElement('div');
-  text.style.cssText = 'font:700 clamp(32px,6vw,64px)/1.1 system-ui;text-align:center;min-height:2em;';
-  overlay.appendChild(text);
+  text.style.cssText = 'position:relative;z-index:1;';
+  textContainer.appendChild(text);
+  overlay.appendChild(textContainer);
   document.body.appendChild(overlay);
   
   // Disable scroll
   document.documentElement.classList.add('no-scroll');
   
-  let i = 0;
   const line1 = C.coldOpen.line1;
   const line2 = C.coldOpen.line2;
   
-  // Type line 1
+  // Phase 1: Type line 1 (whispered)
+  let i = 0;
   const typeInterval = setInterval(() => {
     if (i < line1.length) {
-      text.textContent = line1.slice(0, i + 1);
+      text.textContent = line1.slice(0, i + 1) + '|'; // Cursor
       i++;
     } else {
       clearInterval(typeInterval);
-      // Delete 70% after pause
-      setTimeout(() => {
-        const deleteCount = Math.floor(line1.length * 0.7);
-        let d = 0;
-        const deleteInterval = setInterval(() => {
-          if (d < deleteCount) {
-            text.textContent = line1.slice(0, line1.length - d - 1);
-            d++;
-          } else {
-            clearInterval(deleteInterval);
-            // Type line 2
-            setTimeout(() => {
-              let j = 0;
-              const type2Interval = setInterval(() => {
-                if (j < line2.length) {
-                  text.textContent = line2.slice(0, j + 1);
-                  j++;
-                } else {
-                  clearInterval(type2Interval);
-                  // COOK THE TRANSITION
-                  setTimeout(() => {
-                    // Phase 1: Glitch effect
-                    overlay.style.animation = 'glitch 0.3s steps(4)';
-                    
-                    setTimeout(() => {
-                      // Phase 2: White flash + burst
-                      overlay.style.background = '#fff';
-                      overlay.style.transform = 'scale(1.05)';
-                      overlay.style.transition = 'all 0.15s ease-out';
-                      
-                      setTimeout(() => {
-                        // Phase 3: Fade out with scale down
-                        overlay.style.opacity = '0';
-                        overlay.style.transform = 'scale(0.95)';
-                        overlay.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
-                        
-                        setTimeout(() => {
-                          overlay.remove();
-                          document.documentElement.classList.remove('no-scroll');
-                          initEchoCursor(); // Start echo cursor after cold open
-                        }, 250);
-                      }, 100);
-                    }, 300);
-                  }, 800);
-                }
-              }, 50);
-            }, 100);
-          }
-        }, 35); // Faster delete
-      }, 600);
+      // Blink cursor twice
+      let blinks = 0;
+      const blinkInterval = setInterval(() => {
+        text.textContent = line1 + (blinks % 2 === 0 ? '|' : '');
+        blinks++;
+        if (blinks >= 4) {
+          clearInterval(blinkInterval);
+          text.textContent = line1;
+          
+          // Phase 2: OPERATOR BREACH (delete with ghost letters)
+          setTimeout(() => operatorBreach(), 800);
+        }
+      }, 300);
     }
   }, 80);
+  
+  function operatorBreach() {
+    // Delete with Matrix ghost letters
+    let d = line1.length;
+    const deleteInterval = setInterval(() => {
+      if (d > 0) {
+        const deletedChar = line1[d - 1];
+        
+        // Create ghost letter that flickers
+        const ghost = document.createElement('span');
+        ghost.textContent = deletedChar;
+        ghost.style.cssText = `
+          position:absolute;
+          left:${d * 0.6}em;
+          top:0;
+          color:#0f0;
+          opacity:0.12;
+          font-family:monospace;
+          animation:ghost-flicker 0.15s ease-out forwards;
+          pointer-events:none;
+        `;
+        textContainer.appendChild(ghost);
+        setTimeout(() => ghost.remove(), 150);
+        
+        text.textContent = line1.slice(0, d - 1);
+        d--;
+      } else {
+        clearInterval(deleteInterval);
+        
+        // Phase 3: SCANLINE TAKEOVER
+        setTimeout(() => scanlineTakeover(), 100);
+      }
+    }, 40);
+  }
+  
+  function scanlineTakeover() {
+    // Play subtle audio click (optional)
+    try {
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+      oscillator.type = 'square';
+      oscillator.frequency.setValueAtTime(1000, audioCtx.currentTime);
+      gainNode.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      oscillator.start(audioCtx.currentTime);
+      oscillator.stop(audioCtx.currentTime + 0.1);
+    } catch (e) {
+      // Silent fail
+    }
+    
+    // Create scanline
+    const scanline = document.createElement('div');
+    scanline.style.cssText = `
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:2px;
+      background:rgba(0,255,0,0.3);
+      box-shadow:0 0 20px rgba(0,255,0,0.4);
+      z-index:10001;
+      animation:scanline-sweep 0.6s cubic-bezier(.22,.61,.36,1) forwards;
+    `;
+    document.body.appendChild(scanline);
+    
+    // Darken background as scanline passes
+    overlay.style.background = 'linear-gradient(180deg, #050505 0%, #000 100%)';
+    overlay.style.transition = 'background 0.6s ease';
+    
+    setTimeout(() => {
+      scanline.remove();
+      // Phase 4: RE-TYPE with confidence
+      setTimeout(() => retypeCommand(), 100);
+    }, 600);
+  }
+  
+  function retypeCommand() {
+    text.textContent = '';
+    let j = 0;
+    const type2Interval = setInterval(() => {
+      if (j < line2.length) {
+        text.textContent = line2.slice(0, j + 1);
+        j++;
+      } else {
+        clearInterval(type2Interval);
+        // Hold for 1s (command executed)
+        setTimeout(() => {
+          overlay.style.opacity = '0';
+          overlay.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            overlay.remove();
+            document.documentElement.classList.remove('no-scroll');
+            initEchoCursor();
+          }, 500);
+        }, 1000);
+      }
+    }, 50); // Faster, confident typing
+  }
 }
 
 // ============================================
@@ -404,12 +472,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.documentElement.classList.add('reduced-motion');
   }
   
-  // Cold open - Matrix operator style
-  if (typeof coldOpenMatrix === 'function') {
-    coldOpenMatrix();
-  } else {
-    coldOpen();
-  }
+  // Cold open
+  coldOpen();
   
   setTimeout(() => {
     // Init predictive hover on all interactive elements

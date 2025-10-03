@@ -156,6 +156,8 @@ window.addEventListener('scroll', () => {
 // ============================================
 
 let idle;
+let firstIdleWhisper = true;
+
 const whisper = msg => {
   const w = document.createElement('div');
   w.textContent = msg;
@@ -170,7 +172,13 @@ const whisper = msg => {
 
 const resetIdle = () => {
   clearTimeout(idle);
-  idle = setTimeout(() => whisper(C.whispers.idle), 5000);
+  idle = setTimeout(() => {
+    if (firstIdleWhisper) {
+      playEarnedSound('idle');
+      firstIdleWhisper = false;
+    }
+    whisper(C.whispers.idle);
+  }, 5000);
 };
 
 ['mousemove', 'keydown', 'scroll', 'touchstart'].forEach(e => 
@@ -311,20 +319,6 @@ function playEarnedSound(type) {
   }
 }
 
-// Trigger sound on first idle whisper
-let firstIdleWhisper = true;
-const originalResetIdle = resetIdle;
-resetIdle = () => {
-  clearTimeout(idle);
-  idle = setTimeout(() => {
-    if (firstIdleWhisper) {
-      playEarnedSound('idle');
-      firstIdleWhisper = false;
-    }
-    whisper(C.whispers.idle);
-  }, 5000);
-};
-
 // ============================================
 // 11. POPULATE CONTENT
 // ============================================
@@ -381,20 +375,21 @@ function populateContent() {
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-if (prefersReduced) {
-  // Disable kinetic effects
-  document.documentElement.classList.add('reduced-motion');
-} else {
-  // Enable full effects
-  kineticText();
-}
-
 // ============================================
 // INIT
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
   populateContent();
+  
+  // Kinetic effects (if not reduced motion)
+  if (!prefersReduced) {
+    kineticText();
+  } else {
+    document.documentElement.classList.add('reduced-motion');
+  }
+  
+  // Cold open
   coldOpen();
   
   setTimeout(() => {
@@ -403,6 +398,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Init echo feed
     initEchoFeed();
-  }, 2000); // After cold open
+  }, 3500); // After cold open completes
 });
 

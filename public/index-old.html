@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self';">
+  <title>Hethar — presence over prompts</title>
+  <meta name="description" content="Retire the prompt. Presence over prompts. Live with intelligence, not interfaces.">
+  <meta name="theme-color" content="#0A0A0A">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Hethar — presence over prompts">
+  <meta property="og:description" content="Retire the prompt. Live with intelligence, not interfaces.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hethar.app">
+  <meta property="og:image" content="https://hethar.app/assets/opengraph/og.jpg">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hethar — presence over prompts">
+  <meta name="twitter:description" content="Retire the prompt. Live with intelligence, not interfaces.">
+  <meta name="twitter:image" content="https://hethar.app/assets/opengraph/og.jpg">
+  
+  <link rel="canonical" href="https://hethar.app">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png">
+  
+  <!-- Inline Critical CSS -->
+  <style>
+    :root {
+      --ink: #0A0A0A;
+      --paper: #FFFFFF;
+      --muted: #8A8D91;
+      --hair: #C7CBD1;
+      --ease: cubic-bezier(.22,.61,.36,1);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    html.no-scroll { overflow: hidden; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      background: var(--ink);
+      color: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--paper);
+      color: var(--ink);
+      padding: 8px;
+      text-decoration: none;
+      z-index: 100;
+    }
+    .skip-link:focus {
+      top: 0;
+    }
+  </style>
+  
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <a href="#hero" class="skip-link">Skip to content</a>
+  
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="fullscreen">
+      <div class="container">
+        <h1 class="h1 breath echo" id="hero-headline" data-text=""></h1>
+        <p class="hero-sub"><span class="muted" id="hero-sub"></span></p>
+        <p id="adaptive-line" class="adaptive-line"></p>
+        <div class="cta-row">
+          <a href="mailto:ditch@hethar.app" class="btn primary" id="hero-cta-primary"></a>
+          <a href="mailto:team@hethar.app" class="btn ghost" id="hero-cta-secondary"></a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Interjection 1 -->
+    <section id="interjection-1" class="fullscreen">
+      <div class="container">
+        <h2 class="line echo" data-inject-index="0"></h2>
+      </div>
+    </section>
+    
+    <!-- Interjection 2 -->
+    <section id="interjection-2" class="fullscreen">
+      <div class="container">
+        <h2 class="line echo" data-inject-index="1"></h2>
+      </div>
+    </section>
+    
+    <!-- Interjection 3 -->
+    <section id="interjection-3" class="fullscreen">
+      <div class="container">
+        <h2 class="line echo" data-inject-index="2"></h2>
+      </div>
+    </section>
+    
+    <!-- Contrast -->
+    <section id="contrast">
+      <div class="container">
+        <h2 class="h2" id="contrast-head"></h2>
+        <div class="contrast-grid" id="contrast-grid"></div>
+        <div class="cta-center">
+          <a href="mailto:ditch@hethar.app" class="btn primary" id="contrast-cta"></a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Different -->
+    <section id="different">
+      <div class="container">
+        <h2 class="h2" id="different-head"></h2>
+        <div class="two-col">
+          <div class="col">
+            <p class="statement" id="different-left"></p>
+          </div>
+          <div class="col">
+            <p class="statement" id="different-right"></p>
+          </div>
+        </div>
+        <p class="kicker muted" id="different-kicker"></p>
+      </div>
+    </section>
+    
+    <!-- Vision (full-screen scroll lines) -->
+    <section id="vision">
+      <div class="container">
+        <h2 class="h2" id="vision-head"></h2>
+      </div>
+      <div class="vision-lines" id="vision-lines"></div>
+      <div class="container">
+        <p class="closer muted" id="vision-closer"></p>
+      </div>
+    </section>
+    
+    <!-- Final -->
+    <section id="final" class="fullscreen final-black">
+      <div class="container">
+        <h2 class="h1 echo" id="final-head"></h2>
+        <div class="cta-row">
+          <a href="mailto:team@hethar.app?subject=Join%20the%20Team" class="btn primary" id="final-cta-primary"></a>
+          <a href="mailto:team@hethar.app" class="btn ghost" id="final-cta-secondary"></a>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container footer-content">
+      <p class="footer-left">© <span id="year"></span> Hethar</p>
+      <p class="footer-right">press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></p>
+    </div>
+  </footer>
+  
+  <script src="/js/copy.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>

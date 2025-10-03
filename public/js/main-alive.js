@@ -50,15 +50,30 @@ function coldOpen() {
                   j++;
                 } else {
                   clearInterval(type2Interval);
-                  // Fade out and unlock
+                  // COOK THE TRANSITION
                   setTimeout(() => {
-                    overlay.style.opacity = '0';
-                    overlay.style.transition = 'opacity 0.4s ease';
+                    // Phase 1: Glitch effect
+                    overlay.style.animation = 'glitch 0.3s steps(4)';
+                    
                     setTimeout(() => {
-                      overlay.remove();
-                      document.documentElement.classList.remove('no-scroll');
-                      initEchoCursor(); // Start echo cursor after cold open
-                    }, 400);
+                      // Phase 2: White flash + burst
+                      overlay.style.background = '#fff';
+                      overlay.style.transform = 'scale(1.05)';
+                      overlay.style.transition = 'all 0.15s ease-out';
+                      
+                      setTimeout(() => {
+                        // Phase 3: Fade out with scale down
+                        overlay.style.opacity = '0';
+                        overlay.style.transform = 'scale(0.95)';
+                        overlay.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+                        
+                        setTimeout(() => {
+                          overlay.remove();
+                          document.documentElement.classList.remove('no-scroll');
+                          initEchoCursor(); // Start echo cursor after cold open
+                        }, 250);
+                      }, 100);
+                    }, 300);
                   }, 800);
                 }
               }, 50);

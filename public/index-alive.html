@@ -201,6 +201,16 @@
       text-decoration: none;
     }
     
+    /* Cold open glitch animation */
+    @keyframes glitch {
+      0% { transform: translate(0); filter: none; }
+      20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg) saturate(3); }
+      40% { transform: translate(2px, -2px); filter: hue-rotate(-90deg) saturate(3); }
+      60% { transform: translate(-2px, -2px); filter: invert(1); }
+      80% { transform: translate(2px, 2px); filter: hue-rotate(180deg); }
+      100% { transform: translate(0); filter: none; }
+    }
+    
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hethar Diagnostic Test</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #000; color: #0f0; }
+    .pass { color: #0f0; }
+    .fail { color: #f00; }
+    pre { background: #111; padding: 10px; border: 1px solid #333; }
+  </style>
+</head>
+<body>
+  <h1>Hethar Diagnostic Test</h1>
+  <div id="results"></div>
+  
+  <script src="/js/copy.js"></script>
+  <script>
+    const results = [];
+    const test = (name, fn) => {
+      try {
+        const result = fn();
+        results.push(`<div class="pass">✓ ${name}: ${result}</div>`);
+      } catch(e) {
+        results.push(`<div class="fail">✗ ${name}: ${e.message}</div>`);
+      }
+    };
+    
+    test('window.COPY exists', () => typeof window.COPY !== 'undefined' ? 'YES' : 'NO');
+    test('COPY.heroHeadline', () => window.COPY?.heroHeadline || 'MISSING');
+    test('COPY.heroSub', () => window.COPY?.heroSub || 'MISSING');
+    test('COPY.interjections length', () => window.COPY?.interjections?.length || 0);
+    test('COPY.final.primary', () => window.COPY?.final?.primary || 'MISSING');
+    
+    test('CSS loaded', () => {
+      const link = document.querySelector('link[href="/css/styles.css"]');
+      return link ? 'Link tag present' : 'NO LINK TAG';
+    });
+    
+    test('Computed body background', () => {
+      const bg = getComputedStyle(document.body).backgroundColor;
+      return bg;
+    });
+    
+    setTimeout(() => {
+      results.push('<h2>COPY Object:</h2>');
+      results.push(`<pre>${JSON.stringify(window.COPY, null, 2)}</pre>`);
+      document.getElementById('results').innerHTML = results.join('');
+    }, 100);
+  </script>
+</body>
+</html>
+

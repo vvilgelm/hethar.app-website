@@ -100,12 +100,7 @@
   @keyframes pulse{0%,100%{transform:scale(1);opacity:0.3} 50%{transform:scale(1.4);opacity:0}}
   
   /* Breach animation overlay - subtle flash, doesn't block matrix */
-  .breach{
-    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:30;pointer-events:none;
-    background:rgba(0,255,127,0.1);
-    transition:opacity .3s var(--ease);
-  }
-  .breach.hidden{opacity:0;pointer-events:none}
+  /* Breach element removed - not needed */
   
   /* Dossier screens */
   .dossier{height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;position:relative;z-index:40;scroll-snap-align:start}
@@ -280,8 +275,7 @@
     </div>
   </main>
 
-  <!-- Breach overlay -->
-  <div id="breach" class="breach hidden" aria-hidden="true"></div>
+  <!-- Breach overlay removed - not needed -->
 
   <!-- Dossier screens container -->
   <div id="dossierContainer" style="display:none"></div>
@@ -615,7 +609,6 @@ function audioClick(){
 
 /* ============= CONSOLE / BREACH FLOW ============= */
 const consoleText = document.getElementById('consoleText');
-const breachEl = document.getElementById('breach');
 
 async function launchSequence(){
   await sleep(300);
@@ -738,14 +731,11 @@ function makeDossiers(){
 async function showDossiers(){
   makeDossiers();
   
-  // Ensure stage and breach are completely hidden
+  // Ensure stage is completely hidden
   const stage = document.getElementById('stage');
-  const breach = document.getElementById('breach');
   stage.style.display = 'none';
-  breach.style.display = 'none';
-  breach.classList.add('hidden');
   
-  console.log('[Dossiers] Stage hidden, breach hidden, showing dossiers...');
+  console.log('[Dossiers] Stage hidden, showing dossiers...');
   
   dossierContainer.style.display = 'block';
   

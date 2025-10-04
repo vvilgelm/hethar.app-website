@@ -81,7 +81,7 @@
   .ghost-green{color:#00ff7f}
   
   /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.25;z-index:50;transition:opacity 1.2s ease-out}
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0;z-index:50;transition:opacity 0.8s ease-out}
   
   /* Memory residue canvas */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.12;z-index:2}
@@ -650,7 +650,11 @@ async function ghostDelete(){
   const wasPaused = STATE.paused;
   STATE.paused = false; // Temporarily unpause for intro
   startMatrix();
-  await sleep(2000); // Extended: 2 seconds of pure matrix
+  
+  // Fade in matrix gradually to avoid green flash
+  await sleep(200);
+  matrixCanvas.style.opacity = '0.25';
+  await sleep(1800); // 2 seconds total of matrix display
   STATE.paused = wasPaused; // Restore pause state
 }
 

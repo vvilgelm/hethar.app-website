@@ -295,6 +295,8 @@
 
 'use strict';
 
+console.log('[Hethar] Script loading...');
+
 /* ============= CONFIG & STATE ============= */
 const CONFIG = {
   apiEndpoint: '/api/contact',
@@ -1001,31 +1003,50 @@ function trackEvent(name, props = {}) {
 }
 
 /* ============= BOOT ============= */
-(async function init(){
-  // Record last visit
-  const lastVisit = localStorage.getItem(CONFIG.lastVisitKey);
-  if (lastVisit) {
-    const elapsed = Date.now() - parseInt(lastVisit);
-    console.log('Last visit:', Math.round(elapsed/1000/60), 'minutes ago');
+async function init(){
+  console.log('[Hethar] Init starting...');
+  
+  try {
+    // Record last visit
+    const lastVisit = localStorage.getItem(CONFIG.lastVisitKey);
+    if (lastVisit) {
+      const elapsed = Date.now() - parseInt(lastVisit);
+      console.log('[Hethar] Last visit:', Math.round(elapsed/1000/60), 'minutes ago');
+    }
+    localStorage.setItem(CONFIG.lastVisitKey, Date.now());
+    
+    console.log('[Hethar] Tracking page load...');
+    trackEvent('page_load');
+    
+    // Track A/B variant view
+    if (window.ABTest) {
+      window.ABTest.trackVariantView();
+    }
+    
+    // Check if skip intro
+    if (STATE.skipIntro) {
+      console.log('[Hethar] Skip intro enabled, showing dossiers...');
+      await showDossiers();
+      return;
+    }
+    
+    // Launch breach sequence
+    console.log('[Hethar] Launching breach sequence...');
+    await launchSequence();
+  } catch (error) {
+    console.error('[Hethar] Init Error:', error);
+    console.error('[Hethar] Stack:', error.stack);
+    // Fallback: show dossiers anyway
+    alert('Error loading site. Check console (F12) for details.');
   }
-  localStorage.setItem(CONFIG.lastVisitKey, Date.now());
-  
-  trackEvent('page_load');
-  
-  // Track A/B variant view
-  if (window.ABTest) {
-    window.ABTest.trackVariantView();
-  }
-  
-  // Check if skip intro
-  if (STATE.skipIntro) {
-    await showDossiers();
-    return;
-  }
-  
-  // Launch breach sequence
-  await launchSequence();
-})();
+}
+
+// Wait for DOM to be ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 
 // Service worker for offline (optional)
 if ('serviceWorker' in navigator) {

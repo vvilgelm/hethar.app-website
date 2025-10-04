@@ -255,6 +255,12 @@
   <!-- Whisper -->
   <div id="whisper" class="whisper" role="status" aria-live="polite"></div>
 
+  <!-- Footer with privacy link -->
+  <footer style="position:fixed;bottom:12px;right:12px;z-index:50;font-size:11px;opacity:0.4;transition:opacity 0.2s">
+    <a href="/privacy.html" style="color:#9aa0a6;text-decoration:none;font-family:ui-monospace,monospace" 
+       onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.6'">privacy</a>
+  </footer>
+
   <!-- Proximity permission card -->
   <div id="proximityCard" role="dialog" aria-labelledby="geoTitle">
     <div id="geoTitle" style="font-family:var(--mono);font-size:14px;margin-bottom:10px;color:var(--fg)">small request</div>
@@ -620,7 +626,8 @@ async function breachSequence(){
 }
 
 /* ============= DOSSIERS ============= */
-const LINES = [
+// Get lines from copy rails (feral/calm toggle) or use defaults
+const LINES = window.CopyRails ? window.CopyRails.getCopyLines() : [
   'inputs are over.',
   'life is outcomes-only.',
   'you don't use it. it lives with you.',
@@ -915,8 +922,16 @@ contactForm.addEventListener('submit', async (ev)=>{
     
     if (response.ok) {
       closeModal();
-      showFloatingFlash('received. i'll find you.');
+      // Show handshake animation
+      if (window.Handshake) {
+        window.Handshake.show(() => {
+          showFloatingFlash('received. i'll find you.');
+        });
+      } else {
+        showFloatingFlash('received. i'll find you.');
+      }
       trackEvent('contact_submit_success', {contact: val});
+      if (window.ABTest) window.ABTest.trackConversion('contact_submit');
     } else {
       showWhisper('something failed. try again or email team@hethar.app');
       trackEvent('contact_submit_error');
@@ -924,8 +939,16 @@ contactForm.addEventListener('submit', async (ev)=>{
   } catch(e) {
     console.log('Contact submitted (demo):', val);
     closeModal();
-    showFloatingFlash('received. i'll find you.');
+    // Show handshake animation
+    if (window.Handshake) {
+      window.Handshake.show(() => {
+        showFloatingFlash('received. i'll find you.');
+      });
+    } else {
+      showFloatingFlash('received. i'll find you.');
+    }
     trackEvent('contact_submit_demo', {contact: val});
+    if (window.ABTest) window.ABTest.trackConversion('contact_submit');
   }
 });
 
@@ -989,6 +1012,11 @@ function trackEvent(name, props = {}) {
   
   trackEvent('page_load');
   
+  // Track A/B variant view
+  if (window.ABTest) {
+    window.ABTest.trackVariantView();
+  }
+  
   // Check if skip intro
   if (STATE.skipIntro) {
     await showDossiers();
@@ -1007,6 +1035,18 @@ if ('serviceWorker' in navigator) {
 
 <!-- Analytics (Plausible.io - privacy-friendly) -->
 <script defer data-domain="hethar.app" src="https://plausible.io/js/script.js"></script>
+
+<!-- Additional Features (loaded after main) -->
+<script defer src="/js/ab-test.js"></script>
+<script defer src="/js/copy-rails.js"></script>
+<script defer src="/js/time-variants.js"></script>
+<script defer src="/js/copy-generator.js"></script>
+<script defer src="/js/handshake.js"></script>
+<script defer src="/js/webgl-shader.js"></script>
+<script defer src="/js/dossier-glints.js"></script>
+<script defer src="/js/hover-pov.js"></script>
+<script defer src="/js/legal-banner.js"></script>
+<script defer src="/js/heatmap.js"></script>
 
 </body>
 </html>

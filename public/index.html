@@ -418,7 +418,8 @@ function startMatrix() {
   
   (function draw(){
     if(!matrixRunning) return;
-    matrixCtx.fillStyle = 'rgba(0,0,0,0.05)';
+    // Stronger fade to prevent green accumulation
+    matrixCtx.fillStyle = 'rgba(0,0,0,0.12)';
     matrixCtx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
     matrixCtx.fillStyle = '#00ff7f';
     matrixCtx.font = '13px monospace';

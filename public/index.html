@@ -405,11 +405,23 @@ fitCanvas(matrixCanvas);
 addEventListener('resize', ()=>fitCanvas(matrixCanvas));
 
 function startMatrix() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  if (STATE.paused) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    console.log('[Matrix] ✗ Blocked by prefers-reduced-motion');
+    return;
+  }
+  if (STATE.paused) {
+    console.log('[Matrix] ✗ Blocked by pause state');
+    return;
+  }
+  
+  console.log('[Matrix] ✓ Starting matrix animation...');
   matrixRunning = true;
   const cols = Math.floor(matrixCanvas.width / 14);
   const drops = Array.from({length:cols}).map(()=>Math.random()*-100);
+  
+  console.log('[Matrix] Canvas size:', matrixCanvas.width, 'x', matrixCanvas.height);
+  console.log('[Matrix] Columns:', cols);
+  
   (function draw(){
     if(!matrixRunning) return;
     matrixCtx.fillStyle = 'rgba(0,0,0,0.05)';
@@ -635,13 +647,19 @@ async function ghostDelete(){
   // Clear console text
   consoleText.textContent = '';
   
-  // Start matrix FIRST, let it fully establish
+  // Force start matrix even if paused (this is the intro sequence)
+  console.log('[Matrix] Starting matrix rain...');
+  const wasPaused = STATE.paused;
+  STATE.paused = false; // Temporarily unpause for intro
   startMatrix();
-  await sleep(1200); // Let matrix rain be visible
+  await sleep(2000); // Extended: 2 seconds of pure matrix
+  STATE.paused = wasPaused; // Restore pause state
 }
 
 async function breachSequence(){
   // Matrix is already running from ghostDelete
+  console.log('[Matrix] Matrix should be visible now');
+  
   // Just do a subtle flash
   breachEl.classList.remove('hidden');
   breachEl.style.opacity = '0.5';
@@ -653,14 +671,15 @@ async function breachSequence(){
   await sleep(400);
   breachEl.classList.add('hidden');
   
-  // Let matrix continue for a bit longer
-  await sleep(800);
+  // Let matrix continue MUCH longer
+  await sleep(1500);
   
   // Type final line OVER the matrix
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
-  await sleep(800);
+  await sleep(1200);
   
   // Fade out matrix
+  console.log('[Matrix] Stopping matrix rain...');
   stopMatrix();
   
   await showDossiers();

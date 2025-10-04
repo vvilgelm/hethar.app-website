@@ -1113,6 +1113,10 @@ function trackEvent(name, props = {}) {
 
 /* ============= BOOT ============= */
 (async function init(){
+  console.log('═══════════════════════════════════════');
+  console.log('🔥 HETHAR INITIALIZATION');
+  console.log('═══════════════════════════════════════');
+  
   // Record last visit
   const lastVisit = localStorage.getItem(CONFIG.lastVisitKey);
   if (lastVisit) {
@@ -1129,11 +1133,18 @@ function trackEvent(name, props = {}) {
   }
   
   // Check if skip intro
+  console.log('Skip Intro:', STATE.skipIntro);
+  console.log('Paused:', STATE.paused);
+  
   if (STATE.skipIntro) {
+    console.log('❌ SKIPPING INTRO - going straight to dossiers');
+    console.log('💡 To see the intro, open: http://localhost:8000/debug-intro.html');
+    console.log('   Or run: localStorage.removeItem("hethar_skip_intro"); location.reload()');
     await showDossiers();
     return;
   }
   
+  console.log('✓ Playing full intro sequence...');
   // Launch breach sequence
   await launchSequence();
 })();

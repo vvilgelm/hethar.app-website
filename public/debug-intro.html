@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Debug Hethar Intro</title>
+<style>
+body{background:#000;color:#0f0;font-family:monospace;padding:40px;font-size:14px;line-height:1.6}
+h1{color:#00ff7f}
+.good{color:#0f0} .bad{color:#f00} .warn{color:#ff0}
+button{background:#0f0;color:#000;padding:12px 24px;font-size:16px;border:none;cursor:pointer;margin:10px}
+button:hover{background:#00ff7f}
+pre{background:#111;padding:12px;border:1px solid #333;overflow-x:auto}
+</style>
+</head>
+<body>
+<h1>HETHAR INTRO DEBUG</h1>
+
+<div id="status"></div>
+<br>
+<button onclick="clearAllAndReload()">1. CLEAR ALL & RELOAD</button>
+<button onclick="window.location='/'">2. GO TO SITE</button>
+<button onclick="checkNow()">3. CHECK STATUS AGAIN</button>
+
+<script>
+function checkNow(){
+  const status = [];
+  
+  // Check localStorage
+  status.push('<h2>LocalStorage Check:</h2>');
+  const skipIntro = localStorage.getItem('hethar_skip_intro');
+  const paused = localStorage.getItem('hethar_paused');
+  const lastVisit = localStorage.getItem('hethar_last_visit');
+  
+  status.push(`<div class="${skipIntro === '1' ? 'bad' : 'good'}">hethar_skip_intro: ${skipIntro || 'null'} ${skipIntro === '1' ? '⚠️ THIS IS BLOCKING INTRO!' : '✓'}</div>`);
+  status.push(`<div class="${paused === '1' ? 'warn' : 'good'}">hethar_paused: ${paused || 'null'} ${paused === '1' ? '⚠️ Paused state' : '✓'}</div>`);
+  status.push(`<div>hethar_last_visit: ${lastVisit ? new Date(parseInt(lastVisit)).toLocaleString() : 'null'}</div>`);
+  
+  // Check sessionStorage
+  status.push('<h2>SessionStorage Check:</h2>');
+  const sessionWhisper = sessionStorage.getItem('hethar_session_whisper');
+  status.push(`<div>hethar_session_whisper: ${sessionWhisper || 'null'}</div>`);
+  
+  // Check URL
+  status.push('<h2>URL Check:</h2>');
+  status.push(`<div>Current URL: ${window.location.href}</div>`);
+  
+  // Check browser
+  status.push('<h2>Browser Check:</h2>');
+  status.push(`<div>User Agent: ${navigator.userAgent}</div>`);
+  status.push(`<div>Reduced Motion: ${matchMedia('(prefers-reduced-motion: reduce)').matches ? 'YES ⚠️' : 'NO ✓'}</div>`);
+  
+  // Recommendations
+  status.push('<h2>Actions:</h2>');
+  if (skipIntro === '1') {
+    status.push('<div class="bad">❌ Skip intro is ON - Click button 1 to fix</div>');
+  } else {
+    status.push('<div class="good">✓ Skip intro is OFF - intro should play</div>');
+  }
+  
+  if (paused === '1') {
+    status.push('<div class="warn">⚠️ Presence is PAUSED - matrix won\'t show normally</div>');
+  }
+  
+  document.getElementById('status').innerHTML = status.join('');
+}
+
+function clearAllAndReload(){
+  localStorage.clear();
+  sessionStorage.clear();
+  alert('✅ Cleared all storage! Redirecting to site...');
+  setTimeout(() => window.location = '/', 500);
+}
+
+checkNow();
+</script>
+</body>
+</html>

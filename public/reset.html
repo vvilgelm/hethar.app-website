@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Reset Hethar</title>
+<style>
+body{background:#000;color:#0f0;font-family:monospace;padding:40px;text-align:center}
+button{background:#0f0;color:#000;padding:20px 40px;font-size:18px;border:none;cursor:pointer;margin:10px}
+button:hover{background:#00ff7f}
+.status{margin:20px;padding:20px;border:1px solid #333}
+</style>
+</head>
+<body>
+<h1>HETHAR DEBUG</h1>
+<div class="status" id="status"></div>
+<button onclick="clearAll()">CLEAR ALL STORAGE & RELOAD</button>
+<button onclick="window.location='/'">BACK TO SITE</button>
+
+<script>
+function showStatus(){
+  const keys = Object.keys(localStorage).filter(k=>k.startsWith('hethar_'));
+  const sessionKeys = Object.keys(sessionStorage).filter(k=>k.startsWith('hethar_'));
+  document.getElementById('status').innerHTML = `
+    <h3>LocalStorage:</h3>
+    ${keys.map(k=>`<div>${k}: ${localStorage.getItem(k)}</div>`).join('') || 'Empty'}
+    <h3>SessionStorage:</h3>
+    ${sessionKeys.map(k=>`<div>${k}: ${sessionStorage.getItem(k)}</div>`).join('') || 'Empty'}
+  `;
+}
+
+function clearAll(){
+  localStorage.clear();
+  sessionStorage.clear();
+  alert('✅ Cleared! Reloading...');
+  window.location = '/';
+}
+
+showStatus();
+</script>
+</body>
+</html>

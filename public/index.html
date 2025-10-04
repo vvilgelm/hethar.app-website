@@ -665,19 +665,12 @@ async function breachSequence(){
   // Matrix is already running from ghostDelete
   console.log('[Matrix] Matrix should be visible now');
   
-  // Just do a subtle flash
-  breachEl.classList.remove('hidden');
-  breachEl.style.opacity = '0.5';
+  // NO breach overlay - let matrix be fully visible
+  // Just a quick audio click for the "breach" moment
   audioClick();
-  await sleep(300);
   
-  breachEl.style.transition = 'opacity .4s var(--ease)';
-  breachEl.style.opacity = '0';
-  await sleep(400);
-  breachEl.classList.add('hidden');
-  
-  // Let matrix continue MUCH longer
-  await sleep(1500);
+  // Let matrix run unobstructed for much longer
+  await sleep(2000);
   
   // Type final line OVER the matrix
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});

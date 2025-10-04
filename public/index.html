@@ -665,11 +665,10 @@ async function breachSequence(){
   // Matrix is already running from ghostDelete
   console.log('[Matrix] Matrix should be visible now');
   
-  // NO breach overlay - let matrix be fully visible
-  // Just a quick audio click for the "breach" moment
+  // Just audio click, NO visual overlay to cover matrix
   audioClick();
   
-  // Let matrix run unobstructed for much longer
+  // Let matrix run unobstructed
   await sleep(2000);
   
   // Type final line OVER the matrix

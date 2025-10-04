@@ -295,8 +295,6 @@
 
 'use strict';
 
-console.log('[Hethar] Script loading...');
-
 /* ============= CONFIG & STATE ============= */
 const CONFIG = {
   apiEndpoint: '/api/contact',
@@ -632,10 +630,10 @@ async function breachSequence(){
 const LINES = [
   'inputs are over.',
   'life is outcomes-only.',
-  'you don't use it. it lives with you.',
+  'you don\'t use it. it lives with you.',
   'your ai assistant is mid.',
-  'copilots ≠ pilots — they autocomplete, they don't lead.',
-  'memory ≠ intelligence — remembering isn't knowing.',
+  'copilots ≠ pilots — they autocomplete, they don\'t lead.',
+  'memory ≠ intelligence — remembering isn\'t knowing.',
   'assistants ≠ partners — they take orders. we take outcomes.',
   'not a copilot. a co-you.',
   'the mind — lives across your devices. acts before you ask.',
@@ -643,7 +641,7 @@ const LINES = [
   'stop managing life. start living it.',
   'presence > prompts.',
   'we built a second presence.',
-  'you don't use hethar. you live with it.'
+  'you don\'t use hethar. you live with it.'
 ];
 
 const dossierContainer = document.getElementById('dossierContainer');
@@ -773,10 +771,10 @@ function resetIdle(){
     if (STATE.sessionWhisperShown) return;
     showWhisper(rand([
       'you paused. i noticed.',
-      'don't overthink. say it.',
+      'don\'t overthink. say it.',
       'i remember when you tried this last time.',
       'still here? good.',
-      'you're hesitating. i'll wait.'
+      'you\'re hesitating. i\'ll wait.'
     ]));
     STATE.sessionWhisperShown = true;
     sessionStorage.setItem(CONFIG.sessionWhisperKey, '1');
@@ -848,7 +846,7 @@ document.getElementById('geoAllow').addEventListener('click', async ()=>{
     if (dist < 120) {
       setTimeout(()=>{
         showWhisper(rand([
-          'close enough to hear the VC pitches. don't pretend you can't.',
+          'close enough to hear the VC pitches. don\'t pretend you can\'t.',
           'not in SF proper — but within the current. i feel the echo.',
           'you orbit the hub. the hub leaks into you.'
         ]));
@@ -927,10 +925,10 @@ contactForm.addEventListener('submit', async (ev)=>{
       // Show handshake animation
       if (window.Handshake) {
         window.Handshake.show(() => {
-          showFloatingFlash('received. i'll find you.');
+          showFloatingFlash('received. i\'ll find you.');
         });
       } else {
-        showFloatingFlash('received. i'll find you.');
+        showFloatingFlash('received. i\'ll find you.');
       }
       trackEvent('contact_submit_success', {contact: val});
       if (window.ABTest) window.ABTest.trackConversion('contact_submit');
@@ -944,10 +942,10 @@ contactForm.addEventListener('submit', async (ev)=>{
     // Show handshake animation
     if (window.Handshake) {
       window.Handshake.show(() => {
-        showFloatingFlash('received. i'll find you.');
+        showFloatingFlash('received. i\'ll find you.');
       });
     } else {
-      showFloatingFlash('received. i'll find you.');
+      showFloatingFlash('received. i\'ll find you.');
     }
     trackEvent('contact_submit_demo', {contact: val});
     if (window.ABTest) window.ABTest.trackConversion('contact_submit');
@@ -1003,50 +1001,31 @@ function trackEvent(name, props = {}) {
 }
 
 /* ============= BOOT ============= */
-async function init(){
-  console.log('[Hethar] Init starting...');
-  
-  try {
-    // Record last visit
-    const lastVisit = localStorage.getItem(CONFIG.lastVisitKey);
-    if (lastVisit) {
-      const elapsed = Date.now() - parseInt(lastVisit);
-      console.log('[Hethar] Last visit:', Math.round(elapsed/1000/60), 'minutes ago');
-    }
-    localStorage.setItem(CONFIG.lastVisitKey, Date.now());
-    
-    console.log('[Hethar] Tracking page load...');
-    trackEvent('page_load');
-    
-    // Track A/B variant view
-    if (window.ABTest) {
-      window.ABTest.trackVariantView();
-    }
-    
-    // Check if skip intro
-    if (STATE.skipIntro) {
-      console.log('[Hethar] Skip intro enabled, showing dossiers...');
-      await showDossiers();
-      return;
-    }
-    
-    // Launch breach sequence
-    console.log('[Hethar] Launching breach sequence...');
-    await launchSequence();
-  } catch (error) {
-    console.error('[Hethar] Init Error:', error);
-    console.error('[Hethar] Stack:', error.stack);
-    // Fallback: show dossiers anyway
-    alert('Error loading site. Check console (F12) for details.');
+(async function init(){
+  // Record last visit
+  const lastVisit = localStorage.getItem(CONFIG.lastVisitKey);
+  if (lastVisit) {
+    const elapsed = Date.now() - parseInt(lastVisit);
+    console.log('Last visit:', Math.round(elapsed/1000/60), 'minutes ago');
   }
-}
-
-// Wait for DOM to be ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
-} else {
-  init();
-}
+  localStorage.setItem(CONFIG.lastVisitKey, Date.now());
+  
+  trackEvent('page_load');
+  
+  // Track A/B variant view
+  if (window.ABTest) {
+    window.ABTest.trackVariantView();
+  }
+  
+  // Check if skip intro
+  if (STATE.skipIntro) {
+    await showDossiers();
+    return;
+  }
+  
+  // Launch breach sequence
+  await launchSequence();
+})();
 
 // Service worker for offline (optional)
 if ('serviceWorker' in navigator) {

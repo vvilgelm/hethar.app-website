@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Fix Green Screen</title>
+<style>
+body{background:#000;color:#0f0;font-family:monospace;padding:40px}
+h1{color:#00ff7f}
+button{background:#0f0;color:#000;padding:16px 32px;font-size:18px;border:none;cursor:pointer;margin:20px 10px;display:block;width:100%;max-width:500px}
+button:hover{background:#00ff7f}
+pre{background:#111;padding:12px;border:1px solid #333;margin:20px 0}
+.status{padding:12px;margin:10px 0;border-left:3px solid #0f0}
+</style>
+</head>
+<body>
+<h1>FIX GREEN SCREEN OVERLAY</h1>
+
+<div id="status"></div>
+
+<button onclick="checkStatus()">1. CHECK WHAT'S WRONG</button>
+<button onclick="fixIt()">2. FIX IT NOW</button>
+<button onclick="window.location='/'">3. GO BACK TO SITE</button>
+
+<script>
+function checkStatus() {
+  const status = [];
+  status.push('<div class="status"><strong>Opening main site in inspect mode...</strong></div>');
+  status.push('<div class="status">Check the console on the main site tab for detailed info</div>');
+  
+  window.open('/', '_blank');
+  
+  setTimeout(() => {
+    status.push('<div class="status">Run this in the console on the main site:<br><pre>console.log("Stage display:", document.getElementById("stage").style.display);\nconsole.log("Breach opacity:", document.getElementById("breach").style.opacity);\nconsole.log("Matrix opacity:", document.getElementById("matrixCanvas").style.opacity);</pre></div>');
+    document.getElementById('status').innerHTML = status.join('');
+  }, 500);
+  
+  document.getElementById('status').innerHTML = status.join('');
+}
+
+function fixIt() {
+  localStorage.clear();
+  sessionStorage.clear();
+  
+  const status = [];
+  status.push('<div class="status" style="border-color:#00ff7f"><strong>✅ FIXED!</strong></div>');
+  status.push('<div class="status">Cleared all storage</div>');
+  status.push('<div class="status">Redirecting to site in 2 seconds...</div>');
+  document.getElementById('status').innerHTML = status.join('');
+  
+  setTimeout(() => {
+    window.location = '/';
+  }, 2000);
+}
+</script>
+</body>
+</html>

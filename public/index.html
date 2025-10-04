@@ -737,8 +737,17 @@ function makeDossiers(){
 
 async function showDossiers(){
   makeDossiers();
+  
+  // Ensure stage and breach are completely hidden
+  const stage = document.getElementById('stage');
+  const breach = document.getElementById('breach');
+  stage.style.display = 'none';
+  breach.style.display = 'none';
+  breach.classList.add('hidden');
+  
+  console.log('[Dossiers] Stage hidden, breach hidden, showing dossiers...');
+  
   dossierContainer.style.display = 'block';
-  document.getElementById('stage').style.display = 'none';
   
   attachNavigation();
   scrollToIndex(0, false);

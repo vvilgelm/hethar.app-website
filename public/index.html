@@ -81,7 +81,7 @@
   .ghost-green{color:#00ff7f}
   
   /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.25;z-index:50}
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.25;z-index:50;transition:opacity 1.2s ease-out}
   
   /* Memory residue canvas */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.12;z-index:2}
@@ -442,7 +442,12 @@ function startMatrix() {
 
 function stopMatrix(){ 
   matrixRunning=false; 
-  matrixCtx.clearRect(0,0,matrixCanvas.width,matrixCanvas.height); 
+  matrixCtx.clearRect(0,0,matrixCanvas.width,matrixCanvas.height);
+  matrixCanvas.style.opacity = '0';
+}
+
+function dimMatrix(opacity = 0.04){
+  matrixCanvas.style.opacity = opacity;
 }
 
 /* ============= MEMORY RESIDUE CANVAS ============= */
@@ -678,9 +683,9 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Fade out matrix
-  console.log('[Matrix] Stopping matrix rain...');
-  stopMatrix();
+  // Dim matrix but keep it running in background
+  console.log('[Matrix] Dimming matrix to background level...');
+  matrixCanvas.style.opacity = '0.04'; // Much darker but still alive
   
   await showDossiers();
 }
@@ -1092,9 +1097,10 @@ document.getElementById('pauseToggle').addEventListener('click', ()=>{
   btn.classList.toggle('paused', STATE.paused);
   
   if (STATE.paused) {
-    stopMatrix();
+    dimMatrix(0.01); // Super subtle when paused
   } else {
-    startMatrix();
+    matrixCanvas.style.opacity = '0.04'; // Resume background level
+    if (!matrixRunning) startMatrix();
   }
   
   trackEvent('presence_toggle', {paused: STATE.paused});

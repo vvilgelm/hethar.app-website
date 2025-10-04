@@ -626,8 +626,8 @@ async function breachSequence(){
 }
 
 /* ============= DOSSIERS ============= */
-// Get lines from copy rails (feral/calm toggle) or use defaults
-const LINES = window.CopyRails ? window.CopyRails.getCopyLines() : [
+// Default lines (copy rails can override later if loaded)
+const LINES = [
   'inputs are over.',
   'life is outcomes-only.',
   'you don't use it. it lives with you.',

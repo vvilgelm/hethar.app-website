@@ -208,80 +208,6 @@
       100% { opacity: 0; transform: translateY(-4px); }
     }
     
-    /* ============================================ */
-    /* WORLD BOOT SEQUENCE (aperture + shutters) */
-    /* ============================================ */
-    
-    /* Lock scroll until boot is done */
-    .world.locked-scroll { 
-      height: 100vh; 
-      overflow: hidden; 
-    }
-    .world.unlocked { 
-      height: auto; 
-      overflow: visible; 
-    }
-
-    /* Intro overlay: covers page during reveal */
-    #intro-overlay {
-      position: fixed; 
-      inset: 0; 
-      z-index: 10000; 
-      background: var(--ink);
-      display: block; 
-      pointer-events: none;
-    }
-
-    /* Phase 9: Aperture iris (clip-path circle grows) */
-    #aperture {
-      position: absolute; 
-      inset: 0;
-      --r: 0%;
-      -webkit-mask: radial-gradient(circle var(--r) at 50% 50%, transparent 98%, #000 100%);
-              mask: radial-gradient(circle var(--r) at 50% 50%, transparent 98%, #000 100%);
-      background: var(--ink);
-    }
-
-    /* Phase 10: Shutters (5 columns) */
-    .shutter {
-      position: absolute; 
-      top: 0; 
-      height: 100%; 
-      width: 20%;
-      background: var(--ink);
-      transform: translateY(-100%);
-      will-change: transform;
-    }
-    .s1 { left: 0% }
-    .s2 { left: 20% }
-    .s3 { left: 40% }
-    .s4 { left: 60% }
-    .s5 { left: 80% }
-
-    /* Phase 11: Compile line */
-    #compile-line {
-      position: absolute; 
-      left: 0; 
-      right: 0; 
-      top: 0; 
-      height: 2px;
-      background: rgba(255,255,255,.18);
-      box-shadow: 0 0 8px rgba(255,255,255,.10);
-      transform: translateY(0);
-      will-change: transform;
-    }
-
-    /* Subtle scale-up when the compile line passes titles */
-    .fold h1, .fold h2, .fold .hero-line {
-      transform: scale(.98);
-      transition: transform .18s var(--ease), filter .18s var(--ease);
-      filter: blur(.2px);
-    }
-    .fold.compiled h1, .fold.compiled h2, .fold.compiled .hero-line {
-      transform: scale(1); 
-      filter: none;
-    }
-      
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -295,22 +221,9 @@
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-  <!-- Intro overlay sits above everything until reveal finishes -->
-  <div id="intro-overlay" aria-hidden="true">
-    <div id="aperture"></div>
-    <div class="shutter s1"></div>
-    <div class="shutter s2"></div>
-    <div class="shutter s3"></div>
-    <div class="shutter s4"></div>
-    <div class="shutter s5"></div>
-    <div id="compile-line"></div>
-  </div>
-
-  <!-- Your real site -->
-  <div id="world" class="world locked-scroll">
-    <main>
-      <!-- Hero -->
-      <section id="hero" class="fullscreen fold">
+  <main>
+    <!-- Hero -->
+    <section id="hero" class="fullscreen">
       <div class="container">
         <h1 class="h1" id="hero-headline"></h1>
         <p class="hero-sub"><span class="muted" id="hero-sub"></span></p>
@@ -323,7 +236,7 @@
     </section>
     
     <!-- Contrast -->
-    <section id="contrast" class="fold">
+    <section id="contrast">
       <div class="container">
         <h2 class="h2" id="contrast-head"></h2>
         <div id="contrast-grid"></div>
@@ -334,7 +247,7 @@
     </section>
     
     <!-- Different -->
-    <section id="different" class="fold">
+    <section id="different">
       <div class="container">
         <h2 class="h2" id="different-head"></h2>
         <div class="two-col">
@@ -350,7 +263,7 @@
     </section>
     
     <!-- Vision -->
-    <section id="vision" class="fold">
+    <section id="vision">
       <div class="container">
         <h2 class="h2" id="vision-head"></h2>
       </div>
@@ -361,7 +274,7 @@
     </section>
     
     <!-- Choice moment -->
-    <section id="choice" class="fullscreen fold">
+    <section id="choice" class="fullscreen">
       <div class="container">
         <p class="question" id="final-question"></p>
         <div class="choice-row">
@@ -372,7 +285,7 @@
     </section>
     
     <!-- Final -->
-    <section id="final" class="fullscreen fold" style="background:#000;">
+    <section id="final" class="fullscreen" style="background:#000;">
       <div class="container">
         <h2 class="h1" id="final-head"></h2>
         <div class="cta-row">
@@ -383,14 +296,13 @@
     </section>
   </main>
   
-    <!-- Footer -->
-    <footer>
-      <div class="container footer-content">
-        <p>© <span id="year"></span> Hethar</p>
-        <p class="footer-right">press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></p>
-      </div>
-    </footer>
-  </div>
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Hethar</p>
+      <p class="footer-right">press & partnerships: <a href="mailto:press@hethar.app">press@hethar.app</a></p>
+    </div>
+  </footer>
   
   <!-- Presence Nudges Root -->
   <div id="hethar-presence-root" aria-live="polite"></div>

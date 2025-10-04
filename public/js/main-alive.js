@@ -120,89 +120,20 @@ function coldOpen() {
         j++;
       } else {
         clearInterval(type2Interval);
-        // Hold for 1s (command executed), then transition to world boot
+        // Hold for 1s (command executed), then fade out
         setTimeout(() => {
           overlay.style.opacity = '0';
           overlay.style.transition = 'opacity 0.5s ease';
           setTimeout(() => {
             overlay.remove();
             document.documentElement.classList.remove('no-scroll');
-            // TRIGGER: World Boot sequence
-            revealWorld();
+            // Initialize behaviors
+            initEchoCursor();
           }, 500);
         }, 1000);
       }
     }, 50); // Faster, confident typing
   }
-}
-
-// ============================================
-// WORLD BOOT SEQUENCE (aperture + shutters)
-// ============================================
-
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
-async function revealWorld() {
-  const overlay = document.getElementById('intro-overlay');
-  const aperture = document.getElementById('aperture');
-  const shutters = [...document.querySelectorAll('.shutter')];
-  const line = document.getElementById('compile-line');
-  const world = document.getElementById('world');
-  const folds = [...document.querySelectorAll('.fold')];
-
-  // PHASE 9: Aperture open (420ms)
-  aperture.style.setProperty('--r', '0%');
-  await sleep(20); // ensure style applies
-  const apertureSteps = 6; // smooth ramp w/out expensive keyframes
-  for (let i = 1; i <= apertureSteps; i++) {
-    aperture.style.setProperty('--r', `${i * 16}%`); // to ~96%
-    await sleep(70);
-  }
-
-  // PHASE 10: Shutters slide down in sequence (520ms)
-  // Stagger slightly for L→R confidence
-  for (let i = 0; i < shutters.length; i++) {
-    shutters[i].style.transition = 'transform .52s var(--ease)';
-    shutters[i].style.transform = 'translateY(100%)';
-    await sleep(70);
-  }
-  await sleep(520);
-
-  // PHASE 11: Compile sweep — move the line and "snap" sections as it passes
-  const viewportH = window.innerHeight;
-  line.style.transition = 'transform .46s linear';
-  line.style.transform = `translateY(${viewportH}px)`;
-
-  // While the line sweeps, mark folds as compiled when their top is passed
-  const t0 = performance.now();
-  const dur = 460;
-  const raf = (t) => {
-    const p = Math.min(1, (t - t0) / dur);
-    const y = p * viewportH;
-    folds.forEach(f => {
-      const rect = f.getBoundingClientRect();
-      // if the sweep line has crossed this fold's top → compile it
-      if (y > rect.top + window.scrollY - 24) { 
-        f.classList.add('compiled'); 
-      }
-    });
-    if (p < 1) requestAnimationFrame(raf);
-  };
-  requestAnimationFrame(raf);
-  await sleep(dur + 30);
-
-  // PHASE 12: Unlock scroll
-  world.classList.remove('locked-scroll');
-  world.classList.add('unlocked');
-
-  // Clean up overlay — remove with a gentle dissolve
-  overlay.style.transition = 'opacity .18s var(--ease)';
-  overlay.style.opacity = '0';
-  await sleep(200);
-  overlay.remove();
-
-  // Initialize behaviors
-  initEchoCursor();
 }
 
 // ============================================

@@ -80,8 +80,8 @@
   .muted{color:var(--muted);font-size:14px}
   .ghost-green{color:#00ff7f}
   
-  /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0.25;z-index:50;transition:opacity 1.2s ease-out;background:transparent}
+  /* Matrix trail canvas - pure character rain, no backdrop */
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:1;z-index:50;transition:opacity 1.2s ease-out}
   
   /* Memory residue canvas */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.12;z-index:2}
@@ -418,9 +418,11 @@ function startMatrix() {
   
   (function draw(){
     if(!matrixRunning) return;
-    // Use a more transparent black for fade effect to prevent green accumulation
-    matrixCtx.fillStyle = 'rgba(0,0,0,0.08)';
-    matrixCtx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
+    
+    // Clear canvas completely - NO background fill at all
+    matrixCtx.clearRect(0,0,matrixCanvas.width,matrixCanvas.height);
+    
+    // Draw ONLY the falling characters
     matrixCtx.fillStyle = '#00ff7f';
     matrixCtx.font = '13px monospace';
     for (let i=0;i<drops.length;i++){
@@ -441,7 +443,7 @@ function stopMatrix(){
   matrixCanvas.style.opacity = '0';
 }
 
-function dimMatrix(opacity = 0.04){
+function dimMatrix(opacity = 0.15){
   matrixCanvas.style.opacity = opacity;
 }
 
@@ -671,7 +673,7 @@ async function breachSequence(){
   
   // Dim matrix but keep it running in background
   console.log('[Matrix] Dimming matrix to background level...');
-  matrixCanvas.style.opacity = '0.04'; // Much darker but still alive
+  matrixCanvas.style.opacity = '0.15'; // Subtle but visible
   
   await showDossiers();
 }
@@ -1091,7 +1093,7 @@ document.getElementById('pauseToggle').addEventListener('click', ()=>{
   if (STATE.paused) {
     dimMatrix(0.01); // Super subtle when paused
   } else {
-    matrixCanvas.style.opacity = '0.04'; // Resume background level
+    matrixCanvas.style.opacity = '0.15'; // Resume background level
     if (!matrixRunning) startMatrix();
   }
   

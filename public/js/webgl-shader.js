@@ -20,7 +20,7 @@ function initWebGLShader() {
     inset:0;
     pointer-events:none;
     mix-blend-mode:screen;
-    opacity:0.06;
+    opacity:0.15;
     z-index:1;
   `;
   document.body.appendChild(shaderCanvas);

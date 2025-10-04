@@ -64,6 +64,14 @@
   }
   @keyframes bounce{0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}}
   
+  /* Screen counter */
+  .screen-counter{
+    position:fixed;bottom:20px;right:20px;z-index:100;
+    font-family:var(--mono);font-size:11px;color:var(--muted);
+    background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
+    padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);
+  }
+  
   .full{height:100vh;width:100vw;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
   .center-col{display:flex;flex-direction:column;gap:14px;align-items:center;max-width:1100px;padding:24px;text-align:center}
   .cursor{display:inline-block;width:10px;height:26px;background:var(--fg);vertical-align:middle;animation:blink 1s steps(2) infinite}
@@ -73,7 +81,7 @@
   .ghost-green{color:#00ff7f}
   
   /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.07;z-index:1}
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.25;z-index:50}
   
   /* Memory residue canvas */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.12;z-index:2}
@@ -91,11 +99,11 @@
   }
   @keyframes pulse{0%,100%{transform:scale(1);opacity:0.3} 50%{transform:scale(1.4);opacity:0}}
   
-  /* Breach animation overlay */
+  /* Breach animation overlay - subtle flash, doesn't block matrix */
   .breach{
     position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:30;pointer-events:none;
-    background:linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85));
-    transition:opacity .45s var(--ease);
+    background:rgba(0,255,127,0.1);
+    transition:opacity .3s var(--ease);
   }
   .breach.hidden{opacity:0;pointer-events:none}
   
@@ -241,6 +249,11 @@
   <div id="scrollHint" class="scroll-hint">
     <div class="scroll-hint-text">scroll or press ↓</div>
     <div class="scroll-hint-icon">⌄</div>
+  </div>
+  
+  <!-- Screen counter -->
+  <div id="screenCounter" class="screen-counter" style="display:none">
+    <span id="currentScreen">1</span> / <span id="totalScreens">14</span>
   </div>
   
   <!-- Canvas layers -->
@@ -616,32 +629,39 @@ async function ghostDelete(){
   for (let i = lastLine.length; i > 0; i--){
     lines[lines.length - 1] = lastLine.slice(0, i);
     consoleText.textContent = lines.join('\n');
-    breachEl.classList.remove('hidden');
-    breachEl.style.opacity = '0.3';
     await sleep(16 + Math.random()*20);
   }
   
+  // Clear console text
+  consoleText.textContent = '';
+  
+  // Start matrix FIRST, let it fully establish
   startMatrix();
-  await sleep(250);
+  await sleep(1200); // Let matrix rain be visible
 }
 
 async function breachSequence(){
+  // Matrix is already running from ghostDelete
+  // Just do a subtle flash
   breachEl.classList.remove('hidden');
-  breachEl.style.opacity = '1';
+  breachEl.style.opacity = '0.5';
   audioClick();
-  await sleep(400);
+  await sleep(300);
   
-  breachEl.style.transition = 'opacity .6s var(--ease)';
+  breachEl.style.transition = 'opacity .4s var(--ease)';
   breachEl.style.opacity = '0';
-  await sleep(600);
-  
-  stopMatrix();
+  await sleep(400);
   breachEl.classList.add('hidden');
   
-  // Type final line
-  consoleText.textContent = '';
+  // Let matrix continue for a bit longer
+  await sleep(800);
+  
+  // Type final line OVER the matrix
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
-  await sleep(1000);
+  await sleep(800);
+  
+  // Fade out matrix
+  stopMatrix();
   
   await showDossiers();
 }
@@ -711,6 +731,12 @@ async function showDossiers(){
   document.getElementById('chooseY').addEventListener('click', openModal);
   document.getElementById('chooseN').addEventListener('click', tweetReaction);
   
+  // Update screen counter total
+  const totalScreens = document.getElementById('totalScreens');
+  if (totalScreens) {
+    totalScreens.textContent = document.querySelectorAll('.dossier').length;
+  }
+  
   // Show scroll hint
   setTimeout(()=>{
     const scrollHint = document.getElementById('scrollHint');
@@ -719,11 +745,30 @@ async function showDossiers(){
     setTimeout(()=>scrollHint.classList.remove('visible'), 5000);
   }, 1000);
   
-  // Init external features
+  // Init external features - with debug logging
   setTimeout(()=>{
-    if (window.DossierGlints) window.DossierGlints.init();
-    if (window.HoverPOV) window.HoverPOV.init();
-    if (window.WebGLShader) window.WebGLShader.init();
+    console.log('[Features] Initializing external features...');
+    
+    if (window.DossierGlints) {
+      window.DossierGlints.init();
+      console.log('[Features] ✓ Dossier Glints initialized');
+    } else {
+      console.log('[Features] ✗ DossierGlints not loaded');
+    }
+    
+    if (window.HoverPOV) {
+      window.HoverPOV.init();
+      console.log('[Features] ✓ Hover POV initialized');
+    } else {
+      console.log('[Features] ✗ HoverPOV not loaded');
+    }
+    
+    if (window.WebGLShader) {
+      window.WebGLShader.init();
+      console.log('[Features] ✓ WebGL Shader initialized');
+    } else {
+      console.log('[Features] ✗ WebGLShader not loaded');
+    }
   }, 500);
   
   // Show proximity card if not asked yet
@@ -797,6 +842,14 @@ function scrollToIndex(idx, smooth=true){
   STATE.isLocked = true;
   el.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'center'});
   setTimeout(()=> STATE.isLocked = false, 600);
+  
+  // Update screen counter
+  const counter = document.getElementById('screenCounter');
+  const currentScreen = document.getElementById('currentScreen');
+  if (counter && currentScreen) {
+    counter.style.display = 'block';
+    currentScreen.textContent = idx + 1;
+  }
   
   trackEvent('dossier_view', {index: idx});
 }

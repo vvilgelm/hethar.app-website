@@ -880,16 +880,10 @@ function resetIdle(){
   if (STATE.paused) return;
   idleTimer = setTimeout(()=>{
     if (STATE.sessionWhisperShown) return;
-    showWhisper(rand([
-      'you paused. i noticed.',
-      'don\'t overthink. say it.',
-      'i remember when you tried this last time.',
-      'still here? good.',
-      'you\'re hesitating. i\'ll wait.'
-    ]));
+    showWhisper('stop reading. feel it.');
     STATE.sessionWhisperShown = true;
     sessionStorage.setItem(CONFIG.sessionWhisperKey, '1');
-  }, 4000);
+  }, 3000); // 3 seconds as per spec
 }
 
 ['mousemove','keydown','scroll','touchstart'].forEach(ev=>
@@ -910,11 +904,8 @@ window.addEventListener('mouseout', e=>{
   if (exitFired || STATE.paused) return;
   if (!e.relatedTarget && e.clientY <= 0){
     exitFired = true;
-    showFloatingFlash(rand([
-      "leaving already? i wasn't done watching you.",
-      "you'll be back. i'll remember.",
-      "don't go. i'm only getting started."
-    ]));
+    showFloatingFlash("i'll follow you.");
+    trackEvent('exit_intent');
     setTimeout(()=> exitFired = false, 5000);
   }
 });
@@ -929,7 +920,6 @@ function showFloatingFlash(msg){
   document.body.appendChild(el);
   setTimeout(()=> el.classList.remove('on'), 2000);
   setTimeout(()=> el.remove(), 2500);
-  trackEvent('exit_intent');
 }
 
 /* ============= PROXIMITY GEO ============= */

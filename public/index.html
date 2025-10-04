@@ -418,8 +418,7 @@ function startMatrix() {
   
   (function draw(){
     if(!matrixRunning) return;
-    // Stronger fade to prevent green accumulation
-    matrixCtx.fillStyle = 'rgba(0,0,0,0.12)';
+    matrixCtx.fillStyle = 'rgba(0,0,0,0.05)';
     matrixCtx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
     matrixCtx.fillStyle = '#00ff7f';
     matrixCtx.font = '13px monospace';
@@ -646,28 +645,25 @@ async function ghostDelete(){
   // Clear console text
   consoleText.textContent = '';
   
-  // Force start matrix even if paused (this is the intro sequence)
-  console.log('[Matrix] Starting matrix rain...');
-  const wasPaused = STATE.paused;
-  STATE.paused = false; // Temporarily unpause for intro
-  startMatrix();
-  
-  // Fade in matrix gradually to avoid green flash
-  await sleep(200);
-  matrixCanvas.style.opacity = '0.25';
-  await sleep(1800); // 2 seconds total of matrix display
-  STATE.paused = wasPaused; // Restore pause state
+  // DON'T start matrix here - wait until breach sequence
+  // This prevents green accumulation during auth
+  await sleep(800);
 }
 
 async function breachSequence(){
-  // Matrix is already running from ghostDelete
-  console.log('[Matrix] Matrix should be visible now');
+  // NOW start matrix - fresh, no accumulation
+  console.log('[Matrix] Starting matrix rain NOW...');
+  const wasPaused = STATE.paused;
+  STATE.paused = false;
+  startMatrix();
   
-  // Just audio click, NO visual overlay to cover matrix
+  // Audio click
   audioClick();
   
-  // Let matrix run unobstructed
-  await sleep(2000);
+  // Fade in matrix over 1 second
+  await sleep(100);
+  matrixCanvas.style.opacity = '0.25';
+  await sleep(1500);
   
   // Type final line OVER the matrix
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
@@ -675,7 +671,8 @@ async function breachSequence(){
   
   // Dim matrix but keep it running in background
   console.log('[Matrix] Dimming matrix to background level...');
-  matrixCanvas.style.opacity = '0.04'; // Much darker but still alive
+  matrixCanvas.style.opacity = '0.04';
+  STATE.paused = wasPaused;
   
   await showDossiers();
 }

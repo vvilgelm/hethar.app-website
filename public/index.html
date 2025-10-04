@@ -81,7 +81,7 @@
   .ghost-green{color:#00ff7f}
   
   /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.25;z-index:50;transition:opacity 1.2s ease-out}
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0.25;z-index:50;transition:opacity 1.2s ease-out;background:transparent}
   
   /* Memory residue canvas */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.12;z-index:2}
@@ -418,7 +418,8 @@ function startMatrix() {
   
   (function draw(){
     if(!matrixRunning) return;
-    matrixCtx.fillStyle = 'rgba(0,0,0,0.05)';
+    // Use a more transparent black for fade effect to prevent green accumulation
+    matrixCtx.fillStyle = 'rgba(0,0,0,0.08)';
     matrixCtx.fillRect(0,0,matrixCanvas.width,matrixCanvas.height);
     matrixCtx.fillStyle = '#00ff7f';
     matrixCtx.font = '13px monospace';

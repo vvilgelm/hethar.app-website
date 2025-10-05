@@ -78,7 +78,7 @@
   @keyframes blink{50%{opacity:0}}
   .console{font-family:var(--mono);font-size:20px;letter-spacing:0.02em;line-height:1.6}
   .muted{color:var(--muted);font-size:14px}
-  /* Removed ghost-green class */
+  .ghost-green{color:#00ff7f}
   
   /* Matrix trail canvas */
   #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:50;transition:opacity 0.8s ease-out}
@@ -625,7 +625,7 @@ async function launchSequence(){
   consoleText.textContent += '\n…CONFIRMED.';
   await sleep(500);
   
-  // Ghost deletion (no flicker)
+  // Ghost deletion with green flicker
   await ghostDelete();
   
   // Breach sequence
@@ -660,18 +660,17 @@ async function breachSequence(){
   // Audio click
   audioClick();
   
-  // Fade in matrix very gradually - no flash
-  await sleep(400);
+  // Let matrix draw a few frames BEFORE fading in (prevents green flash)
+  await sleep(500);
   matrixCanvas.style.opacity = '0.25';
-  await sleep(1200);
+  await sleep(1500);
   
   // Type final line OVER the matrix
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Clear accumulated green tint from canvas
-  console.log('[Matrix] Clearing accumulated green tint...');
-  matrixCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+  // Dim matrix but keep it running in background
+  console.log('[Matrix] Dimming matrix to background level...');
   matrixCanvas.style.opacity = '0.04';
   STATE.paused = wasPaused;
   

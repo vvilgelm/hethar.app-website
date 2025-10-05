@@ -809,11 +809,8 @@ async function showDossiers(){
   attachNavigation();
   scrollToIndex(0, false);
   
-  // Initialize core features
-  console.log('[Features] Initializing core features...');
-  initEchoCursor();
-  initMemoryResidue();
-  initTemporalRewind();
+  // Core features (echo cursor, memory residue) are already auto-initialized
+  // Temporal rewind is event-based (ESC key)
   
   // Initialize external features
   console.log('[Features] Initializing external modules...');

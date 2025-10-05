@@ -843,8 +843,10 @@ async function showDossiers(){
     } else console.log('[Features] ✗ ABTest not loaded');
   }, 500); // Wait for external scripts to load
   
-  // Show geo proximity card after 3 seconds
-  setTimeout(showProximityCard, 3000);
+  // Show geo proximity card after 3 seconds (if not asked before)
+  if (!STATE.geoAsked) {
+    setTimeout(showProximityCard, 3000);
+  }
   
   // Wire final CTA
   document.getElementById('chooseY').addEventListener('click', openModal);

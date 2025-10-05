@@ -843,9 +843,9 @@ async function showDossiers(){
     } else console.log('[Features] ✗ ABTest not loaded');
   }, 500); // Wait for external scripts to load
   
-  // Show geo proximity card after 3 seconds (if not asked before)
+  // Show geo proximity card after 10 seconds (if not asked before)
   if (!STATE.geoAsked) {
-    setTimeout(showProximityCard, 3000);
+    setTimeout(showProximityCard, 10000);
   }
   
   // Wire final CTA
@@ -983,9 +983,11 @@ function resetIdle(){
   clearTimeout(idleTimer);
   if (STATE.paused) return;
   idleTimer = setTimeout(()=>{
-    // Show time-aware whisper
+    // Only show whisper once per session, after longer idle time
+    if (STATE.sessionWhisperShown) return;
     showWhisper(getTimeAwareWhisper());
-  }, 3000); // 3 seconds as per spec
+    STATE.sessionWhisperShown = true;
+  }, 8000); // 8 seconds - much longer
 }
 
 ['mousemove','keydown','scroll','touchstart'].forEach(ev=>
@@ -1022,7 +1024,7 @@ window.addEventListener('mouseout', e=>{
     exitFired = true;
     showFloatingFlash("i'll follow you.");
     trackEvent('exit_intent');
-    setTimeout(()=> exitFired = false, 5000);
+    setTimeout(()=> exitFired = false, 30000); // 30 seconds cooldown
   }
 });
 

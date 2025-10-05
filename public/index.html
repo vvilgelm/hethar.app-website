@@ -669,8 +669,12 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Dim matrix but keep it running in background
-  console.log('[Matrix] Dimming matrix to background level...');
+  // Clear accumulated green and restart matrix fresh
+  console.log('[Matrix] Clearing and restarting for clean background...');
+  stopMatrix();
+  await sleep(100);
+  STATE.paused = false;
+  startMatrix();
   matrixCanvas.style.opacity = '0.04';
   STATE.paused = wasPaused;
   

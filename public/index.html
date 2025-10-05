@@ -669,9 +669,11 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Stop matrix completely - pure black for dossiers
-  console.log('[Matrix] Stopping matrix completely...');
-  stopMatrix();
+  // Clear accumulated green tint from canvas
+  console.log('[Matrix] Clearing accumulated green tint...');
+  matrixCtx.clearRect(0, 0, matrixCanvas.width, matrixCanvas.height);
+  matrixCanvas.style.opacity = '0.04';
+  STATE.paused = wasPaused;
   
   await showDossiers();
 }

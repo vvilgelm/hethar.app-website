@@ -36,9 +36,6 @@ function initHoverPOV() {
 }
 
 function handleHover(el, messages) {
-  // DISABLED - too annoying
-  return;
-  
   // Don't spam - only show POV after 800ms hover
   povTimeout = setTimeout(() => {
     let hoverCount = hoveredElements.get(el) || 0;

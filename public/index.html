@@ -1113,6 +1113,26 @@ function closeModal(){
   modal.setAttribute('aria-hidden', 'true');
 }
 
+// Modal button hover nudges
+const sendBtn = document.querySelector('#contactForm button[type="submit"]');
+const cancelBtn = document.getElementById('modalCancel');
+
+let sendHoverTimer, cancelHoverTimer;
+
+sendBtn.addEventListener('mouseenter', ()=>{
+  sendHoverTimer = setTimeout(()=>{
+    showWhisper('commitment made. no backing out now.');
+  }, 800);
+});
+sendBtn.addEventListener('mouseleave', ()=> clearTimeout(sendHoverTimer));
+
+cancelBtn.addEventListener('mouseenter', ()=>{
+  cancelHoverTimer = setTimeout(()=>{
+    showWhisper('you\'ll be back. they always come back.');
+  }, 800);
+});
+cancelBtn.addEventListener('mouseleave', ()=> clearTimeout(cancelHoverTimer));
+
 document.getElementById('modalCancel').addEventListener('click', ()=>{
   closeModal();
   trackEvent('modal_cancel');
@@ -1120,9 +1140,7 @@ document.getElementById('modalCancel').addEventListener('click', ()=>{
 
 contactForm.addEventListener('submit', async (ev)=>{
   ev.preventDefault();
-  console.log('[Form] Submit triggered');
   const val = document.getElementById('contactInput').value.trim();
-  console.log('[Form] Value:', val);
   
   if (!val) {
     showWhisper('give a contact. or come back later.');
@@ -1130,7 +1148,6 @@ contactForm.addEventListener('submit', async (ev)=>{
   }
   
   // Submit to backend
-  console.log('[Form] Submitting to backend...');
   try {
     const response = await fetch(CONFIG.apiEndpoint, {
       method: 'POST',
@@ -1159,16 +1176,24 @@ contactForm.addEventListener('submit', async (ev)=>{
       trackEvent('contact_submit_error');
     }
   } catch(e) {
-    console.log('Contact submitted (demo):', val);
+    console.log('[Contact] Submitted (local demo):', val);
+    console.log('[Contact] Backend not available, showing success anyway');
     closeModal();
-    // Show handshake animation
-    if (window.Handshake) {
-      window.Handshake.show(() => {
+    
+    // Show success message
+    setTimeout(() => {
+      // Show handshake animation if available
+      if (window.Handshake) {
+        console.log('[Contact] ✓ Showing Handshake animation');
+        window.Handshake.show(() => {
+          showFloatingFlash('received. i\'ll find you.');
+        });
+      } else {
+        console.log('[Contact] ✗ Handshake not loaded, showing message');
         showFloatingFlash('received. i\'ll find you.');
-      });
-    } else {
-      showFloatingFlash('received. i\'ll find you.');
-    }
+      }
+    }, 300);
+    
     trackEvent('contact_submit_demo', {contact: val});
     if (window.ABTest) window.ABTest.trackConversion('contact_submit');
   }

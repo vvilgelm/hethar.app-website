@@ -669,9 +669,9 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Stop matrix completely - no green screen in dossiers
-  console.log('[Matrix] Stopping matrix for dossiers...');
-  stopMatrix();
+  // Dim matrix but keep it running in background
+  console.log('[Matrix] Dimming matrix to background level...');
+  matrixCanvas.style.opacity = '0.04';
   STATE.paused = wasPaused;
   
   await showDossiers();

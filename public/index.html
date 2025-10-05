@@ -848,9 +848,28 @@ async function showDossiers(){
     setTimeout(showProximityCard, 10000);
   }
   
-  // Wire final CTA
-  document.getElementById('chooseY').addEventListener('click', openModal);
-  document.getElementById('chooseN').addEventListener('click', tweetReaction);
+  // Wire final CTA with hover nudges
+  const yesBtn = document.getElementById('chooseY');
+  const noBtn = document.getElementById('chooseN');
+  
+  let yesHoverTimer, noHoverTimer;
+  
+  yesBtn.addEventListener('mouseenter', ()=>{
+    yesHoverTimer = setTimeout(()=>{
+      showWhisper('bold choice. few say yes right away.');
+    }, 600);
+  });
+  yesBtn.addEventListener('mouseleave', ()=> clearTimeout(yesHoverTimer));
+  
+  noBtn.addEventListener('mouseenter', ()=>{
+    noHoverTimer = setTimeout(()=>{
+      showWhisper('expected. no one commits on first visit.');
+    }, 600);
+  });
+  noBtn.addEventListener('mouseleave', ()=> clearTimeout(noHoverTimer));
+  
+  yesBtn.addEventListener('click', openModal);
+  noBtn.addEventListener('click', tweetReaction);
   
   // Update screen counter total
   const totalScreens = document.getElementById('totalScreens');
@@ -924,14 +943,30 @@ function onWheel(e){
   e.preventDefault();
   if (wheelTimer) return;
   wheelTimer = setTimeout(()=> wheelTimer = null, 400);
+  
+  // Random presence whisper on scroll
+  if (Math.random() > 0.93) { // 7% chance per scroll
+    setTimeout(showRandomPresenceWhisper, 600);
+  }
+  
   if (e.deltaY > 10) next();
   else if (e.deltaY < -10) prev();
 }
 
 function onKey(e){
   if (STATE.rewindMode) return;
-  if (e.key === 'ArrowDown' || e.key==='PageDown') next();
-  if (e.key === 'ArrowUp' || e.key==='PageUp') prev();
+  if (e.key === 'ArrowDown' || e.key==='PageDown') {
+    next();
+    if (Math.random() > 0.85) { // 15% chance
+      setTimeout(() => showWhisper('keyboard warrior. efficient.'), 400);
+    }
+  }
+  if (e.key === 'ArrowUp' || e.key==='PageUp') {
+    prev();
+    if (Math.random() > 0.9) { // 10% chance
+      setTimeout(() => showWhisper('going back. missed something?'), 400);
+    }
+  }
   if (e.key === 'y' || e.key === 'Y') openModal();
   if (e.key === 'n' || e.key === 'N') tweetReaction();
 }
@@ -951,10 +986,17 @@ function prev(){
   scrollToIndex(STATE.currentDossier - 1); 
 }
 
+// Track scroll behavior for contextual nudges
+let lastScrollIdx = 0;
+let lastScrollTime = Date.now();
+let fastScrollCount = 0;
+
 function scrollToIndex(idx, smooth=true){
   const children = Array.from(dossierContainer.children);
   if (idx < 0) idx = 0;
   if (idx >= children.length) idx = children.length - 1;
+  
+  const previousIdx = STATE.currentDossier;
   STATE.currentDossier = idx;
   
   const el = children[idx];
@@ -963,6 +1005,32 @@ function scrollToIndex(idx, smooth=true){
   STATE.isLocked = true;
   el.scrollIntoView({behavior: smooth ? 'smooth' : 'auto', block:'center'});
   setTimeout(()=> STATE.isLocked = false, 600);
+  
+  // Contextual nudges based on screen position
+  const totalScreens = children.length;
+  if (idx === 3 && previousIdx === 2) {
+    setTimeout(() => showWhisper('you\'re skimming. i can tell.'), 1200);
+  }
+  if (idx === Math.floor(totalScreens / 2) && previousIdx < idx) {
+    setTimeout(() => showWhisper('halfway through. most turn back here.'), 1000);
+  }
+  if (idx === totalScreens - 2 && previousIdx < idx) {
+    setTimeout(() => showWhisper('almost there. don\'t bail now.'), 1500);
+  }
+  
+  // Fast scrolling detection
+  const now = Date.now();
+  if (now - lastScrollTime < 400 && Math.abs(idx - previousIdx) === 1) {
+    fastScrollCount++;
+    if (fastScrollCount === 3) {
+      setTimeout(() => showWhisper('racing through. scared?'), 800);
+      fastScrollCount = 0;
+    }
+  } else {
+    fastScrollCount = 0;
+  }
+  lastScrollTime = now;
+  lastScrollIdx = idx;
   
   // Update screen counter
   const counter = document.getElementById('screenCounter');
@@ -1014,6 +1082,24 @@ function getTimeAwareWhisper(){
   if (hour >= 17 && hour < 20) return 'after hours. when real work begins.';
   if (hour >= 20 && hour < 23) return 'night mode engaged.';
   return 'stop reading. feel it.';
+}
+
+// Random presence whispers
+const presenceWhispers = [
+  'i see you thinking about it.',
+  'your cursor hesitated. doubt?',
+  'the shadow follows faster than you do.',
+  'not ready yet. that\'s fine.',
+  'most people refresh twice.',
+  'you\'re trying to understand. it won\'t work.',
+  'this isn\'t like the others. you feel it.',
+  'screenshot won\'t help. the feeling doesn\'t transfer.'
+];
+
+function showRandomPresenceWhisper(){
+  if (Math.random() > 0.7 && !STATE.paused) { // 30% chance
+    showWhisper(presenceWhispers[Math.floor(Math.random() * presenceWhispers.length)]);
+  }
 }
 
 /* Exit intent */

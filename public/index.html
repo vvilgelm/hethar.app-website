@@ -232,6 +232,22 @@
   #pauseToggle:hover{background:rgba(255,255,255,0.1);color:var(--fg)}
   #pauseToggle.paused{background:rgba(255,100,100,0.2);color:#ff6b6b;border-color:#ff6b6b}
 </style>
+
+<!-- External feature modules -->
+<script src="/js/ab-test.js"></script>
+<script src="/js/copy-rails.js"></script>
+<script src="/js/time-variants.js"></script>
+<script src="/js/dossier-glints.js"></script>
+<script src="/js/hover-pov.js"></script>
+<script src="/js/webgl-shader.js"></script>
+<script src="/js/handshake.js"></script>
+<script src="/js/heatmap.js"></script>
+<script src="/js/copy-generator.js"></script>
+<script src="/js/legal-banner.js"></script>
+
+<!-- Analytics -->
+<script defer data-domain="hethar.app" src="https://plausible.io/js/script.js"></script>
+
 </head>
 <body>
   <!-- Accessibility: Skip intro -->
@@ -555,7 +571,56 @@ function recordEvent(type, data){
 window.addEventListener('keydown', e=>{
   recordEvent('key', {key:e.key});
   
-  // R = toggle rewind mode
+  // ESC = toggle rewind mode
+  if (e.key === 'Escape'){
+    if (!STATE.rewindMode && document.getElementById('dossierContainer').style.display === 'block'){
+      STATE.rewindMode = true;
+      document.getElementById('rewindUI').classList.add('on');
+      trackEvent('rewind_open');
+    } else if (STATE.rewindMode) {
+      STATE.rewindMode = false;
+      document.getElementById('rewindUI').classList.remove('on');
+      trackEvent('rewind_close');
+    }
+  }
+  
+  // Space = toggle pause
+  if (e.key === ' ' || e.code === 'Space'){
+    e.preventDefault();
+    document.getElementById('pauseToggle').click();
+  }
+  
+  // Konami code: ↑ ↑ ↓ ↓ ← → ← → B A
+  const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  if (!window.konamiProgress) window.konamiProgress = 0;
+  if (e.key === konamiCode[window.konamiProgress]) {
+    window.konamiProgress++;
+    if (window.konamiProgress === konamiCode.length) {
+      showFloatingFlash('you found it. now what?');
+      trackEvent('konami_code');
+      window.konamiProgress = 0;
+    }
+  } else {
+    window.konamiProgress = 0;
+  }
+  
+  // Screenshot mode: Cmd+Shift+S
+  if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 's'){
+    e.preventDefault();
+    const elementsToHide = [
+      document.getElementById('pauseToggle'),
+      document.getElementById('skipIntro'),
+      document.getElementById('scrollHint'),
+      document.getElementById('screenCounter')
+    ];
+    elementsToHide.forEach(el => {
+      if(el) el.style.display = el.style.display === 'none' ? '' : 'none';
+    });
+    showWhisper(elementsToHide[0].style.display === 'none' ? 'screenshot mode' : 'UI restored');
+    trackEvent('screenshot_mode');
+  }
+  
+  // R = also toggle rewind (legacy)
   if (e.key === 'r' || e.key === 'R'){
     if (!STATE.rewindMode && document.getElementById('dossierContainer').style.display === 'block'){
       STATE.rewindMode = true;
@@ -743,6 +808,20 @@ async function showDossiers(){
   
   attachNavigation();
   scrollToIndex(0, false);
+  
+  // Initialize core features
+  console.log('[Features] Initializing core features...');
+  initEchoCursor();
+  initMemoryResidue();
+  initTemporalRewind();
+  
+  // Initialize external features
+  console.log('[Features] Initializing external modules...');
+  if (window.DossierGlints) window.DossierGlints.init();
+  if (window.HoverPOV) window.HoverPOV.init();
+  if (window.WebGLShader) window.WebGLShader.init(0.15);
+  if (window.Heatmap) window.Heatmap.init();
+  if (window.TimeVariants) window.TimeVariants.apply();
   
   // Wire final CTA
   document.getElementById('chooseY').addEventListener('click', openModal);

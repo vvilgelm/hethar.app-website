@@ -1120,7 +1120,9 @@ document.getElementById('modalCancel').addEventListener('click', ()=>{
 
 contactForm.addEventListener('submit', async (ev)=>{
   ev.preventDefault();
+  console.log('[Form] Submit triggered');
   const val = document.getElementById('contactInput').value.trim();
+  console.log('[Form] Value:', val);
   
   if (!val) {
     showWhisper('give a contact. or come back later.');
@@ -1128,6 +1130,7 @@ contactForm.addEventListener('submit', async (ev)=>{
   }
   
   // Submit to backend
+  console.log('[Form] Submitting to backend...');
   try {
     const response = await fetch(CONFIG.apiEndpoint, {
       method: 'POST',

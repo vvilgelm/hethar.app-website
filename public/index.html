@@ -407,6 +407,8 @@ const matrixCtx = matrixCanvas ? matrixCanvas.getContext('2d') : null;
 let matrixRunning = false;
 
 function fitCanvas(canvas){
+  // DISABLED - all canvases removed
+  if (!canvas) return;
   canvas.width = innerWidth;
   canvas.height = innerHeight;
 }
@@ -702,9 +704,8 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Dim matrix but keep it running in background
-  console.log('[Matrix] Dimming matrix to background level...');
-  matrixCanvas.style.opacity = '0.04';
+  // Matrix completely disabled - no background elements
+  console.log('[Matrix] Matrix disabled - pure black background...');
   STATE.paused = wasPaused;
   
   await showDossiers();
@@ -1285,12 +1286,8 @@ document.getElementById('pauseToggle').addEventListener('click', ()=>{
   btn.textContent = STATE.paused ? 'presence: paused' : 'presence: on';
   btn.classList.toggle('paused', STATE.paused);
   
-  if (STATE.paused) {
-    dimMatrix(0.01); // Super subtle when paused
-  } else {
-    matrixCanvas.style.opacity = '0.04'; // Resume background level
-    if (!matrixRunning) startMatrix();
-  }
+  // Matrix completely disabled
+  // No background elements at all
   
   trackEvent('presence_toggle', {paused: STATE.paused});
 });

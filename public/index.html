@@ -416,6 +416,10 @@ fitCanvas(matrixCanvas);
 addEventListener('resize', ()=>fitCanvas(matrixCanvas));
 
 function startMatrix() {
+  // COMPLETELY DISABLED - no background elements
+  console.log('[Matrix] ✗ DISABLED - no background elements');
+  return;
+  
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     console.log('[Matrix] ✗ Blocked by prefers-reduced-motion');
     return;

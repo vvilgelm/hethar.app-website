@@ -479,16 +479,16 @@ function recordPath(x, y){
 
 function drawResidue(){
   if (STATE.paused) return;
-  // Fade existing
-  residueCtx.fillStyle = 'rgba(0,0,0,0.02)';
+  // Fade existing (faster fade to prevent green accumulation)
+  residueCtx.fillStyle = 'rgba(0,0,0,0.15)';
   residueCtx.fillRect(0,0,residueCanvas.width,residueCanvas.height);
   
   // Draw recent path
   if (pathBuffer.length < 2) return;
-  residueCtx.strokeStyle = 'rgba(0,255,127,0.6)';
-  residueCtx.lineWidth = 3;
+  residueCtx.strokeStyle = 'rgba(0,255,127,0.25)';
+  residueCtx.lineWidth = 2;
   residueCtx.lineCap = 'round';
-  residueCtx.globalCompositeOperation = 'lighter';
+  residueCtx.globalCompositeOperation = 'source-over';
   
   residueCtx.beginPath();
   residueCtx.moveTo(pathBuffer[0].x, pathBuffer[0].y);
@@ -496,7 +496,6 @@ function drawResidue(){
     residueCtx.lineTo(pathBuffer[i].x, pathBuffer[i].y);
   }
   residueCtx.stroke();
-  residueCtx.globalCompositeOperation = 'source-over';
   
   requestAnimationFrame(drawResidue);
 }

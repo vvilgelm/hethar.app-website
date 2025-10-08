@@ -83,7 +83,7 @@
   /* Matrix trail canvas */
   #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:50;transition:opacity 0.8s ease-out}
   
-  /* Memory residue canvas */
+  /* Memory residue canvas - DISABLED to prevent green tint */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:2;display:none}
   
   /* Shadow cursor (predictive companion) */
@@ -478,26 +478,8 @@ function recordPath(x, y){
 }
 
 function drawResidue(){
-  if (STATE.paused) return;
-  // Fade existing (faster fade to prevent green accumulation)
-  residueCtx.fillStyle = 'rgba(0,0,0,0.15)';
-  residueCtx.fillRect(0,0,residueCanvas.width,residueCanvas.height);
-  
-  // Draw recent path
-  if (pathBuffer.length < 2) return;
-  residueCtx.strokeStyle = 'rgba(0,255,127,0.25)';
-  residueCtx.lineWidth = 2;
-  residueCtx.lineCap = 'round';
-  residueCtx.globalCompositeOperation = 'source-over';
-  
-  residueCtx.beginPath();
-  residueCtx.moveTo(pathBuffer[0].x, pathBuffer[0].y);
-  for (let i=1; i<pathBuffer.length; i++){
-    residueCtx.lineTo(pathBuffer[i].x, pathBuffer[i].y);
-  }
-  residueCtx.stroke();
-  
-  requestAnimationFrame(drawResidue);
+  // DISABLED - causes green tint accumulation
+  return;
 }
 
 window.addEventListener('pointermove', e=>{

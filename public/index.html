@@ -529,19 +529,10 @@ function tickShadow(){
   const tx = px + jitter;
   const ty = py + jitter;
   
-  // Easing lag
-  const current = shadowCursor.getBoundingClientRect();
-  const cx = current.left + current.width/2;
-  const cy = current.top + current.height/2;
-  const nx = cx + (tx - cx) * 0.18;
-  const ny = cy + (ty - cy) * 0.18;
-  
-  shadowCursor.style.left = nx + 'px';
-  shadowCursor.style.top = ny + 'px';
-  
-  requestAnimationFrame(tickShadow);
+  // REMOVED - shadow cursor deleted from DOM
+  return;
 }
-tickShadow();
+// tickShadow(); // Not called since shadow cursor is removed
 
 /* ============= TEMPORAL REWIND ============= */
 function recordEvent(type, data){

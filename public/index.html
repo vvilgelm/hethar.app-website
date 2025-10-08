@@ -80,8 +80,8 @@
   .muted{color:var(--muted);font-size:14px}
   .ghost-green{color:#00ff7f}
   
-  /* Matrix trail canvas */
-  #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:50;transition:opacity 0.8s ease-out}
+  /* Matrix trail canvas - REMOVED */
+  #matrixCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:50;display:none !important}
   
   /* Memory residue canvas - DISABLED to prevent green tint */
   #residueCanvas{position:fixed;inset:0;pointer-events:none;opacity:0;z-index:2;display:none}
@@ -267,10 +267,8 @@
     <span id="currentScreen">1</span> / <span id="totalScreens">14</span>
   </div>
   
-  <!-- Canvas layers -->
-  <canvas id="matrixCanvas" aria-hidden="true"></canvas>
-  
-  <!-- Residue canvas and shadow cursor REMOVED to eliminate green tint -->
+  <!-- ALL background elements REMOVED -->
+  <!-- <canvas id="matrixCanvas" aria-hidden="true"></canvas> -->
   <!-- <canvas id="residueCanvas" aria-hidden="true"></canvas> -->
   <!-- <div id="shadowCursor" aria-hidden="true" style="display:none"></div> -->
   
@@ -403,8 +401,9 @@ function showCursor(on){
 }
 
 /* ============= MATRIX CANVAS ============= */
+// COMPLETELY DISABLED - matrix removed from DOM
 const matrixCanvas = document.getElementById('matrixCanvas');
-const matrixCtx = matrixCanvas.getContext('2d');
+const matrixCtx = matrixCanvas ? matrixCanvas.getContext('2d') : null;
 let matrixRunning = false;
 
 function fitCanvas(canvas){
@@ -451,13 +450,13 @@ function startMatrix() {
 }
 
 function stopMatrix(){ 
-  matrixRunning=false; 
-  matrixCtx.clearRect(0,0,matrixCanvas.width,matrixCanvas.height);
-  matrixCanvas.style.opacity = '0';
+  // DISABLED - matrix removed from DOM
+  matrixRunning=false;
 }
 
 function dimMatrix(opacity = 0.04){
-  matrixCanvas.style.opacity = opacity;
+  // DISABLED - matrix removed from DOM
+  return;
 }
 
 /* ============= MEMORY RESIDUE CANVAS ============= */

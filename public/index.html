@@ -487,7 +487,8 @@ window.addEventListener('pointermove', e=>{
   recordEvent('move', {x:e.clientX, y:e.clientY});
 }, {passive:true});
 
-requestAnimationFrame(drawResidue);
+// Residue drawing DISABLED to prevent green tint
+// requestAnimationFrame(drawResidue);
 
 /* ============= SHADOW CURSOR (Predictive) ============= */
 const shadowCursor = document.getElementById('shadowCursor');

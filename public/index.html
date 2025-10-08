@@ -710,9 +710,9 @@ async function breachSequence(){
   await typeText(consoleText, 'i was already here.', 24, {cursor:false});
   await sleep(1200);
   
-  // Dim matrix but keep it running in background
-  console.log('[Matrix] Dimming matrix to background level...');
-  matrixCanvas.style.opacity = '0.04';
+  // Stop matrix completely to prevent green accumulation
+  console.log('[Matrix] Stopping matrix completely...');
+  stopMatrix();
   STATE.paused = wasPaused;
   
   await showDossiers();
@@ -1294,10 +1294,11 @@ document.getElementById('pauseToggle').addEventListener('click', ()=>{
   btn.classList.toggle('paused', STATE.paused);
   
   if (STATE.paused) {
-    dimMatrix(0.01); // Super subtle when paused
+    stopMatrix(); // Stop completely when paused
   } else {
-    matrixCanvas.style.opacity = '0.04'; // Resume background level
-    if (!matrixRunning) startMatrix();
+    // Don't restart matrix - it stops after intro
+    // matrixCanvas.style.opacity = '0.04'; 
+    // if (!matrixRunning) startMatrix();
   }
   
   trackEvent('presence_toggle', {paused: STATE.paused});

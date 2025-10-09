@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>privacy — hethar</title>
+  <meta name="description" content="What Hethar logs and how we handle your data." />
+  <link rel="canonical" href="https://hethar.app/privacy" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+      background: #000;
+      color: #e8e8e8;
+      line-height: 1.7;
+      padding: 48px 24px;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 36px;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+    h2 {
+      font-size: 20px;
+      margin: 32px 0 16px;
+      color: #00ff7f;
+    }
+    p {
+      margin-bottom: 16px;
+      color: #9aa0a6;
+      font-size: 15px;
+    }
+    ul {
+      margin-left: 24px;
+      margin-bottom: 16px;
+      color: #9aa0a6;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    a {
+      color: #00ff7f;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .back {
+      display: inline-block;
+      margin-bottom: 32px;
+      padding: 8px 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .back:hover {
+      background: rgba(255,255,255,0.05);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← back to presence</a>
+    
+    <h1>privacy</h1>
+    <p>presence requires awareness. here's what we log, what we don't, and why.</p>
+
+    <h2>what we collect</h2>
+    <ul>
+      <li><strong>Analytics:</strong> Page views, button clicks, navigation events via <a href="https://plausible.io" target="_blank">Plausible</a> (no cookies, GDPR-compliant)</li>
+      <li><strong>Contact form:</strong> Email or phone you provide, timestamp, source (breach site)</li>
+      <li><strong>IP address:</strong> Only for rate limiting (3 submissions/hour). Not stored permanently.</li>
+      <li><strong>Geolocation:</strong> Only if you explicitly allow. Used once to show proximity message. Not stored.</li>
+    </ul>
+
+    <h2>what we DON'T collect</h2>
+    <ul>
+      <li>❌ No tracking cookies</li>
+      <li>❌ No third-party advertising trackers</li>
+      <li>❌ No keystrokes or form inputs (except submitted contact)</li>
+      <li>❌ No microphone or camera access</li>
+      <li>❌ No session recordings (cursor trails are local-only)</li>
+      <li>❌ No sale of data to third parties</li>
+    </ul>
+
+    <h2>local-only features</h2>
+    <p>These run entirely in your browser. Nothing leaves your device:</p>
+    <ul>
+      <li>Shadow cursor (predictive movement)</li>
+      <li>Memory residue (cursor trail canvas)</li>
+      <li>Temporal rewind (session recording)</li>
+      <li>Behavior whispers (idle detection)</li>
+      <li>localStorage (skip intro, last visit timestamp)</li>
+    </ul>
+
+    <h2>geolocation (optional)</h2>
+    <p>If you click "allow" on the proximity card:</p>
+    <ul>
+      <li>We request your lat/long once via browser Geolocation API</li>
+      <li>We calculate distance to SF/NYC/etc. client-side</li>
+      <li>We show a single proximity message if within 120km</li>
+      <li>Your coordinates are NOT sent to our servers</li>
+      <li>Your location is NOT stored or logged</li>
+    </ul>
+
+    <h2>cookies & localStorage</h2>
+    <p>We use localStorage (not cookies) to remember:</p>
+    <ul>
+      <li><code>hethar_skip_intro</code> - whether you've skipped the intro</li>
+      <li><code>hethar_last_visit</code> - timestamp of your last visit</li>
+      <li><code>hethar_geo_asked</code> - whether we've shown the geo prompt</li>
+      <li><code>hethar_paused</code> - whether presence features are paused</li>
+    </ul>
+    <p>sessionStorage (cleared when you close tab):</p>
+    <ul>
+      <li><code>hethar_session_whisper</code> - whether we've shown a whisper this session</li>
+    </ul>
+
+    <h2>your rights</h2>
+    <ul>
+      <li><strong>Pause:</strong> Click "presence: on" (top-left) to disable all tracking</li>
+      <li><strong>Clear:</strong> Clear browser cache/localStorage to reset</li>
+      <li><strong>Opt-out:</strong> Disable JavaScript or use privacy mode</li>
+      <li><strong>Contact removal:</strong> Email us to remove your contact from our list</li>
+    </ul>
+
+    <h2>data retention</h2>
+    <ul>
+      <li>Analytics: 2 years (Plausible default)</li>
+      <li>Contact submissions: Indefinitely (unless you request removal)</li>
+      <li>IP addresses: Not permanently stored (used only for rate limiting)</li>
+    </ul>
+
+    <h2>changes to this policy</h2>
+    <p>We'll update this page if our privacy practices change. Last updated: October 4, 2025.</p>
+
+    <h2>questions?</h2>
+    <p>Email us: <a href="mailto:privacy@hethar.app">privacy@hethar.app</a></p>
+
+    <p style="margin-top:48px;font-size:13px;color:#666;">
+      This policy applies to hethar.app only. The actual Hethar product (when launched) will have its own privacy policy.
+    </p>
+  </div>
+</body>
+</html>
+

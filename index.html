@@ -3,23 +3,675 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Cleared</title>
+  <title>METHOD LAB — Growth as a System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
-    body { 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      background: #000; 
-      color: #fff; 
-      font-family: monospace; 
+    :root {
+      --bg: #F7F7F5;
+      --text-primary: #0F0F0F;
+      --text-secondary: #555555;
+      --accent: #111111;
+      --divider: rgba(0,0,0,0.08);
+      --highlight: rgba(17,17,17,0.04);
+      --footer-bg: #111111;
+      --footer-text: #F7F7F5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 160px 24px;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      animation: fadeUp 0.8s ease-out;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 7vw, 5rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: 32px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    /* Section Spacing */
+    section {
+      padding: 160px 0;
+      position: relative;
+    }
+
+    section.divider::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 1240px;
+      height: 1px;
+      background: var(--divider);
+    }
+
+    /* What We Do Section */
+    .what-we-do {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .what-we-do h2 {
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      margin-bottom: 32px;
+    }
+
+    .what-we-do .intro {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      color: var(--text-primary);
+    }
+
+    .what-we-do ul {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+
+    .what-we-do ul li {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .what-we-do ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--text-secondary);
+    }
+
+    .tagline {
+      font-style: italic;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* System Diagram */
+    .diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+    }
+
+    .diagram svg {
+      width: 100%;
+      max-width: 400px;
+      opacity: 0.6;
+    }
+
+    /* 3-Month Frame */
+    .frame {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .frame h2 {
+      font-size: 2.5rem;
+      font-weight: 400;
+      margin-bottom: 48px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .frame .timeline {
+      text-align: left;
+      margin-bottom: 48px;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      line-height: 2;
+    }
+
+    .frame .timeline div {
+      animation: textReveal 0.5s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .frame .timeline div:nth-child(1) { animation-delay: 0.1s; }
+    .frame .timeline div:nth-child(2) { animation-delay: 0.25s; }
+    .frame .timeline div:nth-child(3) { animation-delay: 0.4s; }
+    .frame .timeline div:nth-child(4) { animation-delay: 0.55s; }
+
+    .frame .pricing {
+      padding-top: 32px;
+      border-top: 1px solid var(--divider);
+      margin-top: 32px;
+    }
+
+    .frame .pricing p {
+      margin-bottom: 8px;
+    }
+
+    .frame .pricing .note {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      margin-top: 24px;
+    }
+
+    /* Video Section */
+    .vsl {
+      text-align: center;
+    }
+
+    .vsl h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      font-weight: 500;
+    }
+
+    .video-container {
+      max-width: 800px;
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      background: #000;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #666;
+      font-size: 0.9rem;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    /* Apply Section */
+    .apply-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 160px 24px;
+    }
+
+    .apply-container {
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .form-intro {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .form-intro h2 {
       font-size: 2rem;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .form-intro p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    .chat-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .question {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.5s ease-out forwards;
+    }
+
+    .question.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .question-label {
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+      display: block;
+      color: var(--text-secondary);
+    }
+
+    .question-input input,
+    .question-input textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--divider);
+      background: #fff;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+    }
+
+    .question-input input:focus,
+    .question-input textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(17,17,17,0.05);
+    }
+
+    .question-input textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .response-text {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-top: 12px;
+      padding-left: 16px;
+      border-left: 2px solid var(--divider);
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out 0.3s forwards;
+    }
+
+    .submit-btn {
+      margin-top: 32px;
+      padding: 16px 48px;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    footer .footer-content {
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+
+    footer .footer-content .brand {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes textReveal {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .what-we-do {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      .frame .timeline {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Cursor interaction */
+    .btn, a {
+      position: relative;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: inherit;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn:hover::after {
+      opacity: 1;
+      background: var(--highlight);
+    }
+
+    /* Easter egg */
+    .btn.lab-btn {
+      position: relative;
+    }
+
+    .btn.lab-btn .alt-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn.lab-btn:hover .alt-text {
+      opacity: 1;
+    }
+
+    .btn.lab-btn:hover .main-text {
+      opacity: 0;
     }
   </style>
 </head>
 <body>
-  <div>SITE CLEARED</div>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>growth isn't magic. it's a system you haven't built yet.</h1>
+      <p>we partner with early-stage startups for 3 months — install experiments, find what moves the numbers, cut everything else.</p>
+      <a href="#apply" class="btn lab-btn">
+        <span class="main-text">enter the lab</span>
+        <span class="alt-text">ready?</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- What We Do -->
+  <section class="divider">
+    <div class="container">
+      <div class="what-we-do">
+        <div>
+          <h2>What We Do</h2>
+          <p class="intro">we don't do marketing — we build predictable motion inside your startup.</p>
+          <ul>
+            <li>repackage what's there — pricing, funnel, story</li>
+            <li>rebuild the landing so it doesn't leak</li>
+            <li>run loops → twitter, reels, meta + google ads, niche collabs</li>
+            <li>measure → tweak → repeat</li>
+          </ul>
+          <p class="tagline">unsexy. consistent. compounding.</p>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="40" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+            <circle cx="40" cy="100" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+            <circle cx="160" cy="100" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+            <circle cx="100" cy="160" r="8" fill="none" stroke="currentColor" stroke-width="1"/>
+            <line x1="100" y1="48" x2="100" y2="152" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <line x1="48" y1="100" x2="152" y2="100" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <line x1="45" y1="105" x2="95" y2="155" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <line x1="155" y1="105" x2="105" y2="155" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <line x1="45" y1="95" x2="95" y2="45" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <line x1="155" y1="95" x2="105" y2="45" stroke="currentColor" stroke-width="1" opacity="0.3"/>
+            <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
+              <animate attributeName="r" from="30" to="35" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" from="0.2" to="0" dur="2s" repeatCount="indefinite" />
+            </circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3-Month Frame -->
+  <section class="divider">
+    <div class="container">
+      <div class="frame">
+        <h2>3 months.</h2>
+        <div class="timeline">
+          <div>month 1 → diagnosis, audit, experiments</div>
+          <div>month 2 → working channels, first revenue loops</div>
+          <div>month 3 → remove what's dead, scale what's alive</div>
+        </div>
+        <div class="pricing">
+          <p><strong>$5,000/month</strong> (ad budget included)</p>
+          <p>+ % of revenue we bring</p>
+          <p class="note">we only take 5 startups per batch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="divider">
+    <div class="container vsl">
+      <h3>3 minutes inside the lab</h3>
+      <div class="video-container">
+        [VSL embed placeholder — add your video URL]
+      </div>
+    </div>
+  </section>
+
+  <!-- Apply Form -->
+  <section id="apply" class="apply-section">
+    <div class="apply-container">
+      <div class="form-intro">
+        <h2>Let's see if we can help</h2>
+        <p>A few quick questions. If it fits, we'll reach out within 24h.</p>
+      </div>
+
+      <form class="chat-form" id="applyForm">
+        <div class="question visible">
+          <label class="question-label">what's your startup called?</label>
+          <div class="question-input">
+            <input type="text" name="startup_name" required placeholder="Company name">
+          </div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">what's working right now?</label>
+          <div class="question-input">
+            <textarea name="working" required placeholder="Tell us what's keeping the lights on..."></textarea>
+          </div>
+          <div class="response-text">makes sense. there's always that one thing that keeps the lights on.</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">what's not working?</label>
+          <div class="question-input">
+            <textarea name="not_working" required placeholder="Where are you stuck?"></textarea>
+          </div>
+          <div class="response-text">that's usually where the leverage hides. most founders just ignore it.</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">what's your goal for the next 90 days?</label>
+          <div class="question-input">
+            <textarea name="goal" required placeholder="What would make this worth it?"></textarea>
+          </div>
+          <div class="response-text">good window. three months is enough to prove almost anything — or kill it fast.</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">okay with $5k/month + small rev-share?</label>
+          <div class="question-input">
+            <input type="text" name="budget_ok" required placeholder="yes / no / tell us more">
+          </div>
+          <div class="response-text">cool. we only take startups that treat this like partnership, not outsourcing.</div>
+        </div>
+
+        <div class="question">
+          <label class="question-label">drop your link / contact.</label>
+          <div class="question-input">
+            <input type="email" name="email" required placeholder="email@startup.com">
+            <input type="url" name="website" placeholder="https://yourstartup.com" style="margin-top: 12px;">
+          </div>
+          <div class="response-text">perfect. we'll review it and reach out if it fits the batch. no waiting list. no polite "maybes."</div>
+        </div>
+
+        <button type="submit" class="btn submit-btn">submit to lab review</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="brand">method lab</div>
+      <div>proof → users → revenue</div>
+      <div>90 days. one experiment at a time.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Progressive form reveal
+    const form = document.getElementById('applyForm');
+    const questions = document.querySelectorAll('.question');
+    
+    let currentQuestion = 0;
+
+    // Reveal questions on scroll or interaction
+    const revealNext = () => {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        questions[currentQuestion].classList.add('visible');
+      }
+    };
+
+    // Reveal on input
+    questions.forEach((question, index) => {
+      const inputs = question.querySelectorAll('input, textarea');
+      inputs.forEach(input => {
+        input.addEventListener('input', () => {
+          setTimeout(revealNext, 300);
+        });
+      });
+    });
+
+    // Intersection Observer for scroll-based reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+
+    questions.forEach(q => observer.observe(q));
+
+    // Form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      
+      console.log('Form submitted:', data);
+      
+      // TODO: Send to your backend / Airtable / HubSpot
+      // For now, show success message
+      alert('Application sent! We\'ll review it and reach out if it fits the batch. If not — build something great anyway.');
+      
+      form.reset();
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-

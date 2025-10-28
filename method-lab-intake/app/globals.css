@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply bg-white text-[#0F0F0F];
-    font-family: 'Inter', system-ui, sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
-  }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
 }
-

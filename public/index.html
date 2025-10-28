@@ -1037,7 +1037,7 @@
       });
     });
 
-    // Form submission - will be replaced with secure backend
+    // Form submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -1049,12 +1049,34 @@
       submitBtn.textContent = 'sending...';
       submitBtn.disabled = true;
       
-      // TODO: Replace with your Vercel form endpoint
-      alert('Form ready! Deploy the Next.js app to Vercel to enable submissions.');
-      
-      console.log('Form data ready to submit:', data);
-      submitBtn.textContent = 'submit to lab review';
-      submitBtn.disabled = false;
+      try {
+        const response = await fetch('https://hethar-app-website-8nc6lk2g6-hethar.vercel.app/api/lead', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+          throw new Error('Submission failed');
+        }
+
+        // Show success message
+        form.innerHTML = `
+          <div style="text-align: center; padding: 48px 24px;">
+            <p style="margin-bottom: 16px;">got it. we'll take a look.</p>
+            <p style="font-size: 0.95rem;">if we can actually help, you'll hear from us within 10h. if not — keep building, we're rooting for you.</p>
+            <p style="font-size: 0.8rem; margin-top: 32px; opacity: 0.6;">method lab<br>proof → users → revenue</p>
+          </div>
+        `;
+        
+      } catch (error) {
+        console.error('Error:', error);
+        submitBtn.textContent = 'try again';
+        submitBtn.disabled = false;
+        alert('Something went wrong. Mind trying once more?');
+      }
     });
 
     // Smooth scroll

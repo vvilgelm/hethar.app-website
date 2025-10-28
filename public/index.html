@@ -491,14 +491,14 @@
     .chat-form {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0;
     }
 
     .question {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease, margin-top 0.3s ease;
-      margin-top: 0;
+      transition: opacity 0.5s ease, transform 0.5s ease, margin-bottom 0.3s ease;
+      margin-bottom: 0;
     }
 
     .question.visible {
@@ -506,8 +506,8 @@
       transform: translateY(0);
     }
 
-    .question.visible.answered {
-      margin-top: 32px;
+    .question.answered {
+      margin-bottom: 32px;
     }
 
     .question-label {

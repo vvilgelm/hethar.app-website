@@ -6,92 +6,36 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { leadSchema, type LeadFormData } from '@/lib/schema';
 import clsx from 'clsx';
 
-const STAGES = [
-  'pre-launch',
-  'beta',
-  'launched <$5k MRR',
-  'launched $5–50k MRR',
-  '>$50k MRR',
-];
-
-const GOALS = [
-  'paying users',
-  'activation',
-  'lower CAC',
-  'raise',
-  'brand proof',
-];
-
-const CHANNELS = [
-  'twitter',
-  'reels/shorts',
-  'meta ads',
-  'google ads',
-  'communities',
-  'referrals',
-  'none yet',
-];
-
-const BUDGET_BANDS = [
-  '$0–1k',
-  '$1–3k',
-  '$3–10k',
-  '$10k+',
-  'not sure',
-];
-
 const questions = [
   {
-    key: 'product_name',
-    label: 'first, what\'s your product called? (site if you have one)',
+    key: 'startup',
+    label: 'what\'s your startup called?',
     type: 'text',
     response: 'nice. names carry weight — even before you have users.',
   },
   {
-    key: 'product_url',
-    label: 'product URL (optional)',
-    type: 'url',
-    response: '',
+    key: 'working',
+    label: 'what\'s working right now?',
+    type: 'textarea',
+    response: 'makes sense. there\'s always that one thing that keeps the lights on.',
   },
   {
-    key: 'stage',
-    label: 'where are you at right now?',
-    type: 'chips',
-    options: STAGES,
-    response: '',
+    key: 'notWorking',
+    label: 'what\'s not working?',
+    type: 'textarea',
+    response: 'that\'s usually where the leverage hides. most founders just ignore it.',
   },
   {
-    key: 'goals',
-    label: 'what\'s the goal you actually care about for the next 90 days?',
-    type: 'multi-chips',
-    options: GOALS,
-    response: '',
-  },
-  {
-    key: 'channels',
-    label: 'what\'s your current engine?',
-    type: 'multi-chips',
-    options: CHANNELS,
-    response: '',
-  },
-  {
-    key: 'budget_band',
-    label: 'ballpark budget you\'re comfortable deploying into growth right now?',
-    type: 'chips',
-    options: BUDGET_BANDS,
-    response: '',
-  },
-  {
-    key: 'success_metric',
-    label: 'what would make you say in 60 days: "ok, this was worth it?"',
+    key: 'goal',
+    label: 'what\'s your goal for the next 90 days?',
     type: 'textarea',
     response: 'good window. three months is enough to prove almost anything — or kill it fast.',
   },
   {
-    key: 'name',
-    label: 'best contact name?',
+    key: 'budget',
+    label: 'okay with $5k/month + small rev-share? (covers ads, ops, management)',
     type: 'text',
-    response: '',
+    response: 'cool. we only take startups that treat this like partnership, not outsourcing.',
   },
   {
     key: 'email',
@@ -100,16 +44,10 @@ const questions = [
     response: '',
   },
   {
-    key: 'timezone',
-    label: 'timezone',
-    type: 'text',
-    response: '',
-  },
-  {
-    key: 'twitter_handle',
-    label: 'drop your X (twitter) handle if you want us to peek the vibe (optional)',
-    type: 'text',
-    response: '',
+    key: 'website',
+    label: 'drop your link / contact (optional)',
+    type: 'url',
+    response: 'perfect. we\'ll review it and reach out if it fits the batch. no waiting list. no polite "maybes."',
   },
 ];
 
@@ -123,12 +61,7 @@ export default function ChatForm() {
     resolver: zodResolver(leadSchema),
   });
 
-  // Auto-detect timezone
-  useEffect(() => {
-    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    setValue('timezone', tz);
-    setFormData(prev => ({ ...prev, timezone: tz }));
-  }, [setValue]);
+  // Note: Removed timezone auto-detection as it's not in our schema
 
   // Save to localStorage
   useEffect(() => {

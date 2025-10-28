@@ -61,10 +61,8 @@ export async function createHubSpotLead(data: LeadFormData) {
 
 // Main CRM function
 export async function createLeadInCRM(data: LeadFormData) {
-  if (USE_CRM === 'hubspot') {
-    return await createHubSpotLead(data);
-  } else {
-    return await createAirtableLead(data);
-  }
+  // For now, just log the data - we'll send via email instead
+  console.log('Lead data received:', data);
+  return { success: true, data };
 }
 

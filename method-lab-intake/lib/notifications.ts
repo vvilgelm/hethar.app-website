@@ -1,10 +1,14 @@
 import { Resend } from 'resend';
 import { LeadFormData } from './schema';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient() {
+  if (!process.env.RESEND_API_KEY) return null;
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 export async function sendInternalNotification(data: LeadFormData) {
-  if (!process.env.RESEND_API_KEY) return; // Skip if not configured
+  const resend = getResendClient();
+  if (!resend) return; // Skip if not configured
   
   const notifyEmails = process.env.NOTIFY_EMAILS?.split(',') || [];
   if (notifyEmails.length === 0) return;
@@ -40,7 +44,8 @@ ${JSON.stringify(data, null, 2)}
 }
 
 export async function sendLeadConfirmation(data: LeadFormData) {
-  if (!process.env.RESEND_API_KEY) return; // Skip if not configured
+  const resend = getResendClient();
+  if (!resend) return; // Skip if not configured
   
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,

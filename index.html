@@ -38,21 +38,12 @@
       font-weight: 400;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      cursor: none;
+      cursor: auto;
     }
 
     /* Custom Cursor */
     .custom-cursor {
-      width: 12px;
-      height: 12px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transition: all 0.15s ease;
-      transform: translate(-50%, -50%);
-      opacity: 0;
+      display: none;
     }
 
     .custom-cursor.visible {

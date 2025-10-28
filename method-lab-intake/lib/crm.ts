@@ -5,11 +5,18 @@ const USE_CRM = process.env.USE_CRM || 'airtable';
 
 // Airtable
 export async function createAirtableLead(data: LeadFormData) {
-  const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(
-    process.env.AIRTABLE_BASE_ID!
-  );
+  const apiKey = process.env.AIRTABLE_API_KEY;
+  const baseId = process.env.AIRTABLE_BASE_ID;
+  const tableName = process.env.AIRTABLE_TABLE_NAME || 'METHOD LAB Leads';
+  
+  console.log('Airtable config:', {
+    hasApiKey: !!apiKey,
+    baseId,
+    tableName,
+  });
 
-  const table = base(process.env.AIRTABLE_TABLE_NAME || 'Leads');
+  const base = new Airtable({ apiKey }).base(baseId!);
+  const table = base(tableName);
 
   const record = await table.create({
     'Startup Name': data.startup,

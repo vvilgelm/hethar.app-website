@@ -360,6 +360,17 @@
       transform: translateY(0);
     }
 
+    .frame h2 {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    section.visible .frame h2 {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .frame .timeline {
       text-align: left;
       margin-bottom: 48px;
@@ -761,20 +772,31 @@
     <div class="scroll-indicator"></div>
   </section>
 
-  <!-- What We Do -->
+  <!-- Scope -->
   <section class="divider">
     <div class="container">
       <div class="what-we-do">
         <div>
-          <h2>What We Do</h2>
-          <p class="intro">we don't do marketing — we build predictable motion inside your startup.</p>
+          <h2>Scope</h2>
+          
+          <h3 style="font-size: 1.1rem; font-weight: 500; margin-top: 32px; margin-bottom: 16px;">1. Startup Repackaging</h3>
           <ul>
-            <li>repackage what's there — pricing, funnel, story</li>
-            <li>rebuild the landing so it doesn't leak</li>
-            <li>run loops → twitter, reels, meta + google ads, niche collabs</li>
-            <li>measure → tweak → repeat</li>
+            <li>Full startup audit: positioning, competitor & pricing analysis</li>
+            <li>New landing page & messaging based on actual user psychology</li>
+            <li>Optional investor-ready version (if fundraising is a goal)</li>
           </ul>
-          <p class="tagline">unsexy. consistent. compounding.</p>
+
+          <h3 style="font-size: 1.1rem; font-weight: 500; margin-top: 32px; margin-bottom: 16px;">2. Traffic & Distribution Stack</h3>
+          <ul>
+            <li>Twitter — running founder's account (content, threads, niche collabs)</li>
+            <li>Reels / Short-form — storytelling clips for reach & conversion</li>
+            <li>Paid Ads — Meta + Google, managed under the fixed budget</li>
+            <li>Referral loops — promo through micro-influencers / niche accounts</li>
+            <li>Funnels — setup + automation (landing → lead → payment)</li>
+            <li>Media — storytelling, design, packaging</li>
+          </ul>
+
+          <p class="tagline" style="margin-top: 32px;">unsexy. consistent. compounding.</p>
         </div>
         <div class="diagram">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -802,15 +824,23 @@
     </div>
   </section>
 
-  <!-- Pricing Section -->
+  <!-- Terms & Financials -->
   <section class="divider">
     <div class="container">
       <div class="frame">
+        <h2 style="font-size: 1.4rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; margin-bottom: 48px; text-align: center;">Terms</h2>
         <div class="pricing">
-          <p><strong>$5,000/month</strong> (ad budget included)</p>
-          <p>+ % of revenue we bring</p>
-          <p style="margin-top: 16px;">→ we only win if you do.</p>
-          <p class="note">we only take 5 startups per batch.</p>
+          <p style="margin-bottom: 32px; font-size: 1.05rem;">minimum 3 months structure</p>
+          
+          <h3 style="font-size: 1.1rem; font-weight: 500; margin-bottom: 16px; margin-top: 32px;">Financials</h3>
+          <p><strong>Fixed: $5,000/month</strong></p>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px;">includes everything from execution to management</p>
+          <p style="font-size: 0.95rem; color: var(--text-secondary);">(ad budget separate — we manage, you fund)</p>
+          
+          <p style="margin-top: 24px;">+ % of revenue from paying users</p>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px;">since you bring them — you win when they win</p>
+          
+          <p class="note" style="margin-top: 48px;">we only take 5 startups per batch.</p>
         </div>
       </div>
     </div>

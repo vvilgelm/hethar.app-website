@@ -491,18 +491,23 @@
     .chat-form {
       display: flex;
       flex-direction: column;
-      gap: 32px;
+      gap: 8px;
     }
 
     .question {
       opacity: 0;
       transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
+      transition: opacity 0.5s ease, transform 0.5s ease, margin-top 0.3s ease;
+      margin-top: 0;
     }
 
     .question.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .question.visible.answered {
+      margin-top: 32px;
     }
 
     .question-label {
@@ -753,6 +758,15 @@
     <div class="hero-content">
       <h1>growth isn't magic. it's a system you haven't built yet.</h1>
       <p>we partner with early-stage startups for 3 months — install experiments, find what moves the numbers, cut everything else.</p>
+      
+      <!-- VSL in Hero -->
+      <div style="max-width: 700px; margin: 48px auto 48px;">
+        <p style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-secondary); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease-out 0.8s forwards;">3 minutes inside the lab</p>
+        <div style="width: 100%; aspect-ratio: 16/9; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); background: #000; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.9rem; opacity: 0; animation: fadeUp 0.8s ease-out 1s forwards;">
+          [VSL embed placeholder — add your video URL]
+        </div>
+      </div>
+      
       <a href="#apply" class="btn lab-btn">
         <span class="main-text">enter the lab</span>
         <span class="alt-text">ready?</span>
@@ -814,20 +828,10 @@
           <p><strong>$5,000/month</strong></p>
           <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 8px;">covers execution, management, everything we do</p>
           <p style="font-size: 0.95rem; color: var(--text-secondary);">(ad budget separate — you fund it, we run it)</p>
-          <p style="margin-top: 24px;">+ <strong>% of revenue</strong> we bring</p>
+          <p style="margin-top: 24px;">+ <strong>10-20% of revenue</strong> from paying users</p>
           <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 4px;">→ we only win if you do.</p>
           <p class="note" style="margin-top: 40px;">we only take 5 startups per batch.</p>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Video Section -->
-  <section class="divider">
-    <div class="container vsl">
-      <h3>3 minutes inside the lab</h3>
-      <div class="video-container">
-        [VSL embed placeholder — add your video URL]
       </div>
     </div>
   </section>
@@ -837,7 +841,7 @@
     <div class="apply-container">
       <div class="form-intro">
         <h2>Let's see if we can help</h2>
-        <p>A few quick questions. If it fits, we'll reach out within 24h.</p>
+        <p>A few quick questions. If it fits, we'll reach out within 10h.</p>
       </div>
 
       <form class="chat-form" id="applyForm">
@@ -1006,6 +1010,7 @@
           if (input.value.length > 2 && !answered.has(index)) {
             typingTimeout = setTimeout(() => {
               answered.add(index);
+              question.classList.add('answered');
               showResponse(question);
               revealNext();
             }, 600);
@@ -1038,7 +1043,7 @@
         successMsg.style.cssText = 'text-align: center; padding: 48px; font-size: 1.1rem; color: var(--text-secondary); font-style: italic;';
         successMsg.innerHTML = `
           <p style="margin-bottom: 16px;">application sent.</p>
-          <p style="font-size: 0.95rem;">if it fits the current batch, you'll hear from us within 24h.</p>
+          <p style="font-size: 0.95rem;">if it fits the current batch, you'll hear from us within 10h.</p>
           <p style="font-size: 0.95rem; margin-top: 8px;">if not — build something great anyway.</p>
           <p style="font-size: 0.8rem; margin-top: 32px; opacity: 0.6;">method lab<br>proof → users → revenue</p>
         `;

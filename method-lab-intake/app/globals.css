@@ -1,10 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-/* Clean build - no custom classes */
-body {
-  font-family: 'Inter', system-ui, sans-serif;
-  margin: 0;
-  padding: 0;
-}

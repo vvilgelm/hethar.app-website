@@ -636,6 +636,40 @@
       letter-spacing: 0.15em;
     }
 
+    .footer-contact {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-contact-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+      margin-bottom: 16px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: var(--footer-text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+      font-family: 'Courier New', monospace;
+    }
+
+    .contact-links a:hover {
+      opacity: 1;
+    }
+
     /* Animations */
     @keyframes fadeUp {
       from {
@@ -909,6 +943,16 @@
       <div class="brand">method lab</div>
       <div>proof → users → revenue</div>
       <div>90 days. one experiment at a time.</div>
+      
+      <div class="footer-contact">
+        <div class="footer-contact-title">contact founder</div>
+        <div class="contact-links">
+          <a href="https://wa.me/79088819595" target="_blank" rel="noopener">whatsapp</a>
+          <a href="https://t.me/vladwilhelm" target="_blank" rel="noopener">telegram</a>
+          <a href="mailto:vladvilgelm732@gmail.com">email</a>
+          <a href="https://x.com/vladwilhelm_" target="_blank" rel="noopener">x</a>
+        </div>
+      </div>
     </div>
   </footer>
 

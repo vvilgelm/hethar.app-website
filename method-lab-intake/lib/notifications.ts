@@ -34,8 +34,6 @@ ${data.notWorking}
 90 Day Goal:
 ${data.goal}
 
-Budget: ${data.budget}
-
 ---
 JSON:
 ${JSON.stringify(data, null, 2)}
@@ -73,7 +71,7 @@ export async function sendSlackNotification(data: LeadFormData) {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*New Lead Received*\n\n*Startup:* ${data.startup}\n*Email:* ${data.email}\n*Budget OK:* ${data.budget}`,
+          text: `*New Lead Received*\n\n*Startup:* ${data.startup}\n*Email:* ${data.email}`,
         },
       },
       {

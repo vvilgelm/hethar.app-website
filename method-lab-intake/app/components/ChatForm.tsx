@@ -32,12 +32,6 @@ const questions = [
     response: 'good window. three months is enough to prove almost anything — or kill it fast.',
   },
   {
-    key: 'budget',
-    label: 'okay with $5k/month + small rev-share? (covers ads, ops, management)',
-    type: 'text',
-    response: 'cool. we only take startups that treat this like partnership, not outsourcing.',
-  },
-  {
     key: 'email',
     label: 'email address',
     type: 'email',

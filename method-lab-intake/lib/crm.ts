@@ -16,7 +16,6 @@ export async function createAirtableLead(data: LeadFormData) {
     'What\'s Working': data.working,
     'What\'s Not Working': data.notWorking,
     '90 Day Goal': data.goal,
-    'Budget OK': data.budget,
     'Email': data.email,
     'Website': data.website || '',
   });
@@ -42,7 +41,6 @@ export async function createHubSpotLead(data: LeadFormData) {
         what_working: data.working,
         what_not_working: data.notWorking,
         goal_90d: data.goal,
-        budget_confirmed: data.budget,
       },
     }),
   });

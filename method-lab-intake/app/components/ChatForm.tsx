@@ -183,54 +183,6 @@ export default function ChatForm() {
               />
             )}
 
-            {q.type === 'chips' && (
-              <div className="flex flex-wrap gap-2">
-                {q.options?.map(option => (
-                  <button
-                    key={option}
-                    type="button"
-                    onClick={() => handleFieldChange(q.key, option)}
-                    className={clsx(
-                      'px-4 py-2 border rounded transition-all',
-                      watch(q.key as any) === option
-                        ? 'bg-black text-white border-black'
-                        : 'bg-white text-black border-gray-200 hover:border-black'
-                    )}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {q.type === 'multi-chips' && (
-              <div className="flex flex-wrap gap-2">
-                {q.options?.map(option => {
-                  const selected = (watch(q.key as any) as string[] || []).includes(option);
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      onClick={() => {
-                        const current = watch(q.key as any) as string[] || [];
-                        const updated = selected
-                          ? current.filter(v => v !== option)
-                          : [...current, option];
-                        handleFieldChange(q.key, updated);
-                      }}
-                      className={clsx(
-                        'px-4 py-2 border rounded transition-all',
-                        selected
-                          ? 'bg-black text-white border-black'
-                          : 'bg-white text-black border-gray-200 hover:border-black'
-                      )}
-                    >
-                      {option}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
 
             {q.response && watch(q.key as any) && (
               <p className="text-sm text-muted italic mt-3 pl-4 border-l-2 border-gray-200 animate-fade-in">

@@ -4,29 +4,33 @@ import { LeadFormData } from './schema';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function sendInternalNotification(data: LeadFormData) {
+  if (!process.env.RESEND_API_KEY) return; // Skip if not configured
+  
   const notifyEmails = process.env.NOTIFY_EMAILS?.split(',') || [];
+  if (notifyEmails.length === 0) return;
   
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,
     to: notifyEmails,
-    subject: `New lead — ${data.product_name} (${data.email})`,
+    subject: `New lead — ${data.startup} (${data.email})`,
     text: `
 New Lead Received
 =================
 
-Product: ${data.product_name}
-URL: ${data.product_url || 'N/A'}
-Stage: ${data.stage}
-Goals: ${data.goals.join(', ')}
-Channels: ${data.channels.join(', ')}
-Budget: ${data.budget_band}
-Success Metric: ${data.success_metric}
-
-Contact:
-Name: ${data.name}
+Startup: ${data.startup}
+Website: ${data.website || 'N/A'}
 Email: ${data.email}
-Timezone: ${data.timezone}
-Twitter: ${data.twitter_handle || 'N/A'}
+
+What's Working:
+${data.working}
+
+What's Not Working:
+${data.notWorking}
+
+90 Day Goal:
+${data.goal}
+
+Budget: ${data.budget}
 
 ---
 JSON:
@@ -36,15 +40,17 @@ ${JSON.stringify(data, null, 2)}
 }
 
 export async function sendLeadConfirmation(data: LeadFormData) {
+  if (!process.env.RESEND_API_KEY) return; // Skip if not configured
+  
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,
     to: data.email,
-    subject: 'got it — let\'s talk',
-    text: `hey ${data.name},
+    subject: 'got it — we\'ll be in touch',
+    text: `hey there,
 
-thanks for the details — that's exactly what we need to prep.
-you can book a time on the page you're on now.
-if anything shifts, hit reply.
+got your details for ${data.startup}.
+
+we'll review and reach out within 10h if it's a fit.
 
 — method lab
     `,
@@ -56,22 +62,20 @@ export async function sendSlackNotification(data: LeadFormData) {
   if (!webhookUrl) return;
 
   const payload = {
-    text: `🚀 New Lead: ${data.product_name}`,
+    text: `🚀 New Lead: ${data.startup}`,
     blocks: [
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*New Lead Received*\n\n*Product:* ${data.product_name}\n*Stage:* ${data.stage}\n*Budget:* ${data.budget_band}\n*Goal:* ${data.success_metric.substring(0, 100)}...`,
+          text: `*New Lead Received*\n\n*Startup:* ${data.startup}\n*Email:* ${data.email}\n*Budget OK:* ${data.budget}`,
         },
       },
       {
         type: 'section',
         fields: [
-          { type: 'mrkdwn', text: `*Name:*\n${data.name}` },
-          { type: 'mrkdwn', text: `*Email:*\n${data.email}` },
-          { type: 'mrkdwn', text: `*Channels:*\n${data.channels.join(', ')}` },
-          { type: 'mrkdwn', text: `*Goals:*\n${data.goals.join(', ')}` },
+          { type: 'mrkdwn', text: `*What's Working:*\n${data.working.substring(0, 100)}${data.working.length > 100 ? '...' : ''}` },
+          { type: 'mrkdwn', text: `*90 Day Goal:*\n${data.goal.substring(0, 100)}${data.goal.length > 100 ? '...' : ''}` },
         ],
       },
     ],

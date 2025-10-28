@@ -12,20 +12,13 @@ export async function createAirtableLead(data: LeadFormData) {
   const table = base(process.env.AIRTABLE_TABLE_NAME || 'Leads');
 
   const record = await table.create({
-    'Product Name': data.product_name,
-    'Product URL': data.product_url || '',
-    'Stage': data.stage,
-    'Goals (90d)': data.goals.join(', '),
-    'Channels': data.channels.join(', '),
-    'Budget Band': data.budget_band,
-    'Success Metric': data.success_metric,
-    'Name': data.name,
+    'Startup Name': data.startup,
+    'What\'s Working': data.working,
+    'What\'s Not Working': data.notWorking,
+    '90 Day Goal': data.goal,
+    'Budget OK': data.budget,
     'Email': data.email,
-    'Timezone': data.timezone,
-    'Twitter': data.twitter_handle || '',
-    'Source': 'Method Lab Site',
-    'Booked?': false,
-    'Created At': new Date().toISOString(),
+    'Website': data.website || '',
   });
 
   return record;
@@ -44,17 +37,12 @@ export async function createHubSpotLead(data: LeadFormData) {
     body: JSON.stringify({
       properties: {
         email: data.email,
-        firstname: data.name.split(' ')[0],
-        lastname: data.name.split(' ').slice(1).join(' ') || '',
-        company: data.product_name,
-        website: data.product_url,
-        product_stage: data.stage,
-        goals_90d: data.goals.join(', '),
-        channels: data.channels.join(', '),
-        budget_band: data.budget_band,
-        success_metric: data.success_metric,
-        timezone: data.timezone,
-        twitter: data.twitter_handle,
+        company: data.startup,
+        website: data.website,
+        what_working: data.working,
+        what_not_working: data.notWorking,
+        goal_90d: data.goal,
+        budget_confirmed: data.budget,
       },
     }),
   });

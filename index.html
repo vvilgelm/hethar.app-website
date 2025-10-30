@@ -201,90 +201,6 @@
       color: var(--bg);
     }
 
-    /* Proof/Clarity Section */
-    .clarity-section {
-      background: var(--bg);
-    }
-
-    .clarity-section h2 {
-      font-size: clamp(28px, 4vw, 36px);
-      margin-bottom: 96px;
-      text-align: center;
-    }
-
-    .clarity-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 120px;
-      align-items: center;
-    }
-
-    .clarity-content {
-      max-width: 500px;
-    }
-
-    .clarity-item {
-      margin-bottom: 48px;
-    }
-
-    .clarity-item h3 {
-      font-size: 18px;
-      font-weight: 400;
-      margin-bottom: 12px;
-      color: var(--text-primary);
-    }
-
-    .clarity-item p {
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-    }
-
-    .clarity-subnote {
-      margin-top: 48px;
-      padding-top: 32px;
-      border-top: 1px solid var(--divider);
-      font-size: 15px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .clarity-graphic {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 72px;
-      background: linear-gradient(135deg, rgba(26,26,26,0.02) 0%, rgba(26,26,26,0.01) 100%);
-      border-radius: 8px;
-    }
-
-    .process-line {
-      position: relative;
-      width: 2px;
-      height: 400px;
-      background: linear-gradient(to bottom, var(--text-primary) 0%, var(--accent) 100%);
-    }
-
-    .process-line::before,
-    .process-line::after {
-      content: '';
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      background: var(--text-primary);
-      border-radius: 50%;
-    }
-
-    .process-line::before {
-      top: 0;
-    }
-
-    .process-line::after {
-      bottom: 0;
-    }
-
     /* Scope Breakdown */
     .scope-section {
       background: #fafafa;
@@ -547,11 +463,6 @@
         padding: 80px 24px;
       }
 
-      .clarity-grid {
-        grid-template-columns: 1fr;
-        gap: 64px;
-      }
-
       .scope-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -559,14 +470,6 @@
 
       .contact-links {
         gap: 24px;
-      }
-
-      .clarity-graphic {
-        padding: 48px;
-      }
-
-      .process-line {
-        height: 300px;
       }
     }
   </style>
@@ -609,40 +512,6 @@
       </p>
       
       <a href="#form" class="btn">book a call →</a>
-    </div>
-  </section>
-
-  <!-- Proof/Clarity Section -->
-  <section class="clarity-section">
-    <div class="container">
-      <h2>what actually happens in those 90 days</h2>
-      
-      <div class="clarity-grid">
-        <div class="clarity-content">
-          <div class="clarity-item">
-            <h3>month 1 →</h3>
-            <p>diagnosis, audit, new message, first experiments</p>
-          </div>
-          
-          <div class="clarity-item">
-            <h3>month 2 →</h3>
-            <p>working channels, first revenue loops</p>
-          </div>
-          
-          <div class="clarity-item">
-            <h3>month 3 →</h3>
-            <p>remove what's dead, scale what's alive</p>
-          </div>
-
-          <div class="clarity-subnote">
-            we keep it transparent — weekly syncs, shared dashboards, and a single metric: paying users.
-          </div>
-        </div>
-
-        <div class="clarity-graphic">
-          <div class="process-line"></div>
-        </div>
-      </div>
     </div>
   </section>
 

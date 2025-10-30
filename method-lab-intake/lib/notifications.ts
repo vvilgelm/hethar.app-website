@@ -16,23 +16,20 @@ export async function sendInternalNotification(data: LeadFormData) {
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,
     to: notifyEmails,
-    subject: `New lead — ${data.startup} (${data.email})`,
+    subject: `New lead — ${data.name} (${data.email})`,
     text: `
 New Lead Received
 =================
 
-Startup: ${data.startup}
-Website: ${data.website || 'N/A'}
+Name: ${data.name}
 Email: ${data.email}
+Startup URL: ${data.startup || 'N/A'}
 
-What's Working:
-${data.working}
+Building:
+${data.building}
 
-What's Not Working:
-${data.notWorking}
-
-90 Day Goal:
-${data.goal}
+Biggest Drag: ${data.drag}
+Stage: ${data.stage}
 
 ---
 JSON:
@@ -48,14 +45,14 @@ export async function sendLeadConfirmation(data: LeadFormData) {
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,
     to: data.email,
-    subject: 'got it — we\'ll be in touch',
-    text: `hey there,
+    subject: 'got it',
+    text: `hey ${data.name.split(' ')[0]},
 
-got your details for ${data.startup}.
+got your submission.
 
-we'll review and reach out within 10h if it's a fit.
+we'll take a look and reach out if it makes sense to work together.
 
-— method lab
+— method
     `,
   });
 }
@@ -65,20 +62,20 @@ export async function sendSlackNotification(data: LeadFormData) {
   if (!webhookUrl) return;
 
   const payload = {
-    text: `🚀 New Lead: ${data.startup}`,
+    text: `🚀 New Lead: ${data.name}`,
     blocks: [
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*New Lead Received*\n\n*Startup:* ${data.startup}\n*Email:* ${data.email}`,
+          text: `*New Lead Received*\n\n*Name:* ${data.name}\n*Email:* ${data.email}\n*Startup:* ${data.startup || 'N/A'}`,
         },
       },
       {
         type: 'section',
         fields: [
-          { type: 'mrkdwn', text: `*What's Working:*\n${data.working.substring(0, 100)}${data.working.length > 100 ? '...' : ''}` },
-          { type: 'mrkdwn', text: `*90 Day Goal:*\n${data.goal.substring(0, 100)}${data.goal.length > 100 ? '...' : ''}` },
+          { type: 'mrkdwn', text: `*Building:*\n${data.building.substring(0, 100)}${data.building.length > 100 ? '...' : ''}` },
+          { type: 'mrkdwn', text: `*Biggest Drag:* ${data.drag}\n*Stage:* ${data.stage}` },
         ],
       },
     ],

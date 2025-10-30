@@ -1,12 +1,16 @@
 import { z } from 'zod';
 
 export const leadSchema = z.object({
-  startup: z.string().min(1, 'Startup name is required'),
-  working: z.string().min(1, 'What\'s working is required'),
-  notWorking: z.string().min(1, 'What\'s not working is required'),
-  goal: z.string().min(1, '90 day goal is required'),
+  name: z.string().min(1, 'Name is required'),
   email: z.string().email('Valid email is required'),
-  website: z.string().url().optional().or(z.literal('')),
+  startup: z.string().url().optional().or(z.literal('')),
+  building: z.string().min(1, 'What you\'re building is required'),
+  drag: z.enum(['traffic', 'funnel', 'users', 'story', 'all'], {
+    required_error: 'Please select the biggest drag',
+  }),
+  stage: z.enum(['pre-launch', 'early-rev', 'scaling'], {
+    required_error: 'Please select your stage',
+  }),
 });
 
 export type LeadFormData = z.infer<typeof leadSchema>;

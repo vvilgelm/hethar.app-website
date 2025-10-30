@@ -19,12 +19,12 @@ export async function createAirtableLead(data: LeadFormData) {
   const table = base(tableName);
 
   const record = await table.create({
-    'Startup Name': data.startup,
-    'What\'s Working': data.working,
-    'What\'s Not Working': data.notWorking,
-    '90 Day Goal': data.goal,
+    'Name': data.name,
     'Email': data.email,
-    'Website': data.website || '',
+    'Startup URL': data.startup || '',
+    'Building': data.building,
+    'Biggest Drag': data.drag,
+    'Stage': data.stage,
   });
 
   return record;
@@ -42,12 +42,13 @@ export async function createHubSpotLead(data: LeadFormData) {
     },
     body: JSON.stringify({
       properties: {
+        firstname: data.name.split(' ')[0],
+        lastname: data.name.split(' ').slice(1).join(' ') || data.name.split(' ')[0],
         email: data.email,
-        company: data.startup,
-        website: data.website,
-        what_working: data.working,
-        what_not_working: data.notWorking,
-        goal_90d: data.goal,
+        website: data.startup,
+        building: data.building,
+        biggest_drag: data.drag,
+        stage: data.stage,
       },
     }),
   });
@@ -61,8 +62,10 @@ export async function createHubSpotLead(data: LeadFormData) {
 
 // Main CRM function
 export async function createLeadInCRM(data: LeadFormData) {
-  // For now, just log the data - we'll send via email instead
-  console.log('Lead data received:', data);
-  return { success: true, data };
+  if (USE_CRM === 'hubspot') {
+    return await createHubSpotLead(data);
+  } else {
+    return await createAirtableLead(data);
+  }
 }
 

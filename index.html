@@ -6,14 +6,18 @@
   <title>method — turn your product into traction</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fafaf8;
       --text: #1a1a1a;
-      --text-muted: #666;
+      --text-muted: #6b6b6b;
+      --text-lighter: #999;
       --accent: #c4a48a;
+      --accent-light: #d4b49a;
       --divider: #e8e8e6;
+      --input-border: #d4d4d2;
+      --input-focus: #1a1a1a;
     }
 
     * {
@@ -27,25 +31,33 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, system-ui, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
       font-weight: 400;
       background: var(--bg);
       color: var(--text);
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.75;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--accent-light);
+      color: var(--text);
     }
 
     .container {
-      max-width: 680px;
+      max-width: 640px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 40px;
     }
 
     /* Header */
     header {
-      padding: 48px 0 24px;
+      padding: 56px 0 32px;
       border-bottom: 1px solid var(--divider);
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out 0.1s forwards;
     }
 
     header .container {
@@ -54,41 +66,74 @@
 
     .logo {
       font-size: 15px;
+      font-weight: 500;
       color: var(--text);
-      letter-spacing: 0.02em;
+      letter-spacing: 0.01em;
     }
 
     /* Sections */
     section {
-      padding: 80px 0;
+      padding: 88px 0;
     }
 
     .hero {
-      padding: 120px 0 80px;
+      padding: 128px 0 96px;
     }
 
     .hero h1 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 400;
       line-height: 1.5;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
       color: var(--text);
+      letter-spacing: -0.01em;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
     }
 
     .hero p {
       font-size: 17px;
-      line-height: 1.7;
-      margin-bottom: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
       color: var(--text-muted);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.5s forwards;
     }
 
-    .hero p:last-of-type {
-      margin-bottom: 48px;
+    .hero p:nth-of-type(2) {
+      animation-delay: 0.6s;
+    }
+
+    .hero p:nth-of-type(3) {
+      animation-delay: 0.7s;
+      margin-bottom: 56px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* Video */
     .video-section {
-      padding: 64px 0;
+      padding: 80px 0 96px;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.9s forwards;
     }
 
     .video-wrapper {
@@ -96,10 +141,17 @@
       padding-bottom: 177.78%;
       height: 0;
       overflow: hidden;
-      max-width: 400px;
+      max-width: 420px;
       margin: 0 auto;
-      border-radius: 4px;
+      border-radius: 6px;
       background: #000;
+      box-shadow: 0 2px 32px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-wrapper:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 48px rgba(0, 0, 0, 0.12);
     }
 
     .video-wrapper iframe {
@@ -113,69 +165,111 @@
 
     /* CTA Section */
     .cta-section {
-      padding: 80px 0;
+      padding: 96px 0;
       text-align: left;
+      border-top: 1px solid var(--divider);
     }
 
     .cta-section h2 {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 400;
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       color: var(--text);
+      letter-spacing: -0.01em;
     }
 
     .cta-section p {
-      font-size: 16px;
-      line-height: 1.7;
+      font-size: 17px;
+      line-height: 1.8;
       margin-bottom: 12px;
       color: var(--text-muted);
     }
 
+    .cta-section p:last-of-type {
+      margin-bottom: 0;
+    }
+
     .cta-btn {
       display: inline-block;
-      margin-top: 32px;
-      padding: 16px 32px;
+      margin-top: 40px;
+      padding: 15px 36px;
       background: transparent;
       border: 1px solid var(--text);
       color: var(--text);
       text-decoration: none;
       font-size: 15px;
-      transition: all 0.2s ease;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--text);
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    .cta-btn:hover::before {
+      width: 100%;
     }
 
     .cta-btn:hover {
-      background: var(--text);
       color: var(--bg);
     }
 
     /* Form Section */
     .form-section {
-      padding: 80px 0 120px;
+      padding: 96px 0 128px;
       background: var(--bg);
+      border-top: 1px solid var(--divider);
     }
 
     .form-section h2 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 400;
-      margin-bottom: 48px;
+      margin-bottom: 56px;
       color: var(--text);
+      letter-spacing: -0.01em;
     }
 
     form {
-      max-width: 520px;
+      max-width: 560px;
     }
 
     .form-field {
-      margin-bottom: 32px;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
     }
+
+    .form-field:nth-child(1) { animation-delay: 0.1s; }
+    .form-field:nth-child(2) { animation-delay: 0.15s; }
+    .form-field:nth-child(3) { animation-delay: 0.2s; }
+    .form-field:nth-child(4) { animation-delay: 0.25s; }
+    .form-field:nth-child(5) { animation-delay: 0.3s; }
+    .form-field:nth-child(6) { animation-delay: 0.35s; }
 
     label {
       display: block;
       font-size: 14px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: var(--text-muted);
+      letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+
+    .form-field:focus-within label {
+      color: var(--text);
     }
 
     input[type="text"],
@@ -184,41 +278,82 @@
     select,
     textarea {
       width: 100%;
-      padding: 12px 16px;
-      border: 1px solid var(--divider);
+      padding: 14px 16px;
+      border: 1px solid var(--input-border);
       background: var(--bg);
       color: var(--text);
       font-family: inherit;
       font-size: 15px;
-      transition: border-color 0.2s ease;
+      line-height: 1.6;
+      transition: all 0.2s ease;
+      border-radius: 0;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
       outline: none;
-      border-color: var(--accent);
+      border-color: var(--input-focus);
+      background: #fff;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: var(--text-lighter);
     }
 
     textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 88px;
+      line-height: 1.6;
     }
 
     select {
       cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 44px;
+    }
+
+    select option {
+      padding: 8px;
     }
 
     button[type="submit"] {
       display: inline-block;
-      padding: 16px 32px;
+      padding: 15px 36px;
       background: var(--text);
       border: 1px solid var(--text);
       color: var(--bg);
       font-family: inherit;
       font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    button[type="submit"]::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--bg);
+      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    button[type="submit"]:hover::before {
+      width: 100%;
     }
 
     button[type="submit"]:hover {
@@ -227,33 +362,68 @@
     }
 
     button[type="submit"]:disabled {
-      opacity: 0.5;
+      opacity: 0.4;
       cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* Success State */
+    .success-message {
+      text-align: center;
+      padding: 64px 24px;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .success-message h3 {
+      font-size: 22px;
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .success-message p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .success-message .footnote {
+      font-size: 13px;
+      margin-top: 40px;
+      color: var(--text-lighter);
     }
 
     /* Footer */
     footer {
-      padding: 64px 0;
+      padding: 72px 0;
       border-top: 1px solid var(--divider);
     }
 
     footer p {
       font-size: 13px;
-      color: var(--text-muted);
+      color: var(--text-lighter);
+      letter-spacing: 0.01em;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
       .container {
-        padding: 0 24px;
+        padding: 0 28px;
       }
 
       .hero {
-        padding: 80px 0 60px;
+        padding: 96px 0 72px;
       }
 
       .hero h1 {
-        font-size: 26px;
+        font-size: 28px;
+        margin-bottom: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
       }
 
       .video-wrapper {
@@ -261,7 +431,37 @@
       }
 
       section {
-        padding: 60px 0;
+        padding: 72px 0;
+      }
+
+      .cta-section {
+        padding: 72px 0;
+      }
+
+      .cta-section h2 {
+        font-size: 22px;
+      }
+
+      .form-section {
+        padding: 72px 0 96px;
+      }
+
+      .form-field {
+        margin-bottom: 32px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 24px;
+      }
+
+      .hero h1 {
+        font-size: 24px;
+      }
+
+      header {
+        padding: 48px 0 28px;
       }
     }
   </style>
@@ -318,17 +518,17 @@
       <form id="leadForm">
         <div class="form-field">
           <label for="name">name</label>
-          <input type="text" id="name" name="name" required>
+          <input type="text" id="name" name="name" required autocomplete="name">
         </div>
 
         <div class="form-field">
           <label for="email">email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" required autocomplete="email">
         </div>
 
         <div class="form-field">
           <label for="startup">startup / url</label>
-          <input type="url" id="startup" name="startup" placeholder="https://">
+          <input type="url" id="startup" name="startup" placeholder="https://" autocomplete="url">
         </div>
 
         <div class="form-field">
@@ -373,6 +573,21 @@
   <script>
     const form = document.getElementById('leadForm');
 
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Form submission
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
@@ -380,6 +595,7 @@
       const data = Object.fromEntries(formData);
       
       const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
       submitBtn.textContent = 'sending...';
       submitBtn.disabled = true;
       
@@ -396,15 +612,45 @@
           throw new Error('Submission failed');
         }
 
-        // Redirect to Cal.com
-        window.location.href = 'https://cal.com/methodlab';
+        // Show success message
+        form.innerHTML = `
+          <div class="success-message">
+            <h3>got it.</h3>
+            <p>redirecting you to book a call...</p>
+          </div>
+        `;
+
+        // Redirect to Cal.com after a brief moment
+        setTimeout(() => {
+          window.location.href = 'https://cal.com/methodlab';
+        }, 1200);
         
       } catch (error) {
         console.error('Error:', error);
-        submitBtn.textContent = 'try again';
+        submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-        alert('something went wrong. mind trying once more?');
+        
+        // Show error inline instead of alert
+        const errorMsg = document.createElement('p');
+        errorMsg.style.color = '#c44';
+        errorMsg.style.fontSize = '14px';
+        errorMsg.style.marginTop = '12px';
+        errorMsg.textContent = 'something went wrong. mind trying once more?';
+        submitBtn.parentNode.appendChild(errorMsg);
+        
+        setTimeout(() => errorMsg.remove(), 4000);
       }
+    });
+
+    // Add subtle focus ring animation
+    document.querySelectorAll('input, textarea, select').forEach(field => {
+      field.addEventListener('focus', function() {
+        this.style.transform = 'scale(1.002)';
+      });
+      
+      field.addEventListener('blur', function() {
+        this.style.transform = 'scale(1)';
+      });
     });
   </script>
 

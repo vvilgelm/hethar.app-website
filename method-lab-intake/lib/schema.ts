@@ -9,8 +9,6 @@ export const leadSchema = z.object({
     required_error: 'Please select the biggest drag',
   }),
   stage: z.enum([
-    'idea',
-    'between-idea-building',
     'building',
     'between-building-prelaunch',
     'pre-launch',
@@ -19,9 +17,7 @@ export const leadSchema = z.object({
     'between-launched-earlyrev',
     'early-rev',
     'between-earlyrev-scaling',
-    'scaling',
-    'between-scaling-postscaling',
-    'post-scaling'
+    'scaling'
   ], {
     required_error: 'Please select your stage',
   }),

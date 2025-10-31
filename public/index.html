@@ -844,34 +844,50 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
-      // Collect all form data
-      const data = new FormData(form);
-      const payload = Object.fromEntries(data);
-      payload.drag = selectedDrags.join(',');
+      // Collect all form data from our tracked formData object + current form values
+      const payload = {
+        name: formData.name || document.getElementById('name').value,
+        email: formData.email || document.getElementById('email').value,
+        startup: formData.startup || document.getElementById('startup').value,
+        building: formData.building || document.getElementById('building').value,
+        drag: selectedDrags.join(','),
+        tried: document.getElementById('tried')?.value || '',
+        stage: formData.stage || document.getElementById('stage').value,
+        acquisition: document.getElementById('acquisition')?.value || '',
+        blocker: document.getElementById('blocker')?.value || '',
+        finalNote: document.getElementById('finalNote')?.value || ''
+      };
+      
+      console.log('Submitting payload:', payload); // Debug log
       
       // Show redirect message
-      document.getElementById('chatCard').innerHTML = document.getElementById('successScreen').innerHTML;
-      document.getElementById('successScreen').style.display = 'block';
+      const chatCard = document.getElementById('chatCard');
+      chatCard.innerHTML = `
+        <div style="text-align: center; padding: 48px 24px;">
+          <div class="redirect-message">
+            <span class="spinner">🚀</span>
+            <span>sweet — locking your answers 🔒 sending you to schedule…</span>
+          </div>
+        </div>
+      `;
       
-      // Send to API
-      try {
-        await fetch('https://hethar-app-website.vercel.app/api/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
-      } catch (error) {
-        console.error('Error:', error);
-      }
+      // Send to API (don't wait for response)
+      fetch('https://hethar-app-website.vercel.app/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).catch(error => console.error('Error:', error));
       
       // Clear session storage
       sessionStorage.removeItem('founderFormData');
       
-      // Redirect to Cal.com after 1.5s
+      // Redirect to Cal.com after 1.5s (guaranteed)
       setTimeout(() => {
         const name = encodeURIComponent(payload.name || '');
         const email = encodeURIComponent(payload.email || '');
-        window.location.href = `https://cal.com/vlad-wilhelm-new/secret?name=${name}&email=${email}`;
+        const redirectUrl = `https://cal.com/vlad-wilhelm-new/secret?name=${name}&email=${email}`;
+        console.log('Redirecting to:', redirectUrl); // Debug log
+        window.location.href = redirectUrl;
       }, 1500);
     });
 

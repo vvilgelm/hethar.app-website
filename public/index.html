@@ -998,7 +998,7 @@
       `;
       
       // Send to API (don't wait for response)
-      fetch('https://hethar-app-website.vercel.app/api/lead', {
+      fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

@@ -10,14 +10,17 @@
   <style>
     :root {
       --bg: #fafaf8;
-      --text: #1a1a1a;
-      --text-muted: #6b6b6b;
-      --text-lighter: #999;
-      --accent: #c4a48a;
-      --accent-light: #d4b49a;
-      --divider: #e8e8e6;
-      --input-border: #d4d4d2;
-      --input-focus: #1a1a1a;
+      --bg-elevated: #ffffff;
+      --text: #0a0a0a;
+      --text-secondary: #52525b;
+      --text-tertiary: #a1a1aa;
+      --accent: #18181b;
+      --accent-soft: #27272a;
+      --border: #e4e4e7;
+      --border-light: #f4f4f5;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     * {
@@ -31,65 +34,78 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       font-weight: 400;
       background: var(--bg);
       color: var(--text);
       font-size: 16px;
-      line-height: 1.75;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     ::selection {
-      background: var(--accent-light);
+      background: rgba(24, 24, 27, 0.1);
       color: var(--text);
     }
 
     .container {
-      max-width: 640px;
+      max-width: 720px;
       margin: 0 auto;
-      padding: 0 40px;
+      padding: 0 32px;
     }
 
     /* Header */
     header {
-      padding: 56px 0 32px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--border-light);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
       opacity: 0;
-      animation: fadeIn 0.8s ease-out 0.1s forwards;
+      animation: fadeIn 0.6s ease-out 0.1s forwards;
     }
 
     .logo {
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 16px;
+      font-weight: 600;
       color: var(--text);
-      letter-spacing: 0.01em;
+      letter-spacing: -0.02em;
     }
 
     /* Hero */
     .hero {
-      padding: 128px 0 96px;
+      padding: 120px 0 80px;
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     .hero h1 {
-      font-size: 36px;
-      font-weight: 400;
-      line-height: 1.5;
-      margin-bottom: 40px;
+      font-size: 48px;
+      font-weight: 500;
+      line-height: 1.2;
+      margin-bottom: 32px;
       color: var(--text);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.03em;
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+      animation: fadeInUp 0.8s ease-out 0.2s forwards;
     }
 
     .hero p {
-      font-size: 17px;
-      line-height: 1.8;
-      margin-bottom: 20px;
-      color: var(--text-muted);
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--text-secondary);
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.5s forwards;
+      animation: fadeInUp 0.8s ease-out forwards;
     }
+
+    .hero p:nth-of-type(1) { animation-delay: 0.3s; }
+    .hero p:nth-of-type(2) { animation-delay: 0.4s; }
+    .hero p:nth-of-type(3) { animation-delay: 0.5s; margin-bottom: 0; }
 
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -109,9 +125,9 @@
 
     /* Video */
     .video-section {
-      padding: 80px 0 96px;
+      padding: 100px 0;
       opacity: 0;
-      animation: fadeIn 1s ease-out 0.9s forwards;
+      animation: fadeIn 1s ease-out 0.6s forwards;
     }
 
     .video-wrapper {
@@ -121,15 +137,16 @@
       overflow: hidden;
       max-width: 100%;
       margin: 0 auto;
-      border-radius: 6px;
+      border-radius: 12px;
       background: #000;
-      box-shadow: 0 2px 32px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow-lg), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .video-wrapper:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 48px rgba(0, 0, 0, 0.12);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 30px 40px -10px rgba(0, 0, 0, 0.1);
     }
 
     .video-wrapper iframe {
@@ -143,36 +160,39 @@
 
     /* Form Section - Conversational */
     .form-section {
-      padding: 96px 0 128px;
+      padding: 100px 0 140px;
       min-height: 70vh;
+      background: linear-gradient(180deg, var(--bg) 0%, rgba(255,255,255,0.4) 100%);
     }
 
     .form-header {
       text-align: center;
-      margin-bottom: 64px;
+      margin-bottom: 72px;
     }
 
     .form-header h2 {
-      font-size: 32px;
-      font-weight: 400;
-      margin-bottom: 16px;
-      letter-spacing: -0.01em;
+      font-size: 40px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
 
     .form-header p {
-      font-size: 16px;
-      color: var(--text-muted);
+      font-size: 17px;
+      color: var(--text-secondary);
       line-height: 1.7;
     }
 
     /* Chat Card */
     .chat-card {
-      max-width: 560px;
+      max-width: 580px;
       margin: 0 auto;
-      background: #fff;
-      border-radius: 12px;
-      padding: 48px;
-      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+      background: var(--bg-elevated);
+      border-radius: 16px;
+      padding: 56px;
+      box-shadow: var(--shadow-lg), 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border);
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -244,88 +264,98 @@
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 14px 16px;
-      border: 1px solid var(--input-border);
+      padding: 16px 18px;
+      border: 1.5px solid var(--border);
       background: var(--bg);
       color: var(--text);
       font-family: inherit;
       font-size: 16px;
-      line-height: 1.6;
-      border-radius: 6px;
-      transition: all 0.2s ease;
+      line-height: 1.5;
+      border-radius: 10px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-sm);
     }
 
     input:focus,
     textarea:focus {
       outline: none;
-      border-color: var(--input-focus);
-      background: #fff;
-      transform: scale(1.005);
+      border-color: var(--accent);
+      background: var(--bg-elevated);
+      box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.05), var(--shadow-sm);
+      transform: translateY(-1px);
     }
 
     input::placeholder,
     textarea::placeholder {
-      color: var(--text-lighter);
+      color: var(--text-tertiary);
     }
 
     textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 90px;
     }
 
     /* Chips (Multi-select) */
     .chips-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 16px;
+      gap: 10px;
+      margin-top: 20px;
     }
 
     .chip {
-      padding: 10px 20px;
-      border: 1px solid var(--input-border);
-      background: var(--bg);
+      padding: 12px 22px;
+      border: 1.5px solid var(--border);
+      background: var(--bg-elevated);
       color: var(--text);
-      font-size: 14px;
-      border-radius: 24px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       user-select: none;
+      box-shadow: var(--shadow-sm);
     }
 
     .chip:hover {
-      border-color: var(--text);
-      transform: translateY(-1px);
+      border-color: var(--accent-soft);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     .chip.selected {
-      background: var(--text);
-      color: var(--bg);
-      border-color: var(--text);
+      background: var(--accent);
+      color: var(--bg-elevated);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
     }
 
     /* Buttons */
     .step-btn {
       display: inline-block;
-      padding: 15px 32px;
-      background: var(--text);
-      border: 1px solid var(--text);
-      color: var(--bg);
+      padding: 16px 36px;
+      background: var(--accent);
+      border: none;
+      color: var(--bg-elevated);
       font-family: inherit;
       font-size: 15px;
       font-weight: 500;
-      border-radius: 6px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-top: 24px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-top: 28px;
+      box-shadow: var(--shadow-md);
     }
 
     .step-btn:hover {
-      transform: scale(0.98);
+      background: var(--accent-soft);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
     }
 
     .step-btn:active {
-      transform: scale(0.96);
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
     }
 
     .step-btn:disabled {
@@ -402,36 +432,84 @@
       to { transform: rotate(360deg); }
     }
 
+    .step-prompt {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      color: var(--text);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+    }
+
+    .step-subtext {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
     /* Footer */
     footer {
-      padding: 72px 0;
+      padding: 80px 0;
+      border-top: 1px solid var(--border-light);
+      background: var(--bg-elevated);
     }
 
     footer p {
-      font-size: 13px;
-      color: var(--text-lighter);
+      font-size: 14px;
+      color: var(--text-tertiary);
+      text-align: center;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
       .container {
-        padding: 0 28px;
+        padding: 0 24px;
       }
 
       .hero {
-        padding: 96px 0 72px;
+        padding: 80px 0 60px;
       }
 
+      .hero h1 {
+        font-size: 32px;
+        margin-bottom: 24px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .form-header h2 {
+        font-size: 32px;
+      }
+
+      .chat-card {
+        padding: 40px 28px;
+        border-radius: 12px;
+      }
+
+      .step-btn {
+        width: 100%;
+      }
+
+      .chips-container {
+        gap: 8px;
+      }
+
+      .chip {
+        font-size: 14px;
+        padding: 10px 18px;
+      }
+    }
+
+    @media (max-width: 480px) {
       .hero h1 {
         font-size: 28px;
       }
 
       .chat-card {
-        padding: 32px 24px;
-      }
-
-      .form-header h2 {
-        font-size: 26px;
+        padding: 32px 20px;
       }
     }
   </style>

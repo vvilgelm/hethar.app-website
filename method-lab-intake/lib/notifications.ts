@@ -23,13 +23,15 @@ New Lead Received
 
 Name: ${data.name}
 Email: ${data.email}
-Startup URL: ${data.startup || 'N/A'}
+Startup: ${data.startup || 'N/A'}
 
 Building:
 ${data.building}
 
 Biggest Drag: ${data.drag}
+What They've Tried: ${data.tried || 'N/A'}
 Stage: ${data.stage}
+Acquisition: ${data.acquisition || 'N/A'}
 
 ---
 JSON:
@@ -74,9 +76,16 @@ export async function sendSlackNotification(data: LeadFormData) {
       {
         type: 'section',
         fields: [
-          { type: 'mrkdwn', text: `*Building:*\n${data.building.substring(0, 100)}${data.building.length > 100 ? '...' : ''}` },
-          { type: 'mrkdwn', text: `*Biggest Drag:* ${data.drag}\n*Stage:* ${data.stage}` },
+          { type: 'mrkdwn', text: `*Building:*\n${data.building}` },
+          { type: 'mrkdwn', text: `*Stage:* ${data.stage}\n*Acquisition:* ${data.acquisition || 'N/A'}` },
         ],
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Biggest Drag:* ${data.drag}\n*Tried:* ${data.tried?.substring(0, 100) || 'N/A'}${data.tried && data.tried.length > 100 ? '...' : ''}`,
+        },
       },
     ],
   };

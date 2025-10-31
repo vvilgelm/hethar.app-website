@@ -21,10 +21,12 @@ export async function createAirtableLead(data: LeadFormData) {
   const record = await table.create({
     'Name': data.name,
     'Email': data.email,
-    'Startup URL': data.startup || '',
+    'Startup': data.startup || '',
     'Building': data.building,
     'Biggest Drag': data.drag,
+    'Tried': data.tried || '',
     'Stage': data.stage,
+    'Acquisition': data.acquisition || '',
   });
 
   return record;
@@ -48,7 +50,9 @@ export async function createHubSpotLead(data: LeadFormData) {
         website: data.startup,
         building: data.building,
         biggest_drag: data.drag,
+        tried: data.tried,
         stage: data.stage,
+        acquisition: data.acquisition,
       },
     }),
   });

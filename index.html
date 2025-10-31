@@ -257,7 +257,9 @@
     .form-field:nth-child(6) { animation-delay: 0.35s; }
 
     label {
-      display: block;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       font-size: 14px;
       margin-bottom: 10px;
       color: var(--text-muted);
@@ -267,6 +269,16 @@
 
     .form-field:focus-within label {
       color: var(--text);
+    }
+
+    .char-counter {
+      font-size: 12px;
+      color: var(--text-lighter);
+      font-weight: 400;
+    }
+
+    .conditional-field {
+      transition: all 0.4s ease;
     }
 
     input[type="text"],
@@ -523,40 +535,57 @@
         </div>
 
         <div class="form-field">
-          <label for="startup">startup / url</label>
-          <input type="url" id="startup" name="startup" placeholder="https://" autocomplete="url">
+          <label for="startup">startup / project URL (or short pitch if stealth)</label>
+          <input type="text" id="startup" name="startup" placeholder="https:// or short pitch" autocomplete="url">
         </div>
 
         <div class="form-field">
-          <label for="building">what you're building (in one line)</label>
-          <textarea id="building" name="building" required></textarea>
+          <label for="building">
+            what you're building (in one line)
+            <span class="char-counter"><span id="charCount">0</span>/100</span>
+          </label>
+          <textarea id="building" name="building" required maxlength="100" placeholder="eg: AI tool that turns support calls into knowledge-base docs."></textarea>
         </div>
 
         <div class="form-field">
           <label for="drag">what's the biggest drag right now</label>
           <select id="drag" name="drag" required>
             <option value="">select one</option>
-            <option value="traffic">traffic</option>
-            <option value="funnel">funnel</option>
-            <option value="users">users</option>
-            <option value="story">story</option>
-            <option value="all">all</option>
+            <option value="not-enough-traffic">not enough qualified traffic</option>
+            <option value="low-conversion">traffic but low conversion</option>
+            <option value="users-not-sticking">users not activating or sticking</option>
+            <option value="unclear-messaging">unclear messaging / story</option>
+            <option value="no-repeatable-channel">no repeatable acquisition channel</option>
+            <option value="dont-know-what-to-test">don't know what to test next</option>
           </select>
+        </div>
+
+        <div class="form-field">
+          <label for="tried">what have you tried so far? (optional)</label>
+          <textarea id="tried" name="tried" placeholder="brief overview of what you've tested..."></textarea>
         </div>
 
         <div class="form-field">
           <label for="stage">stage</label>
           <select id="stage" name="stage" required>
             <option value="">select one</option>
-            <option value="building">building / not live</option>
-            <option value="between-building-prelaunch">between building and pre-launch</option>
-            <option value="pre-launch">pre-launch / almost ready</option>
-            <option value="between-prelaunch-launched">between pre-launch and launched</option>
-            <option value="just-launched">just launched / first users</option>
-            <option value="between-launched-earlyrev">between launched and early rev</option>
-            <option value="early-rev">early rev / finding fit</option>
-            <option value="between-earlyrev-scaling">between early rev and scaling</option>
-            <option value="scaling">scaling / consistent growth</option>
+            <option value="idea">🧠 idea / not live</option>
+            <option value="prototype">🧩 prototype / testing</option>
+            <option value="launched">🚀 launched / first users</option>
+            <option value="revenue">💰 revenue / finding fit</option>
+            <option value="scaling">📈 scaling / consistent growth</option>
+          </select>
+        </div>
+
+        <div class="form-field conditional-field" id="acquisitionField" style="display: none;">
+          <label for="acquisition">how do you currently get users?</label>
+          <select id="acquisition" name="acquisition">
+            <option value="">select one (optional)</option>
+            <option value="organic">organic / content</option>
+            <option value="paid">paid / ads</option>
+            <option value="outbound">outbound</option>
+            <option value="partnerships">partnerships</option>
+            <option value="other">other</option>
           </select>
         </div>
 
@@ -587,6 +616,29 @@
           });
         }
       });
+    });
+
+    // Character counter for building field
+    const buildingField = document.getElementById('building');
+    const charCount = document.getElementById('charCount');
+    
+    buildingField.addEventListener('input', function() {
+      charCount.textContent = this.value.length;
+    });
+
+    // Conditional logic for acquisition field
+    const stageField = document.getElementById('stage');
+    const acquisitionField = document.getElementById('acquisitionField');
+    
+    stageField.addEventListener('change', function() {
+      const stage = this.value;
+      if (stage === 'launched' || stage === 'revenue') {
+        acquisitionField.style.display = 'block';
+        acquisitionField.style.opacity = '0';
+        acquisitionField.style.animation = 'fadeInUp 0.6s ease-out forwards';
+      } else {
+        acquisitionField.style.display = 'none';
+      }
     });
 
     // Form submission

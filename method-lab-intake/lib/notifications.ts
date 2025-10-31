@@ -32,6 +32,8 @@ Biggest Drag: ${data.drag}
 What They've Tried: ${data.tried || 'N/A'}
 Stage: ${data.stage}
 Acquisition: ${data.acquisition || 'N/A'}
+Blocker: ${data.blocker || 'N/A'}
+Final Note: ${data.finalNote || 'N/A'}
 
 ---
 JSON:
@@ -77,14 +79,14 @@ export async function sendSlackNotification(data: LeadFormData) {
         type: 'section',
         fields: [
           { type: 'mrkdwn', text: `*Building:*\n${data.building}` },
-          { type: 'mrkdwn', text: `*Stage:* ${data.stage}\n*Acquisition:* ${data.acquisition || 'N/A'}` },
+          { type: 'mrkdwn', text: `*Stage:* ${data.stage}` },
         ],
       },
       {
         type: 'section',
         text: {
           type: 'mrkdwn',
-          text: `*Biggest Drag:* ${data.drag}\n*Tried:* ${data.tried?.substring(0, 100) || 'N/A'}${data.tried && data.tried.length > 100 ? '...' : ''}`,
+          text: `*Biggest Drag:* ${data.drag}\n*Acquisition:* ${data.acquisition || 'N/A'}\n*Final Note:* ${data.finalNote?.substring(0, 100) || 'N/A'}${data.finalNote && data.finalNote.length > 100 ? '...' : ''}`,
         },
       },
     ],

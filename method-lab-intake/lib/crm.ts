@@ -27,6 +27,8 @@ export async function createAirtableLead(data: LeadFormData) {
     'Tried': data.tried || '',
     'Stage': data.stage,
     'Acquisition': data.acquisition || '',
+    'Blocker': data.blocker || '',
+    'Final Note': data.finalNote || '',
   });
 
   return record;
@@ -53,6 +55,8 @@ export async function createHubSpotLead(data: LeadFormData) {
         tried: data.tried,
         stage: data.stage,
         acquisition: data.acquisition,
+        blocker: data.blocker,
+        final_note: data.finalNote,
       },
     }),
   });

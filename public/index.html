@@ -59,10 +59,6 @@
       animation: fadeIn 0.8s ease-out 0.1s forwards;
     }
 
-    header .container {
-      text-align: left;
-    }
-
     .logo {
       font-size: 15px;
       font-weight: 500;
@@ -70,11 +66,7 @@
       letter-spacing: 0.01em;
     }
 
-    /* Sections */
-    section {
-      padding: 88px 0;
-    }
-
+    /* Hero */
     .hero {
       padding: 128px 0 96px;
     }
@@ -99,22 +91,9 @@
       animation: fadeInUp 0.8s ease-out 0.5s forwards;
     }
 
-    .hero p:nth-of-type(2) {
-      animation-delay: 0.6s;
-    }
-
-    .hero p:nth-of-type(3) {
-      animation-delay: 0.7s;
-      margin-bottom: 56px;
-    }
-
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes fadeInUp {
@@ -162,129 +141,107 @@
       border: none;
     }
 
-    /* CTA Section */
-    .cta-section {
-      padding: 96px 0;
-      text-align: left;
-    }
-
-    .cta-section h2 {
-      font-size: 26px;
-      font-weight: 400;
-      line-height: 1.6;
-      margin-bottom: 28px;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    .cta-section p {
-      font-size: 17px;
-      line-height: 1.8;
-      margin-bottom: 12px;
-      color: var(--text-muted);
-    }
-
-    .cta-section p:last-of-type {
-      margin-bottom: 0;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      margin-top: 40px;
-      padding: 15px 36px;
-      background: transparent;
-      border: 1px solid var(--text);
-      color: var(--text);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: 0.01em;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: var(--text);
-      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: -1;
-    }
-
-    .cta-btn:hover::before {
-      width: 100%;
-    }
-
-    .cta-btn:hover {
-      color: var(--bg);
-    }
-
-    /* Form Section */
+    /* Form Section - Conversational */
     .form-section {
       padding: 96px 0 128px;
-      background: var(--bg);
+      min-height: 70vh;
     }
 
-    .form-section h2 {
-      font-size: 22px;
+    .form-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .form-header h2 {
+      font-size: 32px;
       font-weight: 400;
-      margin-bottom: 56px;
-      color: var(--text);
+      margin-bottom: 16px;
       letter-spacing: -0.01em;
     }
 
-    form {
-      max-width: 560px;
-    }
-
-    .form-field {
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: fadeInUp 0.6s ease-out forwards;
-    }
-
-    .form-field:nth-child(1) { animation-delay: 0.1s; }
-    .form-field:nth-child(2) { animation-delay: 0.15s; }
-    .form-field:nth-child(3) { animation-delay: 0.2s; }
-    .form-field:nth-child(4) { animation-delay: 0.25s; }
-    .form-field:nth-child(5) { animation-delay: 0.3s; }
-    .form-field:nth-child(6) { animation-delay: 0.35s; }
-
-    label {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 14px;
-      margin-bottom: 10px;
+    .form-header p {
+      font-size: 16px;
       color: var(--text-muted);
-      letter-spacing: 0.01em;
-      transition: color 0.2s ease;
+      line-height: 1.7;
     }
 
-    .form-field:focus-within label {
-      color: var(--text);
+    /* Chat Card */
+    .chat-card {
+      max-width: 560px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 48px;
+      box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .char-counter {
-      font-size: 12px;
-      color: var(--text-lighter);
+    .chat-card.slide-up {
+      animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(0); }
+      to { transform: translateY(-12px); }
+    }
+
+    /* Form Steps */
+    .form-step {
+      display: none;
+      opacity: 0;
+      animation: fadeInStep 0.4s ease-out forwards;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    @keyframes fadeInStep {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .step-prompt {
+      font-size: 18px;
       font-weight: 400;
+      margin-bottom: 24px;
+      color: var(--text);
+      line-height: 1.6;
     }
 
-    .conditional-field {
-      transition: all 0.4s ease;
+    .step-subtext {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      line-height: 1.7;
     }
 
+    .micro-note {
+      font-size: 13px;
+      color: var(--text-lighter);
+      margin-top: 12px;
+      font-style: italic;
+      opacity: 0;
+      animation: fadeIn 0.3s ease-out 0.3s forwards;
+    }
+
+    .greeting {
+      font-size: 14px;
+      color: var(--accent);
+      margin-top: 12px;
+      opacity: 0;
+      animation: fadeIn 0.3s ease-out 0.3s forwards;
+    }
+
+    /* Input Fields */
     input[type="text"],
     input[type="email"],
-    input[type="url"],
-    select,
     textarea {
       width: 100%;
       padding: 14px 16px;
@@ -292,21 +249,18 @@
       background: var(--bg);
       color: var(--text);
       font-family: inherit;
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.6;
+      border-radius: 6px;
       transition: all 0.2s ease;
-      border-radius: 0;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
     }
 
     input:focus,
-    select:focus,
     textarea:focus {
       outline: none;
       border-color: var(--input-focus);
       background: #fff;
+      transform: scale(1.005);
     }
 
     input::placeholder,
@@ -316,92 +270,136 @@
 
     textarea {
       resize: vertical;
-      min-height: 88px;
-      line-height: 1.6;
+      min-height: 80px;
     }
 
-    select {
+    /* Chips (Multi-select) */
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .chip {
+      padding: 10px 20px;
+      border: 1px solid var(--input-border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      border-radius: 24px;
       cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231a1a1a' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      padding-right: 44px;
+      transition: all 0.2s ease;
+      user-select: none;
     }
 
-    select option {
-      padding: 8px;
+    .chip:hover {
+      border-color: var(--text);
+      transform: translateY(-1px);
     }
 
-    button[type="submit"] {
+    .chip.selected {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    /* Buttons */
+    .step-btn {
       display: inline-block;
-      padding: 15px 36px;
+      padding: 15px 32px;
       background: var(--text);
       border: 1px solid var(--text);
       color: var(--bg);
       font-family: inherit;
       font-size: 15px;
       font-weight: 500;
-      letter-spacing: 0.01em;
+      border-radius: 6px;
       cursor: pointer;
       transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-top: 16px;
-      position: relative;
-      overflow: hidden;
+      margin-top: 24px;
     }
 
-    button[type="submit"]::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 100%;
-      background: var(--bg);
-      transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: -1;
+    .step-btn:hover {
+      transform: scale(0.98);
     }
 
-    button[type="submit"]:hover::before {
-      width: 100%;
+    .step-btn:active {
+      transform: scale(0.96);
     }
 
-    button[type="submit"]:hover {
-      background: transparent;
-      color: var(--text);
-    }
-
-    button[type="submit"]:disabled {
+    .step-btn:disabled {
       opacity: 0.4;
       cursor: not-allowed;
-      pointer-events: none;
+      transform: none;
     }
 
-    /* Success State */
-    .success-message {
-      text-align: center;
-      padding: 64px 24px;
+    /* Link Preview */
+    .link-preview {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: #f0f0ef;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-top: 12px;
       opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
+      animation: fadeIn 0.3s ease-out forwards;
     }
 
-    .success-message h3 {
-      font-size: 22px;
+    .link-preview img {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Character Counter */
+    .char-counter {
+      font-size: 12px;
+      color: var(--text-lighter);
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    .char-counter.warning {
+      color: #e67e22;
+    }
+
+    /* Success Screen */
+    .success-screen {
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .success-screen h3 {
+      font-size: 24px;
       font-weight: 400;
-      margin-bottom: 20px;
-      color: var(--text);
+      margin-bottom: 16px;
     }
 
-    .success-message p {
-      font-size: 16px;
-      line-height: 1.8;
+    .success-screen p {
+      font-size: 15px;
       color: var(--text-muted);
+      line-height: 1.7;
       margin-bottom: 12px;
     }
 
-    .success-message .footnote {
-      font-size: 13px;
-      margin-top: 40px;
-      color: var(--text-lighter);
+    .redirect-message {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 16px;
+      color: var(--text-muted);
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
     /* Footer */
@@ -412,7 +410,6 @@
     footer p {
       font-size: 13px;
       color: var(--text-lighter);
-      letter-spacing: 0.01em;
     }
 
     /* Responsive */
@@ -427,49 +424,14 @@
 
       .hero h1 {
         font-size: 28px;
-        margin-bottom: 32px;
       }
 
-      .hero p {
-        font-size: 16px;
+      .chat-card {
+        padding: 32px 24px;
       }
 
-      .video-wrapper {
-        max-width: 100%;
-      }
-
-      section {
-        padding: 72px 0;
-      }
-
-      .cta-section {
-        padding: 72px 0;
-      }
-
-      .cta-section h2 {
-        font-size: 22px;
-      }
-
-      .form-section {
-        padding: 72px 0 96px;
-      }
-
-      .form-field {
-        margin-bottom: 32px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 24px;
-      }
-
-      .hero h1 {
-        font-size: 24px;
-      }
-
-      header {
-        padding: 48px 0 28px;
+      .form-header h2 {
+        font-size: 26px;
       }
     }
   </style>
@@ -509,88 +471,104 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <div class="container">
-      <h2>book a call</h2>
-      <p>you'll get a 15-min teardown of what's working, what's not,</p>
-      <p>and a clear path to your next 1k paying users.</p>
-      <a href="#form" class="cta-btn">book a call ↓</a>
-    </div>
-  </section>
-
-  <!-- Form -->
+  <!-- Form Section -->
   <section id="form" class="form-section">
     <div class="container">
-      <h2>form</h2>
-      <form id="leadForm">
-        <div class="form-field">
-          <label for="name">name</label>
-          <input type="text" id="name" name="name" required autocomplete="name">
-        </div>
+      <div class="form-header">
+        <h2>book a call. not a pitch. a jam.</h2>
+        <p>15 minutes, founder-to-founder. no slides. no decks.<br>we'll look at what you're building and what to do next.</p>
+      </div>
 
-        <div class="form-field">
-          <label for="email">email</label>
-          <input type="email" id="email" name="email" required autocomplete="email">
-        </div>
+      <div class="chat-card" id="chatCard">
+        <form id="founderForm">
+          
+          <!-- Step 0: Welcome -->
+          <div class="form-step active" data-step="0">
+            <div class="step-prompt">hey 👋</div>
+            <div class="step-subtext">this isn't a form — just a tiny founder-to-founder sync.<br>takes 45 seconds tops.</div>
+            <button type="button" class="step-btn" onclick="nextStep()">let's roll →</button>
+          </div>
 
-        <div class="form-field">
-          <label for="startup">startup / project URL (or short pitch if stealth)</label>
-          <input type="text" id="startup" name="startup" placeholder="https:// or short pitch" autocomplete="url">
-        </div>
+          <!-- Step 1: Name -->
+          <div class="form-step" data-step="1">
+            <div class="step-prompt">what should we call you?</div>
+            <input type="text" id="name" name="name" required autocomplete="name">
+            <div class="greeting" id="nameGreeting"></div>
+          </div>
 
-        <div class="form-field">
-          <label for="building">
-            what you're building (in one line)
-            <span class="char-counter"><span id="charCount">0</span>/100</span>
-          </label>
-          <textarea id="building" name="building" required maxlength="100" placeholder="eg: AI tool that turns support calls into knowledge-base docs."></textarea>
-        </div>
+          <!-- Step 2: Email -->
+          <div class="form-step" data-step="2">
+            <div class="step-prompt">drop your go-to inbox — whatever you actually check</div>
+            <input type="email" id="email" name="email" required autocomplete="email">
+            <div class="micro-note" id="emailNote"></div>
+          </div>
 
-        <div class="form-field">
-          <label for="drag">what's the biggest drag right now</label>
-          <select id="drag" name="drag" required>
-            <option value="">select one</option>
-            <option value="not-enough-traffic">not enough qualified traffic</option>
-            <option value="low-conversion">traffic but low conversion</option>
-            <option value="users-not-sticking">users not activating or sticking</option>
-            <option value="unclear-messaging">unclear messaging / story</option>
-            <option value="no-repeatable-channel">no repeatable acquisition channel</option>
-            <option value="dont-know-what-to-test">don't know what to test next</option>
-          </select>
-        </div>
+          <!-- Step 3: Startup/URL -->
+          <div class="form-step" data-step="3">
+            <div class="step-prompt">got a startup or project link?<br><span class="step-subtext">(if stealth, just say what you're cooking)</span></div>
+            <input type="text" id="startup" name="startup" placeholder="https:// or your secret sauce">
+            <div class="micro-note" id="startupNote"></div>
+            <div class="link-preview" id="linkPreview" style="display: none;"></div>
+          </div>
 
-        <div class="form-field">
-          <label for="tried">what have you tried so far? (optional)</label>
-          <textarea id="tried" name="tried" placeholder="brief overview of what you've tested..."></textarea>
-        </div>
+          <!-- Step 4: One-liner -->
+          <div class="form-step" data-step="4">
+            <div class="step-prompt">describe what you're building in one line — tweet length is perfect</div>
+            <textarea id="building" name="building" required maxlength="140" placeholder="AI that turns calls into client briefs automatically."></textarea>
+            <div class="char-counter" id="buildingCounter">0/140</div>
+            <div class="micro-note" id="buildingNote"></div>
+          </div>
 
-        <div class="form-field">
-          <label for="stage">stage</label>
-          <select id="stage" name="stage" required>
-            <option value="">select one</option>
-            <option value="idea">🧠 idea / not live</option>
-            <option value="prototype">🧩 prototype / testing</option>
-            <option value="launched">🚀 launched / first users</option>
-            <option value="revenue">💰 revenue / finding fit</option>
-            <option value="scaling">📈 scaling / consistent growth</option>
-          </select>
-        </div>
+          <!-- Step 5: Biggest Drag -->
+          <div class="form-step" data-step="5">
+            <div class="step-prompt">what's currently kicking your ass the most?</div>
+            <div class="chips-container">
+              <div class="chip" data-value="traffic-flat">traffic's flat</div>
+              <div class="chip" data-value="funnel-leaks">funnel leaks everywhere</div>
+              <div class="chip" data-value="users-ghost">users ghost</div>
+              <div class="chip" data-value="story-fuzzy">story's fuzzy</div>
+              <div class="chip" data-value="dont-know-test">not sure what to test next</div>
+              <div class="chip" data-value="all">all of the above 🤝</div>
+            </div>
+            <input type="hidden" id="drag" name="drag" required>
+            <div class="micro-note" id="dragNote"></div>
+            <div id="triedContainer" style="display: none; margin-top: 24px;">
+              <div class="step-prompt" style="font-size: 16px;">what have you tried so far?</div>
+              <input type="text" id="tried" name="tried" placeholder="brief overview...">
+            </div>
+          </div>
 
-        <div class="form-field conditional-field" id="acquisitionField" style="display: none;">
-          <label for="acquisition">how do you currently get users?</label>
-          <select id="acquisition" name="acquisition">
-            <option value="">select one (optional)</option>
-            <option value="organic">organic / content</option>
-            <option value="paid">paid / ads</option>
-            <option value="outbound">outbound</option>
-            <option value="partnerships">partnerships</option>
-            <option value="other">other</option>
-          </select>
-        </div>
+          <!-- Step 6: Stage -->
+          <div class="form-step" data-step="6">
+            <div class="step-prompt">where you're at in the chaos rn</div>
+            <div class="chips-container">
+              <div class="chip" data-value="idea">💡 idea / not live</div>
+              <div class="chip" data-value="prototype">🧱 prototype / testing</div>
+              <div class="chip" data-value="launched">🚀 launched / early users</div>
+              <div class="chip" data-value="revenue">💰 early revenue / finding fit</div>
+              <div class="chip" data-value="scaling">📈 scaling / consistent growth</div>
+            </div>
+            <input type="hidden" id="stage" name="stage" required>
+            <div id="conditionalContainer" style="display: none; margin-top: 24px;"></div>
+          </div>
 
-        <button type="submit">submit</button>
-      </form>
+          <!-- Step 7: Final Note -->
+          <div class="form-step" data-step="7">
+            <div class="step-prompt">anything else you wanna drop in? or just say hi 👋</div>
+            <textarea id="finalNote" name="finalNote" placeholder="(optional)"></textarea>
+            <button type="submit" class="step-btn" id="submitBtn">ship it 🚀</button>
+          </div>
+
+        </form>
+
+        <!-- Success/Redirect Screen -->
+        <div id="successScreen" style="display: none;">
+          <div class="redirect-message">
+            <span class="spinner">🚀</span>
+            <span>sweet — locking your answers 🔒 sending you to schedule…</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -602,7 +580,300 @@
   </footer>
 
   <script>
-    const form = document.getElementById('leadForm');
+    let currentStep = 0;
+    const formData = {};
+    const selectedDrags = [];
+
+    // Load saved data from sessionStorage
+    window.addEventListener('load', () => {
+      const saved = sessionStorage.getItem('founderFormData');
+      if (saved) {
+        Object.assign(formData, JSON.parse(saved));
+      }
+    });
+
+    // Save data to sessionStorage
+    function saveFormData() {
+      sessionStorage.setItem('founderFormData', JSON.stringify(formData));
+    }
+
+    // Next Step
+    function nextStep() {
+      const steps = document.querySelectorAll('.form-step');
+      steps[currentStep].classList.remove('active');
+      currentStep++;
+      steps[currentStep].classList.add('active');
+      
+      // Auto-focus first input
+      const input = steps[currentStep].querySelector('input, textarea');
+      if (input) setTimeout(() => input.focus(), 100);
+
+      // Slide up card on first advance
+      if (currentStep === 1) {
+        document.getElementById('chatCard').classList.add('slide-up');
+      }
+    }
+
+    // Name field
+    const nameInput = document.getElementById('name');
+    let nameTimeout;
+    nameInput.addEventListener('input', function() {
+      clearTimeout(nameTimeout);
+      nameTimeout = setTimeout(() => {
+        if (this.value.trim().length > 0) {
+          const firstName = this.value.trim().split(' ')[0];
+          document.getElementById('nameGreeting').textContent = `nice to meet you, ${firstName} 👋`;
+          formData.name = this.value.trim();
+          saveFormData();
+        }
+      }, 300);
+    });
+
+    nameInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && nameInput.value.trim()) {
+        e.preventDefault();
+        nextStep();
+      }
+    });
+
+    // Email field
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', function() {
+      const email = this.value.toLowerCase();
+      const noteEl = document.getElementById('emailNote');
+      
+      if (email.includes('@gmail') || email.includes('@outlook') || email.includes('@yahoo')) {
+        noteEl.textContent = 'solo builder? cool.';
+        noteEl.style.display = 'block';
+      } else {
+        noteEl.style.display = 'none';
+      }
+      
+      formData.email = this.value;
+      saveFormData();
+    });
+
+    emailInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && emailInput.validity.valid) {
+        e.preventDefault();
+        nextStep();
+      }
+    });
+
+    // Startup/URL field
+    const startupInput = document.getElementById('startup');
+    startupInput.addEventListener('input', function() {
+      const value = this.value.trim();
+      const noteEl = document.getElementById('startupNote');
+      const previewEl = document.getElementById('linkPreview');
+      
+      if (!value) {
+        noteEl.style.display = 'none';
+        previewEl.style.display = 'none';
+      } else if (value.startsWith('http')) {
+        noteEl.style.display = 'none';
+        try {
+          const url = new URL(value);
+          previewEl.innerHTML = `<span>🔗</span><span>${url.hostname}</span>`;
+          previewEl.style.display = 'inline-flex';
+        } catch {}
+      } else {
+        noteEl.textContent = 'ah, stealth mode. respect.';
+        noteEl.style.display = 'block';
+        previewEl.style.display = 'none';
+      }
+      
+      formData.startup = value;
+      saveFormData();
+    });
+
+    startupInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        nextStep();
+      }
+    });
+
+    // Building field (one-liner)
+    const buildingInput = document.getElementById('building');
+    buildingInput.addEventListener('input', function() {
+      const len = this.value.length;
+      const counterEl = document.getElementById('buildingCounter');
+      const noteEl = document.getElementById('buildingNote');
+      
+      counterEl.textContent = `${len}/140`;
+      
+      if (len > 140) {
+        counterEl.classList.add('warning');
+        noteEl.textContent = 'lol that\'s a mini pitch deck 😅 keep it tighter.';
+        noteEl.style.display = 'block';
+      } else if (len > 0 && len <= 140) {
+        counterEl.classList.remove('warning');
+        noteEl.textContent = 'clean. love it.';
+        noteEl.style.display = 'block';
+      } else {
+        noteEl.style.display = 'none';
+      }
+      
+      formData.building = this.value;
+      saveFormData();
+    });
+
+    buildingInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && buildingInput.value.trim()) {
+        e.preventDefault();
+        nextStep();
+      }
+    });
+
+    // Drag chips (multi-select)
+    document.querySelectorAll('[data-step="5"] .chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        const value = this.dataset.value;
+        
+        // Toggle selection
+        if (this.classList.contains('selected')) {
+          this.classList.remove('selected');
+          const idx = selectedDrags.indexOf(value);
+          if (idx > -1) selectedDrags.splice(idx, 1);
+        } else {
+          this.classList.add('selected');
+          selectedDrags.push(value);
+        }
+        
+        document.getElementById('drag').value = selectedDrags.join(',');
+        formData.drag = selectedDrags.join(',');
+        saveFormData();
+        
+        // Show micro-notes
+        const noteEl = document.getElementById('dragNote');
+        if (selectedDrags.includes('story-fuzzy')) {
+          noteEl.textContent = 'messaging\'s a pain, huh?';
+          noteEl.style.display = 'block';
+        } else {
+          noteEl.style.display = 'none';
+        }
+        
+        // Show "what tried" field
+        const triedContainer = document.getElementById('triedContainer');
+        if (selectedDrags.includes('traffic-flat') || selectedDrags.includes('users-ghost')) {
+          triedContainer.style.display = 'block';
+        } else {
+          triedContainer.style.display = 'none';
+        }
+        
+        // Auto-advance after short delay
+        if (selectedDrags.length > 0) {
+          setTimeout(() => {
+            const nextBtn = document.createElement('button');
+            nextBtn.type = 'button';
+            nextBtn.className = 'step-btn';
+            nextBtn.textContent = 'next →';
+            nextBtn.onclick = nextStep;
+            const existing = document.querySelector('[data-step="5"] .step-btn');
+            if (!existing) {
+              document.querySelector('[data-step="5"]').appendChild(nextBtn);
+            }
+          }, 500);
+        }
+      });
+    });
+
+    // Stage chips (single-select)
+    document.querySelectorAll('[data-step="6"] .chip').forEach(chip => {
+      chip.addEventListener('click', function() {
+        // Clear previous selections
+        document.querySelectorAll('[data-step="6"] .chip').forEach(c => c.classList.remove('selected'));
+        this.classList.add('selected');
+        
+        const value = this.dataset.value;
+        document.getElementById('stage').value = value;
+        formData.stage = value;
+        saveFormData();
+        
+        // Conditional logic
+        const conditionalContainer = document.getElementById('conditionalContainer');
+        conditionalContainer.innerHTML = '';
+        
+        if (value === 'launched' || value === 'revenue' || value === 'scaling') {
+          conditionalContainer.innerHTML = `
+            <div class="step-prompt" style="font-size: 16px;">how do you get users right now?</div>
+            <input type="text" id="acquisition" name="acquisition" placeholder="organic / paid / outbound / partnerships / other">
+          `;
+          conditionalContainer.style.display = 'block';
+        } else if (value === 'idea' || value === 'prototype') {
+          conditionalContainer.innerHTML = `
+            <div class="step-prompt" style="font-size: 16px;">what's the one thing stopping launch?</div>
+            <input type="text" id="blocker" name="blocker" placeholder="the main blocker...">
+          `;
+          conditionalContainer.style.display = 'block';
+        } else {
+          conditionalContainer.style.display = 'none';
+        }
+        
+        // Add next button
+        setTimeout(() => {
+          const nextBtn = document.createElement('button');
+          nextBtn.type = 'button';
+          nextBtn.className = 'step-btn';
+          nextBtn.textContent = 'next →';
+          nextBtn.onclick = nextStep;
+          const existing = document.querySelector('[data-step="6"] .step-btn');
+          if (!existing) {
+            document.querySelector('[data-step="6"]').appendChild(nextBtn);
+          }
+        }, 500);
+      });
+    });
+
+    // Final note field
+    const finalNoteInput = document.getElementById('finalNote');
+    finalNoteInput.addEventListener('input', function() {
+      const submitBtn = document.getElementById('submitBtn');
+      if (this.value.trim()) {
+        submitBtn.textContent = 'let\'s jam ⚡️';
+      } else {
+        submitBtn.textContent = 'ship it 🚀';
+      }
+      formData.finalNote = this.value;
+      saveFormData();
+    });
+
+    // Form submission
+    const form = document.getElementById('founderForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Collect all form data
+      const data = new FormData(form);
+      const payload = Object.fromEntries(data);
+      payload.drag = selectedDrags.join(',');
+      
+      // Show redirect message
+      document.getElementById('chatCard').innerHTML = document.getElementById('successScreen').innerHTML;
+      document.getElementById('successScreen').style.display = 'block';
+      
+      // Send to API
+      try {
+        await fetch('https://hethar-app-website.vercel.app/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      
+      // Clear session storage
+      sessionStorage.removeItem('founderFormData');
+      
+      // Redirect to Cal.com after 1.5s
+      setTimeout(() => {
+        const name = encodeURIComponent(payload.name || '');
+        const email = encodeURIComponent(payload.email || '');
+        window.location.href = `https://cal.com/methodlab?name=${name}&email=${email}`;
+      }, 1500);
+    });
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -610,100 +881,8 @@
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      });
-    });
-
-    // Character counter for building field
-    const buildingField = document.getElementById('building');
-    const charCount = document.getElementById('charCount');
-    
-    buildingField.addEventListener('input', function() {
-      charCount.textContent = this.value.length;
-    });
-
-    // Conditional logic for acquisition field
-    const stageField = document.getElementById('stage');
-    const acquisitionField = document.getElementById('acquisitionField');
-    
-    stageField.addEventListener('change', function() {
-      const stage = this.value;
-      if (stage === 'launched' || stage === 'revenue') {
-        acquisitionField.style.display = 'block';
-        acquisitionField.style.opacity = '0';
-        acquisitionField.style.animation = 'fadeInUp 0.6s ease-out forwards';
-      } else {
-        acquisitionField.style.display = 'none';
-      }
-    });
-
-    // Form submission
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData);
-      
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'sending...';
-      submitBtn.disabled = true;
-      
-      try {
-        const response = await fetch('https://hethar-app-website.vercel.app/api/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (!response.ok) {
-          throw new Error('Submission failed');
-        }
-
-        // Show success message
-        form.innerHTML = `
-          <div class="success-message">
-            <h3>got it.</h3>
-            <p>redirecting you to book a call...</p>
-          </div>
-        `;
-
-        // Redirect to Cal.com after a brief moment
-        setTimeout(() => {
-          window.location.href = 'https://cal.com/methodlab';
-        }, 1200);
-        
-      } catch (error) {
-        console.error('Error:', error);
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-        
-        // Show error inline instead of alert
-        const errorMsg = document.createElement('p');
-        errorMsg.style.color = '#c44';
-        errorMsg.style.fontSize = '14px';
-        errorMsg.style.marginTop = '12px';
-        errorMsg.textContent = 'something went wrong. mind trying once more?';
-        submitBtn.parentNode.appendChild(errorMsg);
-        
-        setTimeout(() => errorMsg.remove(), 4000);
-      }
-    });
-
-    // Add subtle focus ring animation
-    document.querySelectorAll('input, textarea, select').forEach(field => {
-      field.addEventListener('focus', function() {
-        this.style.transform = 'scale(1.002)';
-      });
-      
-      field.addEventListener('blur', function() {
-        this.style.transform = 'scale(1)';
       });
     });
   </script>

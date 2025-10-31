@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { leadSchema } from '@/lib/schema';
 import { createLeadInCRM } from '@/lib/crm';
+import { sendToGoogleSheets } from '@/lib/googlesheets';
 import { sendInternalNotification, sendLeadConfirmation, sendSlackNotification } from '@/lib/notifications';
 
 // CORS headers for cross-origin requests
@@ -21,10 +22,18 @@ export async function POST(request: NextRequest) {
     // Validate
     const validatedData = leadSchema.parse(body);
 
-    // Create in CRM
-    await createLeadInCRM(validatedData);
+    // Save to storage (Google Sheets or Airtable)
+    const useGoogleSheets = !!process.env.GOOGLE_SHEETS_WEBHOOK_URL;
+    
+    if (useGoogleSheets) {
+      console.log('Using Google Sheets as CRM');
+      await sendToGoogleSheets(validatedData);
+    } else {
+      console.log('Using Airtable as CRM');
+      await createLeadInCRM(validatedData);
+    }
 
-    // Send notifications
+    // Send notifications (optional)
     await Promise.all([
       sendInternalNotification(validatedData),
       sendLeadConfirmation(validatedData),

@@ -10,12 +10,17 @@ export const leadSchema = z.object({
   }),
   stage: z.enum([
     'idea',
+    'between-idea-building',
     'building',
+    'between-building-prelaunch',
     'pre-launch',
+    'between-prelaunch-launched',
     'just-launched',
+    'between-launched-earlyrev',
     'early-rev',
-    'between-early-scaling',
+    'between-earlyrev-scaling',
     'scaling',
+    'between-scaling-postscaling',
     'post-scaling'
   ], {
     required_error: 'Please select your stage',

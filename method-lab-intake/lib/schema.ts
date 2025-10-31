@@ -8,7 +8,16 @@ export const leadSchema = z.object({
   drag: z.enum(['traffic', 'funnel', 'users', 'story', 'all'], {
     required_error: 'Please select the biggest drag',
   }),
-  stage: z.enum(['pre-launch', 'early-rev', 'scaling'], {
+  stage: z.enum([
+    'idea',
+    'building',
+    'pre-launch',
+    'just-launched',
+    'early-rev',
+    'between-early-scaling',
+    'scaling',
+    'post-scaling'
+  ], {
     required_error: 'Please select your stage',
   }),
 });

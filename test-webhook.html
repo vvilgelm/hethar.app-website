@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Sheets Webhook Tester</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #f5f5f5;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+
+    .test-section {
+      margin-bottom: 32px;
+      padding: 24px;
+      background: #f9f9f9;
+      border-radius: 8px;
+      border-left: 4px solid #4CAF50;
+    }
+
+    .test-section h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      color: #1a1a1a;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px 24px;
+      background: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    button:hover {
+      background: #333;
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .result.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+
+    .result.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+
+    .result.loading {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+      display: block;
+    }
+
+    .info-box {
+      background: #fff3cd;
+      border: 1px solid #ffc107;
+      padding: 16px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      color: #856404;
+    }
+
+    .webhook-url {
+      background: #f0f0f0;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      word-break: break-all;
+      margin: 12px 0;
+      color: #333;
+    }
+
+    .step {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .step::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    .logs {
+      margin-top: 16px;
+      padding: 12px;
+      background: #1a1a1a;
+      color: #00ff00;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .logs.show {
+      display: block;
+    }
+
+    .log-entry {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🧪 Google Sheets Webhook Tester</h1>
+    <p class="subtitle">Test your METHOD LAB form → Google Sheets integration</p>
+
+    <div class="info-box">
+      <strong>📋 Instructions:</strong>
+      <div class="step">Click "Test Webhook" below</div>
+      <div class="step">Check your Google Sheet for a new row</div>
+      <div class="step">If it works → Your webhook is good!</div>
+    </div>
+
+    <!-- Test 1: Direct Webhook Test -->
+    <div class="test-section">
+      <h2>Test 1: Google Sheets Webhook</h2>
+      <p style="margin-bottom: 16px; color: #666; font-size: 14px;">
+        This sends test data directly to your Google Sheet.
+      </p>
+      <button id="testWebhook">🚀 Test Webhook</button>
+      <div id="webhookResult" class="result"></div>
+      <div id="webhookLogs" class="logs"></div>
+    </div>
+
+    <!-- Test 2: Full API Test -->
+    <div class="test-section" style="border-left-color: #2196F3;">
+      <h2>Test 2: Full Vercel API</h2>
+      <p style="margin-bottom: 16px; color: #666; font-size: 14px;">
+        This tests the complete flow through your Vercel backend.
+      </p>
+      <button id="testAPI">🔗 Test Full API</button>
+      <div id="apiResult" class="result"></div>
+      <div id="apiLogs" class="logs"></div>
+    </div>
+
+    <!-- Webhook URL Display -->
+    <div style="margin-top: 32px; padding-top: 32px; border-top: 1px solid #e0e0e0;">
+      <h3 style="font-size: 16px; margin-bottom: 12px;">Your Webhook URL:</h3>
+      <div class="webhook-url">
+        https://script.google.com/macros/s/AKfycbzf40G5ptxGuZrkiAysm64jQuu-M3103V57t-92LyJlCx4JhBURa0g7HX6A1atNdUdpig/exec
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzf40G5ptxGuZrkiAysm64jQuu-M3103V57t-92LyJlCx4JhBURa0g7HX6A1atNdUdpig/exec';
+    const API_URL = 'https://hethar-app-website.vercel.app/api/lead';
+
+    function log(containerId, message) {
+      const logsEl = document.getElementById(containerId);
+      logsEl.classList.add('show');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+      logsEl.appendChild(entry);
+      logsEl.scrollTop = logsEl.scrollHeight;
+    }
+
+    function showResult(elementId, type, message) {
+      const resultEl = document.getElementById(elementId);
+      resultEl.className = `result ${type}`;
+      resultEl.textContent = message;
+    }
+
+    // Test 1: Direct Webhook
+    document.getElementById('testWebhook').addEventListener('click', async function() {
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = '⏳ Testing...';
+      
+      const logsId = 'webhookLogs';
+      document.getElementById(logsId).innerHTML = '';
+      
+      showResult('webhookResult', 'loading', '⏳ Sending test data to Google Sheets...');
+      log(logsId, 'Starting webhook test...');
+
+      const testData = {
+        name: 'Test User ' + Date.now(),
+        email: 'test@example.com',
+        startup: 'https://test.com',
+        building: 'Testing webhook integration',
+        drag: 'traffic-flat,users-ghost',
+        tried: 'Tried paid ads',
+        stage: 'launched',
+        acquisition: 'organic / content',
+        blocker: '',
+        finalNote: 'Direct webhook test at ' + new Date().toLocaleString()
+      };
+
+      log(logsId, 'Sending to: ' + WEBHOOK_URL);
+      log(logsId, 'Data: ' + JSON.stringify(testData, null, 2));
+
+      try {
+        const response = await fetch(WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(testData)
+        });
+
+        log(logsId, 'Response status: ' + response.status);
+        const result = await response.text();
+        log(logsId, 'Response body: ' + result);
+
+        if (response.ok) {
+          showResult('webhookResult', 'success', 
+            '✅ SUCCESS! Check your Google Sheet for a new row with test data.');
+          log(logsId, '✅ Test completed successfully!');
+        } else {
+          showResult('webhookResult', 'error', 
+            '❌ Webhook returned error: ' + response.status + ' - Check logs below');
+          log(logsId, '❌ Error: ' + response.statusText);
+        }
+      } catch (error) {
+        showResult('webhookResult', 'error', 
+          '❌ Failed to connect: ' + error.message);
+        log(logsId, '❌ Error: ' + error.message);
+      }
+
+      btn.disabled = false;
+      btn.textContent = '🚀 Test Webhook';
+    });
+
+    // Test 2: Full API
+    document.getElementById('testAPI').addEventListener('click', async function() {
+      const btn = this;
+      btn.disabled = true;
+      btn.textContent = '⏳ Testing...';
+      
+      const logsId = 'apiLogs';
+      document.getElementById(logsId).innerHTML = '';
+      
+      showResult('apiResult', 'loading', '⏳ Testing full Vercel API...');
+      log(logsId, 'Starting API test...');
+
+      const testData = {
+        name: 'API Test ' + Date.now(),
+        email: 'apitest@example.com',
+        startup: 'https://apitest.com',
+        building: 'Testing full API integration',
+        drag: 'dont-know-test',
+        tried: '',
+        stage: 'revenue',
+        acquisition: 'paid / ads',
+        blocker: '',
+        finalNote: 'Full API test at ' + new Date().toLocaleString()
+      };
+
+      log(logsId, 'Sending to: ' + API_URL);
+      log(logsId, 'Data: ' + JSON.stringify(testData, null, 2));
+
+      try {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(testData)
+        });
+
+        log(logsId, 'Response status: ' + response.status);
+        const result = await response.json();
+        log(logsId, 'Response: ' + JSON.stringify(result, null, 2));
+
+        if (response.ok && result.ok) {
+          showResult('apiResult', 'success', 
+            '✅ SUCCESS! Full API working. Check Google Sheet for new row.');
+          log(logsId, '✅ API test completed successfully!');
+        } else {
+          showResult('apiResult', 'error', 
+            '❌ API error: ' + (result.error || 'Unknown error'));
+          log(logsId, '❌ Error: ' + (result.error || 'Unknown error'));
+        }
+      } catch (error) {
+        showResult('apiResult', 'error', 
+          '❌ Failed to connect: ' + error.message);
+        log(logsId, '❌ Error: ' + error.message);
+      }
+
+      btn.disabled = false;
+      btn.textContent = '🔗 Test Full API';
+    });
+  </script>
+
+</body>
+</html>
+

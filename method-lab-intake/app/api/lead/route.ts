@@ -22,23 +22,15 @@ export async function POST(request: NextRequest) {
     // Validate
     const validatedData = leadSchema.parse(body);
 
-    // Save to storage (Google Sheets or Airtable)
-    const useGoogleSheets = !!process.env.GOOGLE_SHEETS_WEBHOOK_URL;
-    
-    if (useGoogleSheets) {
-      console.log('Using Google Sheets as CRM');
-      await sendToGoogleSheets(validatedData);
-    } else {
-      console.log('Using Airtable as CRM');
-      await createLeadInCRM(validatedData);
-    }
+    console.log('Form submission received:', {
+      name: validatedData.name,
+      email: validatedData.email,
+      stage: validatedData.stage
+    });
 
-    // Send notifications (optional)
-    await Promise.all([
-      sendInternalNotification(validatedData),
-      sendLeadConfirmation(validatedData),
-      sendSlackNotification(validatedData),
-    ]);
+    // Just log the data and return success
+    // No CRM integration - keep it simple
+    console.log('Full data:', JSON.stringify(validatedData, null, 2));
 
     return NextResponse.json({ ok: true }, { status: 200, headers: corsHeaders });
   } catch (error) {

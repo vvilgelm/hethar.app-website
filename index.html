@@ -450,13 +450,52 @@
 
     /* Footer */
     footer {
-      padding: 80px 0;
+      padding: 60px 0 40px;
       border-top: 1px solid var(--border-light);
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-heading {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .contact-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 15px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      font-weight: 500;
+    }
+
+    .contact-links a:hover {
       background: var(--bg-elevated);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
     }
 
     footer p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--text-tertiary);
       text-align: center;
     }
@@ -653,7 +692,16 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>method — 2025</p>
+      <div class="footer-content">
+        <h3 class="footer-heading">contact founder</h3>
+        <div class="contact-links">
+          <a href="https://wa.me/your-number" target="_blank" rel="noopener noreferrer">whatsapp</a>
+          <a href="mailto:your-email@domain.com">mail</a>
+          <a href="https://x.com/your-handle" target="_blank" rel="noopener noreferrer">x</a>
+          <a href="https://t.me/your-handle" target="_blank" rel="noopener noreferrer">telegram</a>
+        </div>
+        <p>method — 2025</p>
+      </div>
     </div>
   </footer>
 

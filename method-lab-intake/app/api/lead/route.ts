@@ -28,9 +28,29 @@ export async function POST(request: NextRequest) {
       stage: validatedData.stage
     });
 
-    // Just log the data and return success
-    // No CRM integration - keep it simple
-    console.log('Full data:', JSON.stringify(validatedData, null, 2));
+    // Send to Google Sheets (PRIMARY DATA STORAGE)
+    try {
+      await sendToGoogleSheets(validatedData);
+      console.log('✅ Saved to Google Sheets');
+    } catch (error) {
+      console.error('❌ Google Sheets failed:', error);
+      // Continue even if Google Sheets fails
+    }
+
+    // Send notifications
+    try {
+      await sendInternalNotification(validatedData);
+      console.log('✅ Email notification sent');
+    } catch (error) {
+      console.error('❌ Email notification failed:', error);
+    }
+
+    try {
+      await sendSlackNotification(validatedData);
+      console.log('✅ Slack notification sent');
+    } catch (error) {
+      console.error('❌ Slack notification failed:', error);
+    }
 
     return NextResponse.json({ ok: true }, { status: 200, headers: corsHeaders });
   } catch (error) {

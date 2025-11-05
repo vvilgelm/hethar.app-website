@@ -6,10 +6,10 @@ This is the **complete list** of everything you need to provide, configure, and 
 
 ---
 
-## ✅ MAIN WEBSITE (Currently Live at hethar.app)
+## ✅ MAIN WEBSITE (Currently Live at usemethod.pro)
 
 ### What's Already Working:
-- [x] Domain: `hethar.app` is live
+- [x] Domain: `usemethod.pro` is live
 - [x] Design & interactions
 - [x] All animations
 - [x] Basic contact form (frontend only)
@@ -60,7 +60,7 @@ This is the advanced form system with CRM integration. You need to deploy it and
 **How**:
 1. Sign up at https://vercel.com (free)
 2. Connect your GitHub account
-3. Import repo: `vvilgelm/hethar.app-website`
+3. Import repo: `vvilgelm/usemethod.pro-website`
 4. Set root directory to: `method-lab-intake`
 5. Deploy
 
@@ -134,7 +134,7 @@ AIRTABLE_TABLE_NAME=Leads
 
 **Step 2: Verify Your Domain**
 - Go to Domains → Add Domain
-- Enter: `hethar.app` (or use a subdomain like `mail.hethar.app`)
+- Enter: `usemethod.pro` (or use a subdomain like `mail.usemethod.pro`)
 - Add DNS records they provide:
   - TXT record for verification
   - MX records for email
@@ -148,13 +148,13 @@ AIRTABLE_TABLE_NAME=Leads
 - Copy the key (starts with `re_...`)
 
 **Step 4: Set Email Addresses**
-- Decide on FROM email: `no-reply@hethar.app` or `hello@hethar.app`
+- Decide on FROM email: `no-reply@usemethod.pro` or `hello@usemethod.pro`
 - Decide where YOU want to receive notifications: `your@email.com`
 
 **What to Provide**:
 ```
 RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXX
-FROM_EMAIL=no-reply@hethar.app
+FROM_EMAIL=no-reply@usemethod.pro
 NOTIFY_EMAILS=your@email.com,partner@email.com
 ```
 
@@ -245,7 +245,7 @@ AIRTABLE_TABLE_NAME=Leads
 
 # Email (REQUIRED)
 RESEND_API_KEY=re_XXXXXXXXXXXXXXXXXXXXXXXX
-FROM_EMAIL=no-reply@hethar.app
+FROM_EMAIL=no-reply@usemethod.pro
 NOTIFY_EMAILS=your@email.com
 
 # Calendar (REQUIRED)
@@ -279,9 +279,9 @@ Edit `/public/index.html`, find the "enter the lab" button:
 ```
 
 **Option B: Custom Subdomain** (Recommended)
-1. In Vercel: Settings → Domains → Add `apply.hethar.app`
+1. In Vercel: Settings → Domains → Add `apply.usemethod.pro`
 2. Add CNAME in your DNS: `apply` → `cname.vercel-dns.com`
-3. Update button to: `href="https://apply.hethar.app"`
+3. Update button to: `href="https://apply.usemethod.pro"`
 
 **Status**: ⚠️ NEEDED AFTER FORM DEPLOYMENT
 
@@ -297,7 +297,7 @@ Edit `/public/index.html`, find the "enter the lab" button:
 | **Cal.com** | ✅ Basic features | $12/mo (Pro) | Free tier works |
 | **Slack** | ✅ Always free | - | Optional |
 | **GitHub Pages** | ✅ Always free | - | Already using |
-| **Domain (hethar.app)** | - | ~$12/year | Already have |
+| **Domain (usemethod.pro)** | - | ~$12/year | Already have |
 
 **Total Monthly Cost (Free Tier)**: $0  
 **Total Monthly Cost (All Paid)**: ~$62/mo  
@@ -309,7 +309,7 @@ Edit `/public/index.html`, find the "enter the lab" button:
 
 ### 8. **DNS Records for Resend**
 
-You'll need to add these DNS records to `hethar.app`:
+You'll need to add these DNS records to `usemethod.pro`:
 
 **TXT Record** (Verification):
 ```
@@ -352,7 +352,7 @@ Type: TXT
 After everything is set up, test each feature:
 
 ### Main Website
-- [ ] Visit `https://hethar.app`
+- [ ] Visit `https://usemethod.pro`
 - [ ] Custom cursor follows mouse (desktop)
 - [ ] Scroll animations trigger
 - [ ] SVG diagram draws itself
@@ -362,7 +362,7 @@ After everything is set up, test each feature:
 - [ ] Footer hover effects work
 
 ### Form Submission Flow
-- [ ] Visit form app (Vercel URL or `apply.hethar.app`)
+- [ ] Visit form app (Vercel URL or `apply.usemethod.pro`)
 - [ ] Fill out all questions
 - [ ] Questions reveal progressively as you type
 - [ ] Typing indicators appear
@@ -396,7 +396,7 @@ After everything is set up, test each feature:
 
 ### Step 2: Deploy Form to Vercel
 1. Go to https://vercel.com/new
-2. Import GitHub repo: `vvilgelm/hethar.app-website`
+2. Import GitHub repo: `vvilgelm/usemethod.pro-website`
 3. **Set Root Directory**: `method-lab-intake`
 4. Add all environment variables (see summary above)
 5. Click "Deploy"
@@ -417,20 +417,20 @@ After everything is set up, test each feature:
 3. Add your VSL video embed
 4. Commit and push:
 ```bash
-cd /Users/vilgelm/hethar.app-website
+cd /Users/vilgelm/usemethod.pro-website
 git add public/index.html
 git commit -m "update: add form link and VSL video"
 git push origin main
 ```
 
 ### Step 5: Deploy to GitHub Pages
-Wait ~30 seconds for auto-deployment, then visit `hethar.app`
+Wait ~30 seconds for auto-deployment, then visit `usemethod.pro`
 
 ### Step 6: Optional - Custom Domain for Form
 1. In Vercel: Project → Settings → Domains
-2. Add `apply.hethar.app`
+2. Add `apply.usemethod.pro`
 3. Add CNAME in DNS: `apply` → `cname.vercel-dns.com`
-4. Update main site button to `https://apply.hethar.app`
+4. Update main site button to `https://apply.usemethod.pro`
 
 ---
 
@@ -471,7 +471,7 @@ Print this and check off as you go:
 - [ ] Test end-to-end flow
 
 **Testing:**
-- [ ] Main site loads at `hethar.app`
+- [ ] Main site loads at `usemethod.pro`
 - [ ] All animations work
 - [ ] Form link works
 - [ ] Form submission works
@@ -517,7 +517,7 @@ If you get stuck on any step:
 ## 🎯 FINAL CHECKLIST
 
 Everything working when:
-- ✅ Main site live at `hethar.app`
+- ✅ Main site live at `usemethod.pro`
 - ✅ Custom cursor and animations working
 - ✅ VSL video playing
 - ✅ Form accessible via link/subdomain

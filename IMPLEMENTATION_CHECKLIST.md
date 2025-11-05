@@ -382,9 +382,9 @@
 ## 🚀 Deployment
 
 ### Main Site (GitHub Pages)
-- [x] Repository: vvilgelm/hethar.app-website
+- [x] Repository: vvilgelm/usemethod.pro-website
 - [x] Branch: gh-pages (auto-deploys from main)
-- [x] Domain: hethar.app
+- [x] Domain: usemethod.pro
 - [x] CNAME file configured
 - [x] Single-file HTML (no build process)
 - [x] ~30 second deployment time
@@ -478,7 +478,7 @@ Every single feature from your specification has been implemented with attention
 - Complete documentation
 - Deployed and live
 
-**Main Site:** https://hethar.app (deployed)
+**Main Site:** https://usemethod.pro (deployed)
 **Form App:** Ready for Vercel deployment
 
 The site follows the exact aesthetic of instinct.so + methods.app + skale.solutions while maintaining a calmer, more "unsexy" approach as requested.

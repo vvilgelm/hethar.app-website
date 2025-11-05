@@ -3,7 +3,7 @@
 ## 📦 What You Have
 
 ### 1. Main Landing Page (GitHub Pages)
-**Live at:** `https://hethar.app`
+**Live at:** `https://usemethod.pro`
 - Location: `/public/index.html`
 - Deployed via: `gh-pages` branch
 - Automatic deployment when you push to `main` branch
@@ -48,7 +48,7 @@ Follow the prompts:
 #### Option B: Via Vercel Dashboard
 
 1. Go to https://vercel.com/new
-2. Import your GitHub repo: `vvilgelm/hethar.app-website`
+2. Import your GitHub repo: `vvilgelm/usemethod.pro-website`
 3. **Important:** Set Root Directory to `method-lab-intake`
 4. Add environment variables (see below)
 5. Deploy
@@ -134,11 +134,11 @@ Replace the apply section in `/public/index.html` with an iframe:
 
 ### Option 3: Custom Domain
 
-Set up a subdomain like `apply.hethar.app`:
+Set up a subdomain like `apply.usemethod.pro`:
 
-1. In Vercel: Project Settings → Domains → Add `apply.hethar.app`
+1. In Vercel: Project Settings → Domains → Add `apply.usemethod.pro`
 2. Add CNAME record in your DNS: `apply` → `cname.vercel-dns.com`
-3. Update button to point to `https://apply.hethar.app`
+3. Update button to point to `https://apply.usemethod.pro`
 
 ---
 
@@ -185,7 +185,7 @@ Or push to GitHub and Vercel will auto-deploy if connected.
 - **Slack:** Check your channel
 
 ### Check Deployments
-- **Main Site:** https://github.com/vvilgelm/hethar.app-website/actions
+- **Main Site:** https://github.com/vvilgelm/usemethod.pro-website/actions
 - **Form App:** https://vercel.com/dashboard (deployments tab)
 
 ---
@@ -242,7 +242,7 @@ Or use Loom, Vimeo, or any video platform.
 
 ## ✅ Checklist
 
-- [ ] Main site live at `hethar.app`
+- [ ] Main site live at `usemethod.pro`
 - [ ] Form app deployed to Vercel
 - [ ] Airtable configured with Leads table
 - [ ] Resend API key added and domain verified
@@ -263,7 +263,7 @@ Or use Loom, Vimeo, or any video platform.
 4. **Link the form** to your main site
 5. **Test everything** with a real submission
 6. **Add your VSL video** to the main site
-7. **Share** `hethar.app` with the world!
+7. **Share** `usemethod.pro` with the world!
 
 ---
 

@@ -999,7 +999,9 @@
       `;
       
       // Send to API (don't wait for response)
-      fetch('/api/lead', {
+      // TODO: After deploying to Vercel, update this URL to: https://api.usemethod.pro/api/lead
+      const apiUrl = 'https://api.usemethod.pro/api/lead'; // Change to your Vercel URL
+      fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

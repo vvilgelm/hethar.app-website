@@ -3,24 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hethar — turn your product into growing one</title>
+  <title>hethar — founders, teams: you don't need more tools</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fafaf8;
-      --bg-elevated: #ffffff;
+      --bg-dark: #18181b;
       --text: #0a0a0a;
-      --text-secondary: #52525b;
-      --text-tertiary: #a1a1aa;
-      --accent: #18181b;
-      --accent-soft: #27272a;
+      --text-light: #52525b;
+      --text-lighter: #71717a;
       --border: #e4e4e7;
-      --border-light: #f4f4f5;
-      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      --white: #ffffff;
     }
 
     * {
@@ -34,100 +29,86 @@
     }
 
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-weight: 400;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background: var(--bg);
       color: var(--text);
       font-size: 16px;
-      line-height: 1.7;
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-    }
-
-    ::selection {
-      background: rgba(24, 24, 27, 0.1);
-      color: var(--text);
     }
 
     .container {
-      max-width: 720px;
+      max-width: 680px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 24px;
     }
 
-    /* Header */
-    header {
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border-light);
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
+    /* Top Banner */
+    .step-banner {
+      background: var(--bg-dark);
+      color: var(--white);
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.01em;
       position: sticky;
       top: 0;
       z-index: 100;
-      opacity: 0;
-      animation: fadeIn 0.6s ease-out 0.1s forwards;
     }
 
+    /* Logo */
     .logo {
-      font-size: 16px;
+      padding: 40px 0 60px;
+      font-size: 20px;
       font-weight: 600;
-      color: var(--text);
       letter-spacing: -0.02em;
     }
 
-    /* Hero */
-    .hero {
-      padding: 120px 0 80px;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .hero h1 {
+    /* Headlines */
+    h1 {
       font-size: 48px;
-      font-weight: 500;
-      line-height: 1.2;
-      margin-bottom: 32px;
-      color: var(--text);
+      font-weight: 600;
+      line-height: 1.1;
       letter-spacing: -0.03em;
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out 0.2s forwards;
+      margin-bottom: 32px;
     }
 
-    .hero p {
+    h2 {
+      font-size: 32px;
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .subheadline {
+      font-size: 20px;
+      line-height: 1.5;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+
+    .supporting-line {
       font-size: 18px;
-      line-height: 1.7;
-      margin-bottom: 16px;
-      color: var(--text-secondary);
-      opacity: 0;
-      animation: fadeInUp 0.8s ease-out forwards;
+      line-height: 1.6;
+      color: var(--text-lighter);
+      margin-bottom: 48px;
+      font-style: italic;
     }
 
-    .hero p:nth-of-type(1) { animation-delay: 0.3s; }
-    .hero p:nth-of-type(2) { animation-delay: 0.4s; }
-    .hero p:nth-of-type(3) { animation-delay: 0.5s; margin-bottom: 0; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(12px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    /* Video */
+    /* Video Section */
     .video-section {
-      padding: 100px 0;
-      opacity: 0;
-      animation: fadeIn 1s ease-out 0.6s forwards;
+      margin: 60px 0 80px;
+    }
+
+    .video-label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      color: var(--text-light);
     }
 
     .video-wrapper {
@@ -135,18 +116,11 @@
       padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
-      max-width: 100%;
-      margin: 0 auto;
       border-radius: 12px;
       background: #000;
-      box-shadow: var(--shadow-lg), 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.12);
       border: 1px solid var(--border);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .video-wrapper:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 30px 40px -10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 16px;
     }
 
     .video-wrapper iframe {
@@ -158,136 +132,56 @@
       border: none;
     }
 
-    /* Form Section - Conversational */
-    .form-section {
-      padding: 100px 0 140px;
-      min-height: 70vh;
-      background: linear-gradient(180deg, var(--bg) 0%, rgba(255,255,255,0.4) 100%);
-    }
-
-    .form-header {
+    .video-caption {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-lighter);
       text-align: center;
-      margin-bottom: 72px;
-    }
-
-    .form-header h2 {
-      font-size: 40px;
-      font-weight: 500;
-      margin-bottom: 20px;
-      letter-spacing: -0.03em;
-      color: var(--text);
-    }
-
-    .form-header p {
-      font-size: 17px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    /* Chat Card */
-    .chat-card {
       max-width: 580px;
       margin: 0 auto;
-      background: var(--bg-elevated);
-      border-radius: 16px;
-      padding: 56px;
-      box-shadow: var(--shadow-lg), 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Step 2 Section */
+    .step-2-section {
+      background: var(--white);
       border: 1px solid var(--border);
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 16px;
+      padding: 56px 48px;
+      margin: 80px 0;
     }
 
-    .chat-card.slide-up {
-      animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    /* Form Elements */
+    .form-group {
+      margin-bottom: 28px;
     }
 
-    @keyframes slideUp {
-      from { transform: translateY(0); }
-      to { transform: translateY(-12px); }
-    }
-
-    /* Form Steps */
-    .form-step {
-      display: none;
-      opacity: 0;
-      animation: fadeInStep 0.4s ease-out forwards;
-    }
-
-    .form-step.active {
+    label {
       display: block;
-    }
-
-    @keyframes fadeInStep {
-      from {
-        opacity: 0;
-        transform: translateY(8px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .step-prompt {
-      font-size: 18px;
-      font-weight: 400;
-      margin-bottom: 24px;
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 10px;
       color: var(--text);
-      line-height: 1.6;
     }
 
-    .step-subtext {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-bottom: 32px;
-      line-height: 1.7;
-    }
-
-    .micro-note {
-      font-size: 13px;
-      color: var(--text-lighter);
-      margin-top: 12px;
-      font-style: italic;
-      opacity: 0;
-      animation: fadeIn 0.3s ease-out 0.3s forwards;
-    }
-
-    .greeting {
-      font-size: 14px;
-      color: var(--accent);
-      margin-top: 12px;
-      opacity: 0;
-      animation: fadeIn 0.3s ease-out 0.3s forwards;
-    }
-
-    /* Input Fields */
     input[type="text"],
     input[type="email"],
     textarea {
       width: 100%;
-      padding: 16px 18px;
+      padding: 14px 16px;
       border: 1.5px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
+      border-radius: 10px;
       font-family: inherit;
       font-size: 16px;
-      line-height: 1.5;
-      border-radius: 10px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: var(--shadow-sm);
+      background: var(--bg);
+      transition: all 0.2s;
     }
 
     input:focus,
     textarea:focus {
       outline: none;
-      border-color: var(--accent);
-      background: var(--bg-elevated);
-      box-shadow: 0 0 0 4px rgba(24, 24, 27, 0.05), var(--shadow-sm);
-      transform: translateY(-1px);
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: var(--text-tertiary);
+      border-color: var(--bg-dark);
+      background: var(--white);
+      box-shadow: 0 0 0 4px rgba(24,24,27,0.05);
     }
 
     textarea {
@@ -295,747 +189,297 @@
       min-height: 90px;
     }
 
-    /* Chips (Multi-select) */
-    .chips-container {
+    /* Chips */
+    .chips-group {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 12px;
     }
 
     .chip {
-      padding: 12px 22px;
+      padding: 10px 20px;
       border: 1.5px solid var(--border);
-      background: var(--bg-elevated);
-      color: var(--text);
+      border-radius: 10px;
+      background: var(--bg);
       font-size: 15px;
-      font-weight: 500;
-      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.2s;
       user-select: none;
-      box-shadow: var(--shadow-sm);
     }
 
     .chip:hover {
-      border-color: var(--accent-soft);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      border-color: var(--bg-dark);
+      background: var(--white);
     }
 
     .chip.selected {
-      background: var(--accent);
-      color: var(--bg-elevated);
-      border-color: var(--accent);
-      box-shadow: var(--shadow-md);
+      background: var(--bg-dark);
+      color: var(--white);
+      border-color: var(--bg-dark);
     }
 
-    /* Buttons */
-    .step-btn {
-      display: inline-block;
-      padding: 16px 36px;
-      background: var(--accent);
+    /* Button */
+    .cta-button {
+      width: 100%;
+      padding: 16px 32px;
+      background: var(--bg-dark);
+      color: var(--white);
       border: none;
-      color: var(--bg-elevated);
-      font-family: inherit;
-      font-size: 15px;
-      font-weight: 500;
       border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      margin-top: 28px;
-      box-shadow: var(--shadow-md);
-    }
-
-    .step-btn:hover {
-      background: var(--accent-soft);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .step-btn:active {
-      transform: translateY(0);
-      box-shadow: var(--shadow-sm);
-    }
-
-    .step-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Link Preview */
-    .link-preview {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 16px;
-      background: #f0f0ef;
-      border-radius: 6px;
-      font-size: 13px;
-      margin-top: 12px;
-      opacity: 0;
-      animation: fadeIn 0.3s ease-out forwards;
-    }
-
-    .link-preview img {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* Character Counter */
-    .char-counter {
-      font-size: 12px;
-      color: var(--text-lighter);
-      margin-top: 8px;
-      text-align: right;
-    }
-
-    .char-counter.warning {
-      color: #e67e22;
-    }
-
-    /* Success Screen */
-    .success-screen {
-      text-align: center;
-      padding: 48px 24px;
-    }
-
-    .success-screen h3 {
-      font-size: 24px;
-      font-weight: 400;
-      margin-bottom: 16px;
-    }
-
-    .success-screen p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      margin-bottom: 12px;
-    }
-
-    .redirect-message {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      font-family: inherit;
       font-size: 16px;
-      color: var(--text-muted);
-    }
-
-    .spinner {
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .step-prompt {
-      font-size: 20px;
       font-weight: 500;
-      margin-bottom: 24px;
-      color: var(--text);
-      line-height: 1.5;
-      letter-spacing: -0.01em;
-    }
-
-    .step-subtext {
-      font-size: 15px;
-      color: var(--text-secondary);
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-
-    /* Footer */
-    footer {
-      padding: 60px 0 40px;
-      border-top: 1px solid var(--border-light);
-    }
-
-    .footer-content {
-      text-align: center;
-    }
-
-    .footer-heading {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      margin-bottom: 20px;
       text-transform: lowercase;
-      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 32px;
     }
 
-    .contact-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-bottom: 32px;
-      flex-wrap: wrap;
+    .cta-button:hover {
+      background: #27272a;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    .contact-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-size: 15px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      transition: all 0.2s ease;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      font-weight: 500;
+    .cta-button:active {
+      transform: translateY(0);
     }
 
-    .contact-links a:hover {
-      background: var(--bg-elevated);
-      border-color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
-    footer p {
-      font-size: 13px;
-      color: var(--text-tertiary);
+    /* Footer Note */
+    .footer-note {
       text-align: center;
+      margin: 32px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-lighter);
+    }
+
+    /* Confirmation */
+    .confirmation {
+      display: none;
+      text-align: center;
+      padding: 80px 24px;
+    }
+
+    .confirmation.active {
+      display: block;
+    }
+
+    .confirmation h2 {
+      margin-bottom: 20px;
+    }
+
+    .confirmation .subtext {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-light);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 80px 0;
     }
 
     /* Responsive */
     @media (max-width: 768px) {
-      .container {
-        padding: 0 24px;
+      h1 {
+        font-size: 36px;
       }
 
-      .hero {
-        padding: 80px 0 60px;
+      h2 {
+        font-size: 28px;
       }
 
-      .hero h1 {
-        font-size: 32px;
-        margin-bottom: 24px;
+      .subheadline {
+        font-size: 18px;
       }
 
-      .hero p {
-        font-size: 16px;
-      }
-
-      .form-header h2 {
-        font-size: 32px;
-      }
-
-      .chat-card {
+      .step-2-section {
         padding: 40px 28px;
-        border-radius: 12px;
-      }
-
-      .step-btn {
-        width: 100%;
-      }
-
-      .chips-container {
-        gap: 8px;
       }
 
       .chip {
         font-size: 14px;
-        padding: 10px 18px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .hero h1 {
-        font-size: 28px;
-      }
-
-      .chat-card {
-        padding: 32px 20px;
+        padding: 9px 16px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="container">
-      <div class="logo">hethar</div>
-    </div>
-  </header>
+  <!-- Step 1 Banner -->
+  <div class="step-banner">
+    step 1 of 2 — watch this first (then we'll talk founder-to-founder)
+  </div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="container">
-      <h1>you already built something real.<br>now it needs to spread.</h1>
-      <p>we help founders turn working products into real traction — not by guessing, but by running the system until it clicks.</p>
-      <p>3 months, full stack.</p>
-      <p>watch the short video below — then grab a free audit if you're ready to move.</p>
-    </div>
-  </section>
+  <!-- Step 1: Watch Video -->
+  <section class="container">
+    <div class="logo">hethar</div>
 
-  <!-- Video -->
-  <section class="video-section">
-    <div class="container">
+    <h1>founders, teams:<br>you don't need more tools.<br>you need your ops, growth, and focus to finally move in one rhythm.</h1>
+
+    <p class="subheadline">
+      we help early-stage teams go from "everything's on fire" → to<br>
+      "the noise is gone — it's just pure growth now."<br><br>
+      clean systems, sharper loops, steady growth — built around how founders actually think and work.
+    </p>
+
+    <p class="supporting-line">
+      you're not broken. your systems are.<br>
+      let's fix them before you hit that "maybe i'll just pivot again" phase.
+    </p>
+
+    <!-- Video Section -->
+    <div class="video-section">
+      <div class="video-label">🟢 step 1 of 2: watch video</div>
+      
       <div class="video-wrapper">
         <iframe 
           src="https://player.vimeo.com/video/1132148645?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" 
-          frameborder="0"
           allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
           referrerpolicy="strict-origin-when-cross-origin" 
-          title="hethar — 90-day system"
+          title="hethar — founder talk"
           allowfullscreen>
         </iframe>
       </div>
+
+      <p class="video-caption">
+        how we help founders untangle the mess, build traction loops that don't depend on chaos,<br>
+        and scale like it's intentional again.
+      </p>
     </div>
-  </section>
 
-  <!-- Form Section -->
-  <section id="form" class="form-section">
-    <div class="container">
-      <div class="form-header">
-        <h2>book a call. not a pitch. a jam.</h2>
-        <p>15 minutes, founder-to-founder. no slides. no decks.<br>we'll look at what you're building and what to do next.</p>
-      </div>
+    <div class="divider"></div>
 
-      <div class="chat-card" id="chatCard">
-        <form id="founderForm">
-          
-          <!-- Step 0: Welcome -->
-          <div class="form-step active" data-step="0">
-            <div class="step-prompt">hey 👋</div>
-            <div class="step-subtext">this isn't a form — just a tiny founder-to-founder sync.<br>takes 45 seconds tops.</div>
-            <button type="button" class="step-btn" onclick="nextStep()">let's roll →</button>
-          </div>
-
-          <!-- Step 1: Name -->
-          <div class="form-step" data-step="1">
-            <div class="step-prompt">what should we call you?</div>
-            <input type="text" id="name" name="name" required autocomplete="name">
-            <div class="greeting" id="nameGreeting"></div>
-          </div>
-
-          <!-- Step 2: Email -->
-          <div class="form-step" data-step="2">
-            <div class="step-prompt">drop your go-to inbox — whatever you actually check</div>
-            <input type="email" id="email" name="email" required autocomplete="email">
-            <div class="micro-note" id="emailNote"></div>
-          </div>
-
-          <!-- Step 3: Startup/URL -->
-          <div class="form-step" data-step="3">
-            <div class="step-prompt">got a startup or project link?<br><span class="step-subtext">(if stealth, just say what you're cooking)</span></div>
-            <input type="text" id="startup" name="startup" placeholder="https:// or your secret sauce">
-            <div class="micro-note" id="startupNote"></div>
-            <div class="link-preview" id="linkPreview" style="display: none;"></div>
-          </div>
-
-          <!-- Step 4: One-liner -->
-          <div class="form-step" data-step="4">
-            <div class="step-prompt">describe what you're building in one line — tweet length is perfect</div>
-            <textarea id="building" name="building" required maxlength="140" placeholder="AI that turns calls into client briefs automatically."></textarea>
-            <div class="char-counter" id="buildingCounter">0/140</div>
-            <div class="micro-note" id="buildingNote"></div>
-          </div>
-
-          <!-- Step 5: Biggest Drag -->
-          <div class="form-step" data-step="5">
-            <div class="step-prompt">what's currently kicking your ass the most?</div>
-            <div class="chips-container">
-              <div class="chip" data-value="traffic-flat">traffic's flat</div>
-              <div class="chip" data-value="funnel-leaks">funnel leaks everywhere</div>
-              <div class="chip" data-value="users-ghost">users ghost</div>
-              <div class="chip" data-value="story-fuzzy">story's fuzzy</div>
-              <div class="chip" data-value="dont-know-test">not sure what to test next</div>
-              <div class="chip" data-value="all">all of the above 🤝</div>
-            </div>
-            <input type="hidden" id="drag" name="drag" required>
-            <div class="micro-note" id="dragNote"></div>
-            <div id="triedContainer" style="display: none; margin-top: 24px;">
-              <div class="step-prompt" style="font-size: 16px;">what have you tried so far?</div>
-              <input type="text" id="tried" name="tried" placeholder="brief overview...">
-            </div>
-          </div>
-
-          <!-- Step 6: Stage -->
-          <div class="form-step" data-step="6">
-            <div class="step-prompt">where you're at in the chaos rn</div>
-            <div class="chips-container">
-              <div class="chip" data-value="idea">💡 idea / not live</div>
-              <div class="chip" data-value="prototype">🧱 prototype / testing</div>
-              <div class="chip" data-value="launched">🚀 launched / early users</div>
-              <div class="chip" data-value="revenue">💰 early revenue / finding fit</div>
-              <div class="chip" data-value="scaling">📈 scaling / consistent growth</div>
-            </div>
-            <input type="hidden" id="stage" name="stage" required>
-            <div id="conditionalContainer" style="display: none; margin-top: 24px;"></div>
-          </div>
-
-          <!-- Step 7: Final Note -->
-          <div class="form-step" data-step="7">
-            <div class="step-prompt">anything else you wanna drop in? or just say hi 👋</div>
-            <textarea id="finalNote" name="finalNote" placeholder="(optional)"></textarea>
-            <button type="submit" class="step-btn" id="submitBtn">ship it 🚀</button>
-          </div>
-
-        </form>
-
-        <!-- Success/Redirect Screen -->
-        <div id="successScreen" style="display: none;">
-          <div class="redirect-message">
-            <span class="spinner">🚀</span>
-            <span>sweet — locking your answers 🔒 sending you to schedule…</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
+    <!-- Step 2: Book Call -->
+    <div class="step-2-section">
+      <h2>step 2 of 2: let's talk growth — real growth.</h2>
       
-      <div class="footer-content">
-        <h3 class="footer-heading">contact founder</h3>
-        <div class="contact-links">
-          <a href="https://wa.me/79088819595" target="_blank" rel="noopener noreferrer">whatsapp</a>
-          <a href="mailto:vladvilgelm732@gmail.com">mail</a>
-          <a href="https://x.com/vladwilhelm_" target="_blank" rel="noopener noreferrer">x</a>
-          <a href="https://t.me/vladwilhelm" target="_blank" rel="noopener noreferrer">telegram</a>
+      <p class="subheadline">
+        not a sales call. just a short founder sync.<br>
+        you bring the product. we bring the clarity.
+      </p>
+
+      <form id="bookingForm">
+        <!-- Name -->
+        <div class="form-group">
+          <label>1️⃣ name</label>
+          <input type="text" name="name" required placeholder="your name">
         </div>
-        <p>hethar — 2025</p>
-      </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label>2️⃣ email</label>
+          <input type="email" name="email" required placeholder="you@example.com">
+        </div>
+
+        <!-- Startup URL -->
+        <div class="form-group">
+          <label>3️⃣ startup / product url or short note</label>
+          <input type="text" name="startup" placeholder="https:// or describe what you're building">
+        </div>
+
+        <!-- What's Blocking -->
+        <div class="form-group">
+          <label>4️⃣ what's blocking you right now?</label>
+          <div class="chips-group">
+            <div class="chip" data-value="no-users">• no users</div>
+            <div class="chip" data-value="no-system">• no system</div>
+            <div class="chip" data-value="no-signal">• no signal</div>
+            <div class="chip" data-value="all">• all of the above 😩</div>
+          </div>
+          <input type="hidden" name="blocker" id="blocker" required>
+        </div>
+
+        <!-- What Shifts Everything -->
+        <div class="form-group">
+          <label>5️⃣ if we fix one thing this month, what shifts everything else?</label>
+          <textarea name="shift" required placeholder="be specific — what's the one domino?"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="cta-button">→ book your strategy call →</button>
+      </form>
+
+      <p class="footer-note">
+        these calls are 15–20 mins. zero pressure.<br>
+        just real talk about what's stuck and what can move next.
+      </p>
     </div>
-  </footer>
+
+    <!-- Confirmation (Hidden by default) -->
+    <div class="confirmation" id="confirmation">
+      <h2>you're in. see you in the loop.</h2>
+      <p class="subtext">
+        check your inbox — i'll send a short brief before we talk.<br><br>
+        we'll trace the signal, cut the noise, and get your system moving again.
+      </p>
+    </div>
+
+  </section>
 
   <script>
-    let currentStep = 0;
-    const formData = {};
-    const selectedDrags = [];
+    // Chip selection
+    const chips = document.querySelectorAll('.chip');
+    const blockerInput = document.getElementById('blocker');
 
-    // Load saved data from sessionStorage
-    window.addEventListener('load', () => {
-      const saved = sessionStorage.getItem('founderFormData');
-      if (saved) {
-        Object.assign(formData, JSON.parse(saved));
-      }
-    });
-
-    // Save data to sessionStorage
-    function saveFormData() {
-      sessionStorage.setItem('founderFormData', JSON.stringify(formData));
-    }
-
-    // Next Step
-    function nextStep() {
-      const steps = document.querySelectorAll('.form-step');
-      steps[currentStep].classList.remove('active');
-      currentStep++;
-      steps[currentStep].classList.add('active');
-      
-      // Auto-focus first input
-      const input = steps[currentStep].querySelector('input, textarea');
-      if (input) setTimeout(() => input.focus(), 100);
-
-      // Slide up card on first advance
-      if (currentStep === 1) {
-        document.getElementById('chatCard').classList.add('slide-up');
-      }
-    }
-
-    // Name field
-    const nameInput = document.getElementById('name');
-    let nameTimeout;
-    nameInput.addEventListener('input', function() {
-      clearTimeout(nameTimeout);
-      nameTimeout = setTimeout(() => {
-        if (this.value.trim().length > 0) {
-          const firstName = this.value.trim().split(' ')[0];
-          document.getElementById('nameGreeting').textContent = `nice to meet you, ${firstName} 👋`;
-          formData.name = this.value.trim();
-          saveFormData();
-        }
-      }, 300);
-    });
-
-    nameInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && nameInput.value.trim()) {
-        e.preventDefault();
-        nextStep();
-      }
-    });
-
-    // Email field
-    const emailInput = document.getElementById('email');
-    emailInput.addEventListener('input', function() {
-      const email = this.value.toLowerCase();
-      const noteEl = document.getElementById('emailNote');
-      
-      if (email.includes('@gmail') || email.includes('@outlook') || email.includes('@yahoo')) {
-        noteEl.textContent = 'solo builder? cool.';
-        noteEl.style.display = 'block';
-      } else {
-        noteEl.style.display = 'none';
-      }
-      
-      formData.email = this.value;
-      saveFormData();
-    });
-
-    emailInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && emailInput.validity.valid) {
-        e.preventDefault();
-        nextStep();
-      }
-    });
-
-    // Startup/URL field
-    const startupInput = document.getElementById('startup');
-    startupInput.addEventListener('input', function() {
-      const value = this.value.trim();
-      const noteEl = document.getElementById('startupNote');
-      const previewEl = document.getElementById('linkPreview');
-      
-      if (!value) {
-        noteEl.style.display = 'none';
-        previewEl.style.display = 'none';
-      } else if (value.startsWith('http')) {
-        noteEl.style.display = 'none';
-        try {
-          const url = new URL(value);
-          previewEl.innerHTML = `<span>🔗</span><span>${url.hostname}</span>`;
-          previewEl.style.display = 'inline-flex';
-        } catch {}
-      } else {
-        noteEl.textContent = 'ah, stealth mode. respect.';
-        noteEl.style.display = 'block';
-        previewEl.style.display = 'none';
-      }
-      
-      formData.startup = value;
-      saveFormData();
-    });
-
-    startupInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        nextStep();
-      }
-    });
-
-    // Building field (one-liner)
-    const buildingInput = document.getElementById('building');
-    buildingInput.addEventListener('input', function() {
-      const len = this.value.length;
-      const counterEl = document.getElementById('buildingCounter');
-      const noteEl = document.getElementById('buildingNote');
-      
-      counterEl.textContent = `${len}/140`;
-      
-      if (len > 140) {
-        counterEl.classList.add('warning');
-        noteEl.textContent = 'lol that\'s a mini pitch deck 😅 keep it tighter.';
-        noteEl.style.display = 'block';
-      } else if (len > 0 && len <= 140) {
-        counterEl.classList.remove('warning');
-        noteEl.textContent = 'clean. love it.';
-        noteEl.style.display = 'block';
-      } else {
-        noteEl.style.display = 'none';
-      }
-      
-      formData.building = this.value;
-      saveFormData();
-    });
-
-    buildingInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter' && buildingInput.value.trim()) {
-        e.preventDefault();
-        nextStep();
-      }
-    });
-
-    // Drag chips (multi-select)
-    document.querySelectorAll('[data-step="5"] .chip').forEach(chip => {
+    chips.forEach(chip => {
       chip.addEventListener('click', function() {
-        const value = this.dataset.value;
-        
-        // Toggle selection
-        if (this.classList.contains('selected')) {
-          this.classList.remove('selected');
-          const idx = selectedDrags.indexOf(value);
-          if (idx > -1) selectedDrags.splice(idx, 1);
-        } else {
-          this.classList.add('selected');
-          selectedDrags.push(value);
-        }
-        
-        document.getElementById('drag').value = selectedDrags.join(',');
-        formData.drag = selectedDrags.join(',');
-        saveFormData();
-        
-        // Show micro-notes
-        const noteEl = document.getElementById('dragNote');
-        if (selectedDrags.includes('story-fuzzy')) {
-          noteEl.textContent = 'messaging\'s a pain, huh?';
-          noteEl.style.display = 'block';
-        } else {
-          noteEl.style.display = 'none';
-        }
-        
-        // Show "what tried" field
-        const triedContainer = document.getElementById('triedContainer');
-        if (selectedDrags.includes('traffic-flat') || selectedDrags.includes('users-ghost')) {
-          triedContainer.style.display = 'block';
-        } else {
-          triedContainer.style.display = 'none';
-        }
-        
-        // Auto-advance after short delay
-        if (selectedDrags.length > 0) {
-          setTimeout(() => {
-            const nextBtn = document.createElement('button');
-            nextBtn.type = 'button';
-            nextBtn.className = 'step-btn';
-            nextBtn.textContent = 'next →';
-            nextBtn.onclick = nextStep;
-            const existing = document.querySelector('[data-step="5"] .step-btn');
-            if (!existing) {
-              document.querySelector('[data-step="5"]').appendChild(nextBtn);
-            }
-          }, 500);
-        }
-      });
-    });
-
-    // Stage chips (single-select)
-    document.querySelectorAll('[data-step="6"] .chip').forEach(chip => {
-      chip.addEventListener('click', function() {
-        // Clear previous selections
-        document.querySelectorAll('[data-step="6"] .chip').forEach(c => c.classList.remove('selected'));
+        chips.forEach(c => c.classList.remove('selected'));
         this.classList.add('selected');
-        
-        const value = this.dataset.value;
-        document.getElementById('stage').value = value;
-        formData.stage = value;
-        saveFormData();
-        
-        // Conditional logic
-        const conditionalContainer = document.getElementById('conditionalContainer');
-        conditionalContainer.innerHTML = '';
-        
-        if (value === 'launched' || value === 'revenue' || value === 'scaling') {
-          conditionalContainer.innerHTML = `
-            <div class="step-prompt" style="font-size: 16px;">how do you get users right now?</div>
-            <input type="text" id="acquisition" name="acquisition" placeholder="organic / paid / outbound / partnerships / other">
-          `;
-          conditionalContainer.style.display = 'block';
-        } else if (value === 'idea' || value === 'prototype') {
-          conditionalContainer.innerHTML = `
-            <div class="step-prompt" style="font-size: 16px;">what's the one thing stopping launch?</div>
-            <input type="text" id="blocker" name="blocker" placeholder="the main blocker...">
-          `;
-          conditionalContainer.style.display = 'block';
-        } else {
-          conditionalContainer.style.display = 'none';
-        }
-        
-        // Add next button
-        setTimeout(() => {
-          const nextBtn = document.createElement('button');
-          nextBtn.type = 'button';
-          nextBtn.className = 'step-btn';
-          nextBtn.textContent = 'next →';
-          nextBtn.onclick = nextStep;
-          const existing = document.querySelector('[data-step="6"] .step-btn');
-          if (!existing) {
-            document.querySelector('[data-step="6"]').appendChild(nextBtn);
-          }
-        }, 500);
+        blockerInput.value = this.dataset.value;
       });
-    });
-
-    // Final note field
-    const finalNoteInput = document.getElementById('finalNote');
-    finalNoteInput.addEventListener('input', function() {
-      const submitBtn = document.getElementById('submitBtn');
-      if (this.value.trim()) {
-        submitBtn.textContent = 'let\'s jam ⚡️';
-      } else {
-        submitBtn.textContent = 'ship it 🚀';
-      }
-      formData.finalNote = this.value;
-      saveFormData();
     });
 
     // Form submission
-    const form = document.getElementById('founderForm');
+    const form = document.getElementById('bookingForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      
-      // Collect all form data from our tracked formData object + current form values
-      const payload = {
-        name: formData.name || document.getElementById('name').value,
-        email: formData.email || document.getElementById('email').value,
-        startup: formData.startup || document.getElementById('startup').value,
-        building: formData.building || document.getElementById('building').value,
-        drag: selectedDrags.join(','),
-        tried: document.getElementById('tried')?.value || '',
-        stage: formData.stage || document.getElementById('stage').value,
-        acquisition: document.getElementById('acquisition')?.value || '',
-        blocker: document.getElementById('blocker')?.value || '',
-        finalNote: document.getElementById('finalNote')?.value || ''
+
+      const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        startup: form.startup.value,
+        blocker: form.blocker.value,
+        shift: form.shift.value
       };
-      
-      console.log('Submitting payload:', payload); // Debug log
-      
-      // Show redirect message
-      const chatCard = document.getElementById('chatCard');
-      chatCard.innerHTML = `
-        <div style="text-align: center; padding: 48px 24px;">
-          <div class="redirect-message">
-            <span class="spinner">🚀</span>
-            <span>sweet — locking your answers 🔒 sending you to schedule…</span>
-          </div>
-        </div>
-      `;
-      
-      // Send to API (don't wait for response)
-      const apiUrl = 'https://hethar-app-website.vercel.app/api/lead';
-      fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      }).catch(error => console.error('Error:', error));
-      
-      // Clear session storage
-      sessionStorage.removeItem('founderFormData');
-      
-      // Redirect to Cal.com after 1.5s (guaranteed)
+
+      console.log('Form submitted:', formData);
+
+      // Send to API
+      try {
+        await fetch('https://hethar-app-website.vercel.app/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            startup: formData.startup,
+            building: formData.shift,
+            drag: formData.blocker,
+            stage: 'launched'
+          }),
+        });
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+      // Show confirmation
+      document.querySelector('.step-2-section').style.display = 'none';
+      document.getElementById('confirmation').classList.add('active');
+
+      // Redirect to Cal.com after 2 seconds
       setTimeout(() => {
-        const name = encodeURIComponent(payload.name || '');
-        const email = encodeURIComponent(payload.email || '');
-        const redirectUrl = `https://cal.com/vlad-wilhelm-new/secret?name=${name}&email=${email}`;
-        console.log('Redirecting to:', redirectUrl); // Debug log
-        window.location.href = redirectUrl;
-      }, 1500);
+        const name = encodeURIComponent(formData.name);
+        const email = encodeURIComponent(formData.email);
+        window.location.href = `https://cal.com/vlad-wilhelm-new/secret?name=${name}&email=${email}`;
+      }, 2000);
     });
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  </script>
-
-  <!-- Cal.com embed code -->
-  <script type="text/javascript">
-    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
-    Cal("init", "secret", {origin:"https://app.cal.com"});
-    Cal.ns.secret("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
   </script>
 
 </body>

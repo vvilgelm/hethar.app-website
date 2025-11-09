@@ -35,6 +35,26 @@
       font-size: 16px;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    /* Noise Texture Overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.015;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    body.confirmation-active {
+      background: var(--white);
+      transition: background 0.8s ease;
     }
 
     .container {
@@ -59,10 +79,27 @@
 
     /* Logo */
     .logo {
-      padding: 40px 0 60px;
+      padding: 40px 0 20px;
       font-size: 20px;
       font-weight: 600;
       letter-spacing: -0.02em;
+    }
+
+    /* Hero Typing Sequence */
+    .typing-sequence {
+      text-align: center;
+      font-size: 16px;
+      font-weight: 400;
+      color: var(--text-lighter);
+      letter-spacing: 0.01em;
+      min-height: 24px;
+      margin-bottom: 40px;
+      opacity: 0;
+      transition: opacity 0.7s ease-in;
+    }
+
+    .typing-sequence.visible {
+      opacity: 1;
     }
 
     /* Headlines */
@@ -182,6 +219,7 @@
       border-color: var(--bg-dark);
       background: var(--white);
       box-shadow: 0 0 0 4px rgba(24,24,27,0.05);
+      transition: all 0.2s ease;
     }
 
     textarea {
@@ -204,13 +242,17 @@
       background: var(--bg);
       font-size: 15px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
       user-select: none;
     }
 
     .chip:hover {
       border-color: var(--bg-dark);
       background: var(--white);
+    }
+
+    .chip:active {
+      transform: scale(0.98);
     }
 
     .chip.selected {
@@ -232,8 +274,10 @@
       font-weight: 500;
       text-transform: lowercase;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       margin-top: 32px;
+      position: relative;
+      overflow: hidden;
     }
 
     .cta-button:hover {
@@ -244,6 +288,53 @@
 
     .cta-button:active {
       transform: translateY(0);
+    }
+
+    .cta-button.loading {
+      pointer-events: none;
+    }
+
+    /* Loading dots */
+    .loading-dots {
+      display: inline-block;
+    }
+
+    .loading-dots span {
+      animation: loadingDot 0.4s infinite;
+      opacity: 0;
+    }
+
+    .loading-dots span:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes loadingDot {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
+    }
+
+    /* Ripple effect */
+    .ripple {
+      position: absolute;
+      border: 2px solid rgba(24,24,27,0.1);
+      border-radius: 50%;
+      animation: ripple-effect 0.6s ease-out;
+      pointer-events: none;
+    }
+
+    @keyframes ripple-effect {
+      to {
+        transform: scale(2);
+        opacity: 0;
+      }
     }
 
     /* Footer Note */
@@ -260,14 +351,20 @@
       display: none;
       text-align: center;
       padding: 80px 24px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
     .confirmation.active {
       display: block;
+      opacity: 1;
     }
 
     .confirmation h2 {
+      font-size: 28px;
+      font-weight: 500;
       margin-bottom: 20px;
+      color: #0a0a0a;
     }
 
     .confirmation .subtext {
@@ -278,11 +375,38 @@
       margin: 0 auto;
     }
 
+    /* Pulse Line */
+    .pulse-line {
+      width: 0;
+      height: 1px;
+      background: #18181b;
+      margin: 40px auto 0;
+      animation: pulse-expand 1.2s ease-out forwards;
+    }
+
+    @keyframes pulse-expand {
+      to {
+        width: 300px;
+      }
+    }
+
     /* Divider */
     .divider {
       height: 1px;
       background: var(--border);
       margin: 80px 0;
+    }
+
+    /* Scroll Reveal Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* Responsive */
@@ -308,6 +432,14 @@
         padding: 9px 16px;
       }
     }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -315,27 +447,30 @@
   <!-- Step 1 Banner -->
   <div class="step-banner">
     step 1 of 2 — watch this first (then we'll talk founder-to-founder)
-  </div>
+    </div>
 
   <!-- Step 1: Watch Video -->
   <section class="container">
     <div class="logo">hethar</div>
 
-    <h1>founders, teams:<br>you don't need more tools.<br>you need your ops, growth, and focus to finally move in one rhythm.</h1>
+    <!-- Typing Sequence -->
+    <div class="typing-sequence" id="typingSequence"></div>
 
-    <p class="subheadline">
+    <h1 class="reveal">founders, teams:<br>you don't need more tools.<br>you need your ops, growth, and focus to finally move in one rhythm.</h1>
+
+    <p class="subheadline reveal">
       we help early-stage teams go from "everything's on fire" → to<br>
       "the noise is gone — it's just pure growth now."<br><br>
       clean systems, sharper loops, steady growth — built around how founders actually think and work.
     </p>
 
-    <p class="supporting-line">
+    <p class="supporting-line reveal">
       you're not broken. your systems are.<br>
       let's fix them before you hit that "maybe i'll just pivot again" phase.
     </p>
 
     <!-- Video Section -->
-    <div class="video-section">
+    <div class="video-section reveal">
       <div class="video-label">🟢 step 1 of 2: watch video</div>
       
       <div class="video-wrapper">
@@ -354,10 +489,10 @@
       </p>
     </div>
 
-    <div class="divider"></div>
+    <div class="divider reveal"></div>
 
     <!-- Step 2: Book Call -->
-    <div class="step-2-section">
+    <div class="step-2-section reveal">
       <h2>step 2 of 2: let's talk growth — real growth.</h2>
       
       <p class="subheadline">
@@ -370,19 +505,19 @@
         <div class="form-group">
           <label>1️⃣ name</label>
           <input type="text" name="name" required placeholder="your name">
-        </div>
+          </div>
 
         <!-- Email -->
         <div class="form-group">
           <label>2️⃣ email</label>
           <input type="email" name="email" required placeholder="you@example.com">
-        </div>
+          </div>
 
         <!-- Startup URL -->
         <div class="form-group">
           <label>3️⃣ startup / product url or short note</label>
           <input type="text" name="startup" placeholder="https:// or describe what you're building">
-        </div>
+          </div>
 
         <!-- What's Blocking -->
         <div class="form-group">
@@ -394,31 +529,32 @@
             <div class="chip" data-value="all">• all of the above 😩</div>
           </div>
           <input type="hidden" name="blocker" id="blocker" required>
-        </div>
+          </div>
 
         <!-- What Shifts Everything -->
         <div class="form-group">
           <label>5️⃣ if we fix one thing this month, what shifts everything else?</label>
           <textarea name="shift" required placeholder="be specific — what's the one domino?"></textarea>
-        </div>
+          </div>
 
         <!-- Submit Button -->
         <button type="submit" class="cta-button">→ book your strategy call →</button>
-      </form>
+        </form>
 
       <p class="footer-note">
         these calls are 15–20 mins. zero pressure.<br>
         just real talk about what's stuck and what can move next.
       </p>
-    </div>
+          </div>
 
     <!-- Confirmation (Hidden by default) -->
     <div class="confirmation" id="confirmation">
-      <h2>you're in. see you in the loop.</h2>
+      <h2 id="confirmationHeadline">you're in. see you in the loop.</h2>
       <p class="subtext">
         check your inbox — i'll send a short brief before we talk.<br><br>
         we'll trace the signal, cut the noise, and get your system moving again.
       </p>
+      <div class="pulse-line"></div>
     </div>
 
   </section>
@@ -440,7 +576,74 @@
   </footer>
 
   <script>
-    // Chip selection
+    // ========================================
+    // 1. TYPING SEQUENCE
+    // ========================================
+    const phrases = [
+      "you don't need more tools.",
+      "you don't need more hustle.",
+      "you just need rhythm."
+    ];
+    
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typingSequence');
+    const CHAR_SPEED = 50;
+    const PAUSE_AFTER_COMPLETE = 2000;
+    const FADE_OUT_DURATION = 700;
+    const PAUSE_BEFORE_NEXT = 500;
+
+    function typePhrase() {
+      const currentPhrase = phrases[currentPhraseIndex];
+      
+      if (!isDeleting && currentCharIndex < currentPhrase.length) {
+        // Typing
+        typingElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+        typingElement.classList.add('visible');
+        currentCharIndex++;
+        setTimeout(typePhrase, CHAR_SPEED);
+      } else if (!isDeleting && currentCharIndex === currentPhrase.length) {
+        // Pause after complete
+        setTimeout(() => {
+          isDeleting = true;
+          typePhrase();
+        }, PAUSE_AFTER_COMPLETE);
+      } else if (isDeleting) {
+        // Fade out
+        typingElement.classList.remove('visible');
+        setTimeout(() => {
+          currentCharIndex = 0;
+          isDeleting = false;
+          currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+          setTimeout(typePhrase, PAUSE_BEFORE_NEXT);
+        }, FADE_OUT_DURATION);
+      }
+    }
+
+    // Start typing after page load
+    setTimeout(typePhrase, 500);
+
+    // ========================================
+    // 2. SCROLL REVEAL ANIMATION
+    // ========================================
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 250); // 250ms stagger
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.8 });
+
+    revealElements.forEach(el => revealObserver.observe(el));
+
+    // ========================================
+    // 3. CHIP SELECTION
+    // ========================================
     const chips = document.querySelectorAll('.chip');
     const blockerInput = document.getElementById('blocker');
 
@@ -452,11 +655,20 @@
       });
     });
 
-    // Form submission
+    // ========================================
+    // 4. FORM SUBMISSION
+    // ========================================
     const form = document.getElementById('bookingForm');
+    const submitButton = form.querySelector('.cta-button');
+    const originalButtonText = submitButton.textContent;
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
+      
+      // Show loading state
+      submitButton.classList.add('loading');
+      submitButton.innerHTML = 'sending<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
+      
       const formData = {
         name: form.name.value,
         email: form.email.value,
@@ -464,7 +676,7 @@
         blocker: form.blocker.value,
         shift: form.shift.value
       };
-
+      
       console.log('Form submitted:', formData);
 
       // Send to API
@@ -485,16 +697,37 @@
         console.error('Error:', error);
       }
 
-      // Show confirmation
-      document.querySelector('.step-2-section').style.display = 'none';
-      document.getElementById('confirmation').classList.add('active');
+      // Get time-based greeting
+      const hour = new Date().getHours();
+      let greeting = 'good evening.';
+      if (hour >= 5 && hour < 12) {
+        greeting = 'good morning.';
+      } else if (hour >= 12 && hour < 18) {
+        greeting = 'good afternoon.';
+      }
 
-      // Redirect to Cal.com after 2 seconds
+      // Show confirmation with time-based greeting
+      setTimeout(() => {
+        document.querySelector('.step-2-section').style.opacity = '0';
+        document.querySelector('.step-2-section').style.transition = 'opacity 0.4s ease';
+        
+        setTimeout(() => {
+          document.querySelector('.step-2-section').style.display = 'none';
+          document.body.classList.add('confirmation-active');
+          
+          const confirmationHeadline = document.getElementById('confirmationHeadline');
+          confirmationHeadline.innerHTML = `sync established.<br>${greeting} growth online.`;
+          
+          document.getElementById('confirmation').classList.add('active');
+        }, 400);
+      }, 300);
+      
+      // Redirect to Cal.com after 2.5 seconds
       setTimeout(() => {
         const name = encodeURIComponent(formData.name);
         const email = encodeURIComponent(formData.email);
         window.location.href = `https://cal.com/vlad-wilhelm-new/secret?name=${name}&email=${email}`;
-      }, 2000);
+      }, 2500);
     });
   </script>
 

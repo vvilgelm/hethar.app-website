@@ -487,10 +487,10 @@
         how we help founders untangle the mess, build traction loops that don't depend on chaos,<br>
         and scale like it's intentional again.
       </p>
-    </div>
+      </div>
 
     <div class="divider reveal"></div>
-
+          
     <!-- Step 2: Book Call -->
     <div class="step-2-section reveal">
       <h2>step 2 of 2: let's talk growth — real growth.</h2>
@@ -527,7 +527,7 @@
             <div class="chip" data-value="no-system">• no system</div>
             <div class="chip" data-value="no-signal">• no signal</div>
             <div class="chip" data-value="all">• all of the above 😩</div>
-          </div>
+            </div>
           <input type="hidden" name="blocker" id="blocker" required>
           </div>
 
@@ -555,7 +555,7 @@
         we'll trace the signal, cut the noise, and get your system moving again.
       </p>
       <div class="pulse-line"></div>
-    </div>
+        </div>
 
   </section>
 
@@ -590,9 +590,9 @@
     let isDeleting = false;
     const typingElement = document.getElementById('typingSequence');
     const CHAR_SPEED = 50;
-    const PAUSE_AFTER_COMPLETE = 2000;
-    const FADE_OUT_DURATION = 700;
-    const PAUSE_BEFORE_NEXT = 500;
+    const PAUSE_AFTER_COMPLETE = 1000;
+    const FADE_OUT_DURATION = 400;
+    const PAUSE_BEFORE_NEXT = 200;
 
     function typePhrase() {
       const currentPhrase = phrases[currentPhraseIndex];
@@ -635,7 +635,7 @@
             entry.target.classList.add('visible');
           }, index * 250); // 250ms stagger
           revealObserver.unobserve(entry.target);
-        }
+      }
       });
     }, { threshold: 0.8 });
 
@@ -663,7 +663,7 @@
     const originalButtonText = submitButton.textContent;
 
     form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+        e.preventDefault();
       
       // Show loading state
       submitButton.classList.add('loading');
@@ -678,7 +678,7 @@
       };
       
       console.log('Form submitted:', formData);
-
+        
       // Send to API
       try {
         await fetch('https://hethar-app-website.vercel.app/api/lead', {
@@ -695,8 +695,8 @@
         });
       } catch (error) {
         console.error('Error:', error);
-      }
-
+        }
+        
       // Get time-based greeting
       const hour = new Date().getHours();
       let greeting = 'good evening.';
@@ -704,10 +704,10 @@
         greeting = 'good morning.';
       } else if (hour >= 12 && hour < 18) {
         greeting = 'good afternoon.';
-      }
-
+        }
+        
       // Show confirmation with time-based greeting
-      setTimeout(() => {
+          setTimeout(() => {
         document.querySelector('.step-2-section').style.opacity = '0';
         document.querySelector('.step-2-section').style.transition = 'opacity 0.4s ease';
         

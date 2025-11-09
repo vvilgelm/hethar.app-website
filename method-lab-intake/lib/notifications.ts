@@ -7,11 +7,24 @@ function getResendClient() {
 }
 
 export async function sendInternalNotification(data: LeadFormData) {
+  console.log('📧 Starting email notification...');
+  console.log('FROM_EMAIL:', process.env.FROM_EMAIL);
+  console.log('NOTIFY_EMAILS:', process.env.NOTIFY_EMAILS);
+  console.log('RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+  
   const resend = getResendClient();
-  if (!resend) return; // Skip if not configured
+  if (!resend) {
+    console.error('❌ Resend client not initialized - missing API key');
+    return;
+  }
   
   const notifyEmails = process.env.NOTIFY_EMAILS?.split(',') || [];
-  if (notifyEmails.length === 0) return;
+  if (notifyEmails.length === 0) {
+    console.error('❌ No notify emails configured');
+    return;
+  }
+  
+  console.log('📨 Sending email to:', notifyEmails);
   
   await resend.emails.send({
     from: process.env.FROM_EMAIL!,

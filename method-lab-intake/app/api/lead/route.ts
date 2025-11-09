@@ -34,8 +34,11 @@ export async function POST(request: NextRequest) {
       console.log('✅ Email with form data sent to your inbox');
     } catch (error) {
       console.error('❌ Email notification failed:', error);
+      console.error('Error details:', error instanceof Error ? error.message : String(error));
+      console.error('Error stack:', error instanceof Error ? error.stack : 'No stack');
       // This is critical - if email fails, log the data
       console.error('FORM DATA:', JSON.stringify(validatedData, null, 2));
+      // Don't fail the request, but make sure we see the error
     }
 
     // Optional: Send confirmation to user

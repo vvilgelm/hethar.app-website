@@ -28,28 +28,23 @@ export async function POST(request: NextRequest) {
       stage: validatedData.stage
     });
 
-    // Send to Google Sheets (PRIMARY DATA STORAGE)
-    try {
-      await sendToGoogleSheets(validatedData);
-      console.log('✅ Saved to Google Sheets');
-    } catch (error) {
-      console.error('❌ Google Sheets failed:', error);
-      // Continue even if Google Sheets fails
-    }
-
-    // Send notifications
+    // Send email notification (PRIMARY DATA STORAGE)
     try {
       await sendInternalNotification(validatedData);
-      console.log('✅ Email notification sent');
+      console.log('✅ Email with form data sent to your inbox');
     } catch (error) {
       console.error('❌ Email notification failed:', error);
+      // This is critical - if email fails, log the data
+      console.error('FORM DATA:', JSON.stringify(validatedData, null, 2));
     }
 
+    // Optional: Send confirmation to user
     try {
-      await sendSlackNotification(validatedData);
-      console.log('✅ Slack notification sent');
+      await sendLeadConfirmation(validatedData);
+      console.log('✅ Confirmation email sent to user');
     } catch (error) {
-      console.error('❌ Slack notification failed:', error);
+      console.error('❌ User confirmation failed:', error);
+      // Non-critical, continue anyway
     }
 
     return NextResponse.json({ ok: true }, { status: 200, headers: corsHeaders });

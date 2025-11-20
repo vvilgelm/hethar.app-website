@@ -52,6 +52,60 @@
       z-index: 9999;
     }
 
+    /* Navigation */
+    nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .nav-logo {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+      text-transform: lowercase;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0; /* Hidden initially, revealed with hero */
+      animation: fadeIn 0.6s ease-out 0.5s forwards;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      animation: fadeIn 0.6s ease-out 0.5s forwards;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--text-light);
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-link.active {
+      color: var(--text);
+      padding: 4px 12px;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 100px;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
     body.confirmation-active {
       background: var(--white);
       transition: background 0.8s ease;
@@ -411,6 +465,10 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
       h1 {
         font-size: 36px;
       }
@@ -444,14 +502,24 @@
 </head>
 <body>
 
+  <!-- Navigation -->
+  <nav>
+    <a href="/" class="nav-logo">hethar</a>
+    <div class="nav-links">
+      <a href="/" class="nav-link active">home</a>
+      <a href="/" class="nav-link">product</a>
+      <a href="/cases.html" class="nav-link">case studies</a>
+    </div>
+  </nav>
+
   <!-- Step 1 Banner -->
   <div class="step-banner">
     step 1 of 2 — watch this first (then we'll talk founder-to-founder)
-    </div>
+  </div>
 
   <!-- Step 1: Watch Video -->
-  <section class="container">
-    <div class="logo">hethar</div>
+  <section class="container" style="padding-top: 80px;">
+    <!-- <div class="logo">hethar</div> -->
 
     <!-- Typing Sequence -->
     <div class="typing-sequence" id="typingSequence"></div>
@@ -487,7 +555,7 @@
         how we help founders untangle the mess, build traction loops that don't depend on chaos,<br>
         and scale like it's intentional again.
       </p>
-      </div>
+    </div>
 
     <div class="divider"></div>
 
@@ -527,7 +595,7 @@
             <div class="chip" data-value="no-system">• no system</div>
             <div class="chip" data-value="no-signal">• no signal</div>
             <div class="chip" data-value="all">• all of the above 😩</div>
-            </div>
+          </div>
           <input type="hidden" name="blocker" id="blocker" required>
           </div>
 
@@ -555,7 +623,7 @@
         we'll trace the signal, cut the noise, and get your system moving again.
       </p>
       <div class="pulse-line"></div>
-        </div>
+    </div>
 
   </section>
 
@@ -635,7 +703,7 @@
             entry.target.classList.add('visible');
           }, index * 250); // 250ms stagger
           revealObserver.unobserve(entry.target);
-      }
+        }
       });
     }, { threshold: 0.8 });
 
@@ -663,7 +731,7 @@
     const originalButtonText = submitButton.textContent;
 
     form.addEventListener('submit', async (e) => {
-        e.preventDefault();
+      e.preventDefault();
       
       // Show loading state
       submitButton.classList.add('loading');
@@ -678,7 +746,7 @@
       };
       
       console.log('Form submitted:', formData);
-        
+
       // Send to API
       try {
         await fetch('https://hethar-app-website.vercel.app/api/lead', {
@@ -695,8 +763,8 @@
         });
       } catch (error) {
         console.error('Error:', error);
-        }
-        
+      }
+
       // Get time-based greeting
       const hour = new Date().getHours();
       let greeting = 'good evening.';
@@ -704,10 +772,10 @@
         greeting = 'good morning.';
       } else if (hour >= 12 && hour < 18) {
         greeting = 'good afternoon.';
-        }
-        
+      }
+
       // Show confirmation with time-based greeting
-          setTimeout(() => {
+      setTimeout(() => {
         document.querySelector('.step-2-section').style.opacity = '0';
         document.querySelector('.step-2-section').style.transition = 'opacity 0.4s ease';
         

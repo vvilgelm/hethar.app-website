@@ -111,11 +111,11 @@
       padding: 0 24px;
     }
 
-    /* Hero Section - GoStartAI Style */
+    /* Hero Section - GoStartAI Layout */
     .hero-section {
       text-align: center;
-      padding: 60px 24px 80px;
-      max-width: 1100px;
+      padding: 40px 24px 50px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -125,7 +125,7 @@
     }
 
     .hero-logo-text {
-      font-size: 26px;
+      font-size: 24px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text);
@@ -134,51 +134,53 @@
     .hero-logo-underline {
       height: 2px;
       background: var(--text);
-      margin-top: 6px;
+      margin-top: 4px;
       position: relative;
     }
 
     .hero-logo-underline::after {
       content: '';
       position: absolute;
-      right: -12px;
+      right: -10px;
       top: -4px;
       width: 0;
       height: 0;
-      border-left: 12px solid var(--text);
+      border-left: 10px solid var(--text);
       border-top: 5px solid transparent;
       border-bottom: 5px solid transparent;
     }
 
     .hero-eyebrow {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 600;
       font-style: italic;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       letter-spacing: 0.01em;
     }
 
     .hero-headline {
-      font-size: 56px;
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
+      font-size: 54px;
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
       color: var(--text);
-      margin-bottom: 32px;
+      margin-bottom: 28px;
     }
 
     .hero-headline .line-2 {
-      font-weight: 700;
+      font-style: italic;
     }
 
     .hero-headline .line-3 {
       font-style: italic;
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
     /* Chrome/Steel Highlight Effect */
     .chrome-highlight {
-      font-weight: 800;
+      font-weight: 700;
       font-style: normal;
       background: linear-gradient(
         135deg,
@@ -205,6 +207,23 @@
       text-shadow: none;
     }
 
+    /* Add subtle reflection/depth */
+    .chrome-highlight::before {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.4) 0%,
+        rgba(255,255,255,0) 50%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      pointer-events: none;
+    }
+
     @keyframes chrome-flow {
       0%, 100% {
         background-position: 0% 50%;
@@ -215,29 +234,30 @@
     }
 
     .hero-guarantee {
-      font-size: 17px;
+      font-size: 16px;
       line-height: 1.7;
       color: var(--text-light);
-      max-width: 780px;
-      margin: 0 auto 40px;
+      max-width: 720px;
+      margin: 0 auto 32px;
     }
 
     .hero-cta {
       display: inline-block;
-      padding: 18px 48px;
+      padding: 16px 40px;
       background: var(--bg-dark);
       color: var(--white);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 600;
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 6px;
       transition: all 0.3s ease;
+      text-transform: lowercase;
     }
 
     .hero-cta:hover {
       background: #27272a;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
 
     /* Headlines */
@@ -561,24 +581,28 @@
       }
 
       .hero-section {
-        padding: 40px 20px 60px;
+        padding: 30px 20px 40px;
       }
 
       .hero-headline {
-        font-size: 32px;
+        font-size: 28px;
       }
 
       .hero-eyebrow {
-        font-size: 15px;
+        font-size: 14px;
       }
 
       .hero-guarantee {
-        font-size: 15px;
+        font-size: 14px;
       }
 
       .hero-cta {
-        padding: 16px 36px;
-        font-size: 15px;
+        padding: 14px 32px;
+        font-size: 14px;
+      }
+
+      .hero-logo-text {
+        font-size: 20px;
       }
       
       h1 {
@@ -624,7 +648,7 @@
     </div>
   </nav>
 
-  <!-- Hero Section - GoStartAI Style -->
+  <!-- Hero Section - GoStartAI Layout -->
   <section class="hero-section">
     <div class="hero-logo">
       <div class="hero-logo-text">hethar</div>
@@ -634,8 +658,8 @@
     <p class="hero-eyebrow">Early-stage SaaS Founders & CEOs</p>
 
     <h1 class="hero-headline">
-      We Will Add <span class="chrome-highlight">500–1000 Paying Users</span> In 30 Days<br>
-      <span class="line-2">With Media Buying, If You Don't See Results,</span><br>
+      We'll Drive Your First <span class="chrome-highlight" data-text="500–1000 Paying Users">500–1000 Paying Users</span><br>
+      <span class="line-2">in 30 Days with Media Buying — If You Don't See Results,</span><br>
       <span class="line-3">You Don't Pay</span>
     </h1>
 
@@ -643,7 +667,7 @@
       We guarantee our clients results, meaning if during our time working together we can't bring at least 500 paying users to your userbase, we'll refund you in full.
     </p>
 
-    <a href="#bookingForm" class="hero-cta">Book a Call Now</a>
+    <a href="#bookingForm" class="hero-cta">book a call now</a>
   </section>
 
   <!-- Video & Form Section -->

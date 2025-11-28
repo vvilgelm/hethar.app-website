@@ -160,114 +160,23 @@
       text-underline-offset: 4px;
     }
 
-    /* Advanced Chrome/Metallic Effect - Real Polished Steel */
+    /* Apple-style Premium Text Effect */
     .chrome-highlight {
-      font-weight: 700;
+      font-weight: 600;
       font-style: normal;
       position: relative;
-      display: inline-block;
+      display: inline;
       
-      /* Base chrome gradient - mimics real metal reflectivity */
-      background: 
-        /* Sharp highlight band */
-        linear-gradient(
-          105deg,
-          transparent 0%,
-          transparent 35%,
-          rgba(255,255,255,0.95) 45%,
-          rgba(255,255,255,0.95) 55%,
-          transparent 65%,
-          transparent 100%
-        ),
-        /* Primary chrome gradient */
-        linear-gradient(
-          180deg,
-          #e8e8e8 0%,
-          #fafafa 8%,
-          #d4d4d4 15%,
-          #b8b8b8 25%,
-          #9a9a9a 35%,
-          #c8c8c8 45%,
-          #f5f5f5 50%,
-          #e0e0e0 55%,
-          #a8a8a8 65%,
-          #8a8a8a 75%,
-          #b0b0b0 85%,
-          #d8d8d8 92%,
-          #c0c0c0 100%
-        );
-      background-size: 400% 100%, 100% 100%;
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      
-      /* Smooth highlight sweep animation */
-      animation: chrome-sweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-      
-      /* Subtle text stroke for depth */
-      filter: drop-shadow(0 1px 0 rgba(255,255,255,0.5)) 
-              drop-shadow(0 -1px 0 rgba(0,0,0,0.1))
-              drop-shadow(0 2px 4px rgba(0,0,0,0.08));
-    }
-
-    /* Top reflection layer - simulates light hitting polished surface */
-    .chrome-highlight::before {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        165deg,
-        rgba(255,255,255,0.9) 0%,
-        rgba(255,255,255,0.6) 15%,
-        rgba(255,255,255,0.1) 30%,
-        transparent 45%,
-        transparent 100%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      pointer-events: none;
-      mix-blend-mode: overlay;
-    }
-
-    /* Bottom shadow/depth layer */
-    .chrome-highlight::after {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 1px;
-      width: 100%;
-      height: 100%;
+      /* Apple's signature gradient - subtle, refined silver */
       background: linear-gradient(
         180deg,
-        transparent 0%,
-        transparent 60%,
-        rgba(80,80,80,0.3) 80%,
-        rgba(60,60,60,0.4) 100%
+        #a1a1a6 0%,
+        #86868b 50%,
+        #6e6e73 100%
       );
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* Smooth highlight sweep - like light moving across chrome */
-    @keyframes chrome-sweep {
-      0% {
-        background-position: 200% 0, 0 0;
-      }
-      100% {
-        background-position: -200% 0, 0 0;
-      }
-    }
-
-    /* Add shimmer on hover for interactivity */
-    .chrome-highlight:hover {
-      animation: chrome-sweep 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     }
 
     .hero-guarantee {

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>hethar — founders, teams: you don't need more tools</title>
+  <title>hethar — drive your first 500-1000 paying users</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #fafaf8;
@@ -54,15 +54,13 @@
 
     /* Navigation */
     nav {
-      position: absolute;
-      top: 0;
-      left: 0;
+      position: relative;
       width: 100%;
       padding: 24px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 100;
+      z-index: 200;
     }
 
     .nav-logo {
@@ -72,8 +70,6 @@
       text-transform: lowercase;
       color: var(--text);
       text-decoration: none;
-      opacity: 0; /* Hidden initially, revealed with hero */
-      animation: fadeIn 0.6s ease-out 0.5s forwards;
     }
 
     .nav-links {
@@ -81,8 +77,6 @@
       gap: 24px;
       font-size: 13px;
       font-weight: 500;
-      opacity: 0;
-      animation: fadeIn 0.6s ease-out 0.5s forwards;
     }
 
     .nav-link {
@@ -131,29 +125,128 @@
       z-index: 100;
     }
 
-    /* Logo */
-    .logo {
-      padding: 40px 0 20px;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-
-    /* Hero Typing Sequence */
-    .typing-sequence {
+    /* Hero Section - GoStartAI Style */
+    .hero-section {
       text-align: center;
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--text-lighter);
-      letter-spacing: 0.01em;
-      min-height: 24px;
-      margin-bottom: 40px;
-      opacity: 0;
-      transition: opacity 0.7s ease-in;
+      padding: 60px 24px 80px;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    .typing-sequence.visible {
-      opacity: 1;
+    .hero-logo {
+      display: inline-block;
+      margin-bottom: 48px;
+    }
+
+    .hero-logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .hero-logo-underline {
+      height: 2px;
+      background: var(--text);
+      margin-top: 4px;
+      position: relative;
+    }
+
+    .hero-logo-underline::after {
+      content: '';
+      position: absolute;
+      right: -8px;
+      top: -3px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid var(--text);
+      border-top: 4px solid transparent;
+      border-bottom: 4px solid transparent;
+    }
+
+    .hero-eyebrow {
+      font-size: 15px;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 24px;
+      letter-spacing: 0.01em;
+    }
+
+    .hero-headline {
+      font-size: 52px;
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 32px;
+    }
+
+    .hero-headline .line-2 {
+      font-style: italic;
+    }
+
+    /* Chrome/Steel Highlight Effect */
+    .chrome-highlight {
+      font-weight: 700;
+      font-style: normal;
+      background: linear-gradient(
+        135deg,
+        #b8b8b8 0%,
+        #e8e8e8 10%,
+        #ffffff 20%,
+        #d0d0d0 30%,
+        #a8a8a8 40%,
+        #e0e0e0 50%,
+        #ffffff 55%,
+        #c8c8c8 65%,
+        #909090 75%,
+        #d8d8d8 85%,
+        #f0f0f0 90%,
+        #b0b0b0 100%
+      );
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: chrome-flow 8s ease-in-out infinite;
+      position: relative;
+      display: inline;
+      text-shadow: none;
+    }
+
+    /* Add subtle reflection/depth */
+    .chrome-highlight::before {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255,255,255,0.4) 0%,
+        rgba(255,255,255,0) 50%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      pointer-events: none;
+    }
+
+    @keyframes chrome-flow {
+      0%, 100% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .hero-guarantee {
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--text-light);
+      max-width: 680px;
+      margin: 0 auto;
     }
 
     /* Headlines */
@@ -465,8 +558,31 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      nav {
+        padding: 20px;
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+      }
+
       .nav-links {
-        display: none;
+        gap: 20px;
+      }
+
+      .hero-section {
+        padding: 40px 20px 60px;
+      }
+
+      .hero-headline {
+        font-size: 32px;
+      }
+
+      .hero-eyebrow {
+        font-size: 14px;
+      }
+
+      .hero-guarantee {
+        font-size: 15px;
       }
       
       h1 {
@@ -512,30 +628,32 @@
     </div>
   </nav>
 
+  <!-- Hero Section - GoStartAI Style -->
+  <section class="hero-section">
+    <div class="hero-logo">
+      <div class="hero-logo-text">hethar</div>
+      <div class="hero-logo-underline"></div>
+    </div>
+
+    <p class="hero-eyebrow">Early-stage SaaS Founders & CEOs</p>
+
+    <h1 class="hero-headline">
+      We'll Drive Your First <span class="chrome-highlight" data-text="500–1000 Paying Users">500–1000 Paying Users</span><br>
+      <span class="line-2">in 30 Days with Media Buying — Or You Don't Pay</span>
+    </h1>
+
+    <p class="hero-guarantee">
+      We guarantee our clients results, meaning if during our time working together we can't bring at least 500 paying users to your userbase, we'll refund you in full.
+    </p>
+  </section>
+
   <!-- Step 1 Banner -->
   <div class="step-banner">
     step 1 of 2 — watch this first (then we'll talk founder-to-founder)
   </div>
 
   <!-- Step 1: Watch Video -->
-  <section class="container" style="padding-top: 80px;">
-    <!-- <div class="logo">hethar</div> -->
-
-    <!-- Typing Sequence -->
-    <div class="typing-sequence" id="typingSequence"></div>
-
-    <h1 class="reveal">founders, teams:<br>you don't need more tools.<br>you need your ops, growth, and focus to finally move in one rhythm.</h1>
-
-    <p class="subheadline reveal">
-      we help early-stage teams go from "everything's on fire" → to<br>
-      "the noise is gone — it's just pure growth now."<br><br>
-      clean systems, sharper loops, steady growth — built around how founders actually think and work.
-    </p>
-
-    <p class="supporting-line reveal">
-      you're not broken. your systems are.<br>
-      let's fix them before you hit that "maybe i'll just pivot again" phase.
-    </p>
+  <section class="container" style="padding-top: 60px;">
 
     <!-- Video Section -->
     <div class="video-section reveal">
@@ -645,55 +763,7 @@
 
   <script>
     // ========================================
-    // 1. TYPING SEQUENCE
-    // ========================================
-    const phrases = [
-      "you don't need more tools.",
-      "you don't need more hustle.",
-      "you just need rhythm."
-    ];
-    
-    let currentPhraseIndex = 0;
-    let currentCharIndex = 0;
-    let isDeleting = false;
-    const typingElement = document.getElementById('typingSequence');
-    const CHAR_SPEED = 50;
-    const PAUSE_AFTER_COMPLETE = 1000;
-    const FADE_OUT_DURATION = 400;
-    const PAUSE_BEFORE_NEXT = 200;
-
-    function typePhrase() {
-      const currentPhrase = phrases[currentPhraseIndex];
-      
-      if (!isDeleting && currentCharIndex < currentPhrase.length) {
-        // Typing
-        typingElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
-        typingElement.classList.add('visible');
-        currentCharIndex++;
-        setTimeout(typePhrase, CHAR_SPEED);
-      } else if (!isDeleting && currentCharIndex === currentPhrase.length) {
-        // Pause after complete
-        setTimeout(() => {
-          isDeleting = true;
-          typePhrase();
-        }, PAUSE_AFTER_COMPLETE);
-      } else if (isDeleting) {
-        // Fade out
-        typingElement.classList.remove('visible');
-        setTimeout(() => {
-          currentCharIndex = 0;
-          isDeleting = false;
-          currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-          setTimeout(typePhrase, PAUSE_BEFORE_NEXT);
-        }, FADE_OUT_DURATION);
-      }
-    }
-
-    // Start typing after page load
-    setTimeout(typePhrase, 500);
-
-    // ========================================
-    // 2. SCROLL REVEAL ANIMATION
+    // 1. SCROLL REVEAL ANIMATION
     // ========================================
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries) => {
@@ -710,7 +780,7 @@
     revealElements.forEach(el => revealObserver.observe(el));
 
     // ========================================
-    // 3. CHIP SELECTION
+    // 2. CHIP SELECTION
     // ========================================
     const chips = document.querySelectorAll('.chip');
     const blockerInput = document.getElementById('blocker');
@@ -724,7 +794,7 @@
     });
 
     // ========================================
-    // 4. FORM SUBMISSION
+    // 3. FORM SUBMISSION
     // ========================================
     const form = document.getElementById('bookingForm');
     const submitButton = form.querySelector('.cta-button');

@@ -114,49 +114,71 @@
     /* Hero Section - GoStartAI Style */
     .hero-section {
       text-align: center;
-      padding: 10px 24px 60px;
-      max-width: 900px;
+      padding: 60px 24px 80px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
     .hero-logo {
       display: inline-block;
-      margin-bottom: 28px;
+      margin-bottom: 40px;
     }
 
     .hero-logo-text {
-      font-size: 32px;
+      font-size: 26px;
       font-weight: 700;
       letter-spacing: -0.02em;
       color: var(--text);
     }
 
+    .hero-logo-underline {
+      height: 2px;
+      background: var(--text);
+      margin-top: 6px;
+      position: relative;
+    }
+
+    .hero-logo-underline::after {
+      content: '';
+      position: absolute;
+      right: -12px;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-left: 12px solid var(--text);
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+    }
 
     .hero-eyebrow {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 600;
       font-style: italic;
       color: var(--text);
-      margin-bottom: 24px;
-      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+      letter-spacing: 0.01em;
     }
 
     .hero-headline {
-      font-size: 52px;
-      font-weight: 700;
-      line-height: 1.08;
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--text);
-      margin-bottom: 24px;
+      margin-bottom: 32px;
     }
 
     .hero-headline .line-2 {
+      font-weight: 700;
+    }
+
+    .hero-headline .line-3 {
       font-style: italic;
     }
 
     /* Chrome/Steel Highlight Effect */
     .chrome-highlight {
-      font-weight: 700;
+      font-weight: 800;
       font-style: normal;
       background: linear-gradient(
         135deg,
@@ -183,23 +205,6 @@
       text-shadow: none;
     }
 
-    /* Add subtle reflection/depth */
-    .chrome-highlight::before {
-      content: attr(data-text);
-      position: absolute;
-      left: 0;
-      top: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(255,255,255,0.4) 0%,
-        rgba(255,255,255,0) 50%
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      pointer-events: none;
-    }
-
     @keyframes chrome-flow {
       0%, 100% {
         background-position: 0% 50%;
@@ -210,11 +215,29 @@
     }
 
     .hero-guarantee {
-      font-size: 18px;
-      line-height: 1.6;
+      font-size: 17px;
+      line-height: 1.7;
       color: var(--text-light);
-      max-width: 820px;
-      margin: 0 auto;
+      max-width: 780px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-cta {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--bg-dark);
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: #27272a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
 
     /* Headlines */
@@ -546,10 +569,15 @@
       }
 
       .hero-eyebrow {
-        font-size: 14px;
+        font-size: 15px;
       }
 
       .hero-guarantee {
+        font-size: 15px;
+      }
+
+      .hero-cta {
+        padding: 16px 36px;
         font-size: 15px;
       }
       
@@ -600,18 +628,22 @@
   <section class="hero-section">
     <div class="hero-logo">
       <div class="hero-logo-text">hethar</div>
+      <div class="hero-logo-underline"></div>
     </div>
 
     <p class="hero-eyebrow">Early-stage SaaS Founders & CEOs</p>
 
     <h1 class="hero-headline">
-      We'll Drive Your First <span class="chrome-highlight" data-text="500–1000 Paying Users">500–1000 Paying Users</span><br>
-      <span class="line-2">in 30 Days with Media Buying — Or You Don't Pay</span>
+      We Will Add <span class="chrome-highlight">500–1000 Paying Users</span> In 30 Days<br>
+      <span class="line-2">With Media Buying, If You Don't See Results,</span><br>
+      <span class="line-3">You Don't Pay</span>
     </h1>
 
     <p class="hero-guarantee">
       We guarantee our clients results, meaning if during our time working together we can't bring at least 500 paying users to your userbase, we'll refund you in full.
     </p>
+
+    <a href="#bookingForm" class="hero-cta">Book a Call Now</a>
   </section>
 
   <!-- Video & Form Section -->

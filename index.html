@@ -222,14 +222,14 @@
       color: var(--text);
       margin-bottom: 60px;
       text-align: center;
-      max-width: 1400px;
+      max-width: 95%;
       margin-left: auto;
       margin-right: auto;
       padding: 0 24px;
     }
 
     .success-story-list {
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
       display: grid;
       gap: 24px;
@@ -242,7 +242,7 @@
 
     .success-story-row-bottom {
       grid-template-columns: repeat(2, 1fr);
-      max-width: 800px;
+      max-width: 1000px;
       margin: 0 auto;
     }
 
@@ -250,11 +250,16 @@
       background: var(--bg);
       border: 2px solid var(--border);
       border-radius: 16px;
-      padding: 32px;
+      padding: 24px 32px;
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 12px rgba(0,0,0,0.06);
       position: relative;
       overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 32px;
+      min-height: auto;
     }
 
     .success-story-item::before {
@@ -283,15 +288,18 @@
       font-size: 22px;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 20px;
+      margin-bottom: 0;
       line-height: 1.3;
       letter-spacing: -0.01em;
+      flex: 0 0 280px;
+      min-width: 280px;
     }
 
     .success-story-stats {
       list-style: none;
       padding: 0;
       margin: 0;
+      flex: 1;
     }
 
     .success-story-stats li {
@@ -695,12 +703,20 @@
       }
 
       .success-story-item {
-        padding: 24px;
+        padding: 20px;
+        flex-direction: column;
+        gap: 16px;
       }
 
       .success-story-name {
         font-size: 18px;
-        margin-bottom: 14px;
+        margin-bottom: 0;
+        flex: 0 0 auto;
+        min-width: auto;
+      }
+
+      .success-story-stats {
+        flex: 1;
       }
 
       .success-story-stats li {

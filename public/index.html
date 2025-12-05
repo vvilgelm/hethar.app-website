@@ -210,42 +210,82 @@
 
     /* Success Stories Section */
     .success-stories {
-      margin: 60px 0;
+      margin: 80px 0;
       padding: 0 24px;
     }
 
     .success-stories-title {
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 36px;
+      font-weight: 800;
       line-height: 1.2;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--text);
-      margin-bottom: 40px;
+      margin-bottom: 60px;
       text-align: center;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 24px;
     }
 
     .success-story-list {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 24px;
+    }
+
+    .success-story-row-top {
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 24px;
+    }
+
+    .success-story-row-bottom {
+      grid-template-columns: repeat(2, 1fr);
       max-width: 800px;
       margin: 0 auto;
     }
 
     .success-story-item {
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      position: relative;
+      overflow: hidden;
     }
 
-    .success-story-item:last-child {
-      border-bottom: none;
-      margin-bottom: 0;
-      padding-bottom: 0;
+    .success-story-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--text), transparent);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .success-story-item:hover {
+      border-color: var(--text);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+      transform: translateY(-6px);
+    }
+
+    .success-story-item:hover::before {
+      opacity: 1;
     }
 
     .success-story-name {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 800;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 20px;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
     }
 
     .success-story-stats {
@@ -257,14 +297,16 @@
     .success-story-stats li {
       font-size: 15px;
       color: var(--text-light);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       padding-left: 0;
+      line-height: 1.5;
     }
 
     .success-story-stats li::before {
       content: '•';
       color: var(--text);
-      margin-right: 8px;
+      font-weight: 700;
+      margin-right: 10px;
     }
 
     /* Headlines */
@@ -634,21 +676,36 @@
       }
 
       .success-stories {
-        margin: 40px 0;
+        margin: 50px 0;
         padding: 0 20px;
       }
 
       .success-stories-title {
-        font-size: 22px;
+        font-size: 24px;
         margin-bottom: 32px;
+        max-width: 100%;
+      }
+
+      .success-story-row-top,
+      .success-story-row-bottom {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+        max-width: 100%;
+      }
+
+      .success-story-item {
+        padding: 24px;
       }
 
       .success-story-name {
-        font-size: 16px;
+        font-size: 18px;
+        margin-bottom: 14px;
       }
 
       .success-story-stats li {
         font-size: 14px;
+        margin-bottom: 8px;
       }
     }
 
@@ -720,7 +777,8 @@
     <div class="success-stories">
       <h2 class="success-stories-title">Success Stories: How 100+ SaaS Startups Added 500–1,000 Paying Users in 30 Days with Our User Acquisition and Growth Execution System</h2>
       
-      <div class="success-story-list">
+      <!-- Top Row: 3 items -->
+      <div class="success-story-list success-story-row-top">
         <div class="success-story-item">
           <div class="success-story-name">1. Andrey Kozlov — Personal Brand Expert</div>
           <ul class="success-story-stats">
@@ -748,7 +806,10 @@
             <li>1,500 new customers</li>
           </ul>
         </div>
+      </div>
 
+      <!-- Bottom Row: 2 items (centered) -->
+      <div class="success-story-list success-story-row-bottom">
         <div class="success-story-item">
           <div class="success-story-name">4. Ennan — Dubai Realtor & Guide</div>
           <ul class="success-story-stats">

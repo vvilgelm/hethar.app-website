@@ -208,6 +208,65 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.12);
     }
 
+    /* Success Stories Section */
+    .success-stories {
+      margin: 60px 0;
+      padding: 0 24px;
+    }
+
+    .success-stories-title {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .success-story-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .success-story-item {
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .success-story-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .success-story-name {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .success-story-stats {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .success-story-stats li {
+      font-size: 15px;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      padding-left: 0;
+    }
+
+    .success-story-stats li::before {
+      content: '•';
+      color: var(--text);
+      margin-right: 8px;
+    }
+
     /* Headlines */
     h1 {
       font-size: 48px;
@@ -573,6 +632,24 @@
         font-size: 14px;
         padding: 9px 16px;
       }
+
+      .success-stories {
+        margin: 40px 0;
+        padding: 0 20px;
+      }
+
+      .success-stories-title {
+        font-size: 22px;
+        margin-bottom: 32px;
+      }
+
+      .success-story-name {
+        font-size: 16px;
+      }
+
+      .success-story-stats li {
+        font-size: 14px;
+      }
     }
 
     /* Reduced motion */
@@ -636,6 +713,57 @@
 
       <div style="text-align: center; margin-top: 32px;">
         <a href="#bookingForm" class="hero-cta">book a call now</a>
+      </div>
+    </div>
+
+    <!-- Success Stories Section -->
+    <div class="success-stories">
+      <h2 class="success-stories-title">Success Stories: How 100+ SaaS Startups Added 500–1,000 Paying Users in 30 Days with Our User Acquisition and Growth Execution System</h2>
+      
+      <div class="success-story-list">
+        <div class="success-story-item">
+          <div class="success-story-name">1. Andrey Kozlov — Personal Brand Expert</div>
+          <ul class="success-story-stats">
+            <li>1,600,000 total views across 20 short-form videos</li>
+            <li>3,000 new followers</li>
+            <li>4,100 channel clicks</li>
+            <li>1,000,000 views on the very first video</li>
+            <li>+$20k in revenue</li>
+          </ul>
+        </div>
+
+        <div class="success-story-item">
+          <div class="success-story-name">2. Kirill Dvoryanchikov — Content Producer</div>
+          <ul class="success-story-stats">
+            <li>18,000,000 views from a single video</li>
+            <li>25,000 new followers</li>
+            <li>600+ people in a private channel</li>
+          </ul>
+        </div>
+
+        <div class="success-story-item">
+          <div class="success-story-name">3. WAYOFF — Sneaker Store</div>
+          <ul class="success-story-stats">
+            <li>2,600,000 views across 2 videos</li>
+            <li>1,500 new customers</li>
+          </ul>
+        </div>
+
+        <div class="success-story-item">
+          <div class="success-story-name">4. Ennan — Dubai Realtor & Guide</div>
+          <ul class="success-story-stats">
+            <li>421,000 views from one video</li>
+            <li>11 closed leads from videos</li>
+          </ul>
+        </div>
+
+        <div class="success-story-item">
+          <div class="success-story-name">5. Aviator — Sneaker Store</div>
+          <ul class="success-story-stats">
+            <li>300,000 views from scratch across 20 videos</li>
+            <li>1000 followers on a completely new account</li>
+          </ul>
+        </div>
       </div>
     </div>
 
